@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/nocturne-5e430ad9-1417-4553-9bc9-57f014f3a1c1/styles.css">
+<script src="_ds/nocturne-5e430ad9-1417-4553-9bc9-57f014f3a1c1/_ds_bundle.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:var(--color-bg);color:var(--color-text);font-family:"Inter",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:var(--color-accent-400);text-decoration:none}
+a:hover{color:var(--color-accent-300)}
+@keyframes xpl4b-fade{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+@keyframes xpl4b-pop{0%{opacity:0;transform:translateY(14px) scale(.96)}12%{opacity:1;transform:none}88%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-8px)}}
+@keyframes xpl4b-float{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-46px)}}
+</style>
+</helmet>
+
+<canvas ref="{{ canvasRef }}" style="position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none"></canvas>
+<div ref="{{ astRef }}" style="position:fixed;inset:0;z-index:35;pointer-events:none;overflow:hidden"></div>
+
+<div style="position:fixed;left:0;right:0;top:0;z-index:40;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--color-bg) 72%,transparent);border-bottom:1px solid color-mix(in srgb,var(--color-text) 10%,transparent)">
+<div style="max-width:1180px;margin:0 auto;padding:12px 28px;display:flex;align-items:center;flex-wrap:wrap;gap:14px 24px">
+<img src="assets/logo-oriz.png" alt="XP-L4B" style="height:26px;width:auto;flex:none">
+<nav style="display:flex;flex-wrap:wrap;gap:10px 22px;font-size:13px;letter-spacing:.01em;flex:1 1 auto;white-space:nowrap">
+<a href="#cosa" data-en="Services" style="color:color-mix(in srgb,var(--color-text) 72%,transparent);white-space:nowrap" style-hover="color:var(--color-text)">Servizi</a>
+<a href="#mappe" data-en="Game maps" style="color:color-mix(in srgb,var(--color-text) 72%,transparent);white-space:nowrap" style-hover="color:var(--color-text)">Mappe di gioco</a>
+<a href="#prodotti" data-en="Products" style="color:color-mix(in srgb,var(--color-text) 72%,transparent);white-space:nowrap" style-hover="color:var(--color-text)">Prodotti</a>
+<a href="#configuratore" data-en="Possible format" style="color:color-mix(in srgb,var(--color-text) 72%,transparent);white-space:nowrap" style-hover="color:var(--color-text)">Possibile formato</a>
+<a href="#shop" data-en="Shop" style="color:color-mix(in srgb,var(--color-text) 72%,transparent);white-space:nowrap" style-hover="color:var(--color-text)">Shop</a>
+</nav>
+<div style="display:{{ gamiFlex }};align-items:center;gap:14px;flex:none">
+<div style="display:flex;align-items:center;gap:6px" title="asteroidi distrutti">
+<span style="font-family:Orbitron,sans-serif;font-size:13px;color:{{ scoreColor }};transition:color .3s ease">✦</span>
+<span style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.06em;color:{{ scoreColor }};min-width:26px;transition:color .3s ease">{{ score }}</span>
+</div>
+<span style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.14em;color:var(--color-accent-400)">LV {{ level }}</span>
+<div style="width:100px;height:5px;border-radius:3px;background:color-mix(in srgb,var(--color-text) 12%,transparent);overflow:hidden">
+<div style="height:100%;width:{{ xpPct }}%;background:linear-gradient(90deg,#65BFB0,#2F92B3,var(--color-accent-500));transition:width .5s cubic-bezier(.2,.7,.3,1)"></div>
+</div>
+</div>
+<button onClick="{{ onLang }}" class="btn btn-secondary" style="flex:none;font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.1em;padding:6px 10px;min-height:auto">{{ langLabel }}</button>
+</div>
+</div>
+
+<div style="position:relative;z-index:1">
+
+<section style="max-width:1180px;margin:0 auto;padding:clamp(120px,17vw,170px) 28px 80px">
+<div style="display:flex;flex-wrap:wrap;gap:48px 56px;align-items:center">
+<div style="flex:1 1 400px;min-width:0;animation:xpl4b-fade .7s ease both">
+<div data-en="Skills development · Engagement · Analogue and digital products" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:22px">SVILUPPO COMPETENZE · ENGAGEMENT · PRODOTTI ANALOGICI E DIGITALI</div>
+<h1 data-en="Turning every activity into an engaging experience." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(34px,4.4vw,58px);line-height:1.08;margin:0 0 24px;letter-spacing:-.01em;text-wrap:pretty">Trasformare ogni attività, in una esperienza coinvolgente.</h1>
+<p data-en="XP-L4B designs skills-development sessions and engagement solutions for HR and Marketing teams, built with game mechanics, serious games and VR/AR technology." style="font-size:17px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 72%,transparent);max-width:52ch;margin:0 0 34px;text-wrap:pretty">XP-L4B progetta sessioni di sviluppo competenze e soluzioni di engagement per i reparti HR e Marketing, costruite con meccaniche di gioco, serious games e tecnologie VR/AR.</p>
+<div style="display:flex;gap:12px;flex-wrap:wrap">
+<a href="#configuratore" class="btn btn-primary" data-en="See a possible format" style="font-family:Orbitron,sans-serif;font-size:12px;letter-spacing:.08em;white-space:nowrap;padding:14px 22px">VEDI UN POSSIBILE FORMATO</a>
+<a href="#cosa" class="btn btn-secondary" data-en="See the services" style="font-family:Orbitron,sans-serif;font-size:12px;letter-spacing:.08em;white-space:nowrap;padding:14px 22px">VEDI I SERVIZI</a>
+</div>
+</div>
+<div style="flex:1 1 260px;min-width:0;animation:xpl4b-fade .7s .12s ease both;display:flex;flex-direction:column;align-items:center;gap:18px">
+<button onClick="{{ onRoll }}" style="width:min(268px,72vw);height:min(268px,72vw);flex:none;padding:0;border-radius:50%;border:1px solid color-mix(in srgb,var(--color-accent-500) 40%,transparent);background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--color-accent-700) 40%,transparent),transparent);color:var(--color-text);cursor:pointer;position:relative;box-shadow:var(--shadow-md);transition:transform .3s ease,border-color .3s ease" style-hover="border-color:var(--color-accent-500);transform:translateY(-4px)">
+<canvas ref="{{ dieRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+<span data-en="roll the d20" style="position:absolute;left:0;right:0;bottom:22px;font-family:Orbitron,sans-serif;font-size:9px;letter-spacing:.18em;color:color-mix(in srgb,var(--color-text) 50%,transparent);text-align:center">TIRA IL D20</span>
+</button>
+<p style="font-size:13px;line-height:1.55;color:color-mix(in srgb,var(--color-text) 60%,transparent);text-align:center;max-width:34ch;min-height:60px;margin:0">{{ rollText }}</p>
+</div>
+</div>
+</section>
+
+<section style="max-width:1180px;margin:0 auto;padding:0 28px 80px">
+<div data-en="Some of the brands we have worked with" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:color-mix(in srgb,var(--color-text) 45%,transparent);margin-bottom:22px">ALCUNI BRAND CON CUI ABBIAMO LAVORATO</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px">
+<sc-for list="{{ partners }}" as="p" hint-placeholder-count="16">
+<div title="{{ p.name }}" style="border:1px solid color-mix(in srgb,var(--color-text) 10%,transparent);border-radius:var(--radius-md);height:78px;display:flex;align-items:center;justify-content:center;padding:16px 18px;background:color-mix(in srgb,var(--color-surface) 45%,transparent);transition:border-color .3s ease,transform .3s ease" style-hover="border-color:var(--color-accent-500);transform:translateY(-3px)">
+<div role="img" aria-label="{{ p.name }}" style="width:100%;height:100%;background-image:{{ p.bgUrl }};background-size:contain;background-repeat:no-repeat;background-position:center;opacity:.7;transition:opacity .3s ease" style-hover="opacity:1"></div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section style="border-top:1px solid color-mix(in srgb,var(--color-text) 10%,transparent);border-bottom:1px solid color-mix(in srgb,var(--color-text) 10%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--color-section) 55%,transparent),color-mix(in srgb,var(--color-section) 25%,transparent))">
+<div style="max-width:1180px;margin:0 auto;padding:52px 28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:36px">
+<div><div style="font-family:Orbitron,sans-serif;font-size:40px;color:#65BFB0;line-height:1">+50%</div><div data-en="Gamification increases productivity by up to 50%" style="font-size:13px;color:color-mix(in srgb,var(--color-text) 66%,transparent);margin-top:8px;line-height:1.5">La gamification aumenta la produttività fino al 50%</div></div>
+<div><div style="font-family:Orbitron,sans-serif;font-size:40px;color:#2F92B3;line-height:1">+60%</div><div data-en="It increases employee engagement by up to 60%" style="font-size:13px;color:color-mix(in srgb,var(--color-text) 66%,transparent);margin-top:8px;line-height:1.5">Aumenta il coinvolgimento dei dipendenti fino al 60%</div></div>
+<div><div style="font-family:Orbitron,sans-serif;font-size:40px;color:var(--color-accent-400);line-height:1">72%</div><div data-en="of people say gamification pushes them to be more motivated while training" style="font-size:13px;color:color-mix(in srgb,var(--color-text) 66%,transparent);margin-top:8px;line-height:1.5">Delle persone ritiene che la gamification li spinga a essere più motivati in fase formativa</div></div>
+<div style="border-left:1px solid color-mix(in srgb,var(--color-text) 14%,transparent);padding-left:24px"><div data-en="Source: Salesforce" style="font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 42%,transparent)">Fonte: Salesforce</div></div>
+</div>
+</section>
+
+<section style="display:{{ gamiBlock }};max-width:1180px;margin:0 auto;padding:80px 28px 20px">
+<div data-en="Progress" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:18px">I TUOI PROGRESSI</div>
+<h2 data-en="You have been playing since you arrived." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(24px,2.6vw,32px);line-height:1.15;margin:0 0 12px">Stai giocando da quando sei arrivato.</h2>
+<p data-en="This is the same mechanic we build into your sessions: visible progress, unlockable objectives, nothing hidden." style="font-size:15px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin:0 0 40px;max-width:56ch">È la stessa meccanica che costruiamo nelle vostre sessioni: progresso visibile, obiettivi sbloccabili, niente di nascosto.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px">
+<sc-for list="{{ badges }}" as="b" hint-placeholder-count="6">
+<div style="border:1px solid {{ b.border }};border-radius:var(--radius-lg);padding:22px 20px;background:{{ b.bg }};transition:all .4s ease">
+<div style="font-family:Orbitron,sans-serif;font-size:26px;line-height:1;color:{{ b.color }};margin-bottom:14px">{{ b.glyph }}</div>
+<div style="font-family:Orbitron,sans-serif;font-size:13px;color:{{ b.color }};margin-bottom:7px">{{ b.name }}</div>
+<div style="font-size:12.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 52%,transparent)">{{ b.how }}</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="cosa" style="max-width:1180px;margin:0 auto;padding:70px 28px 90px;scroll-margin-top:80px">
+<div data-en="Services" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:18px">I SERVIZI</div>
+<h2 data-en="Two departments, two catalogues." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 14px;max-width:22ch">Due reparti, due cataloghi.</h2>
+<p data-en="Open an activity to see what it involves." style="font-size:15px;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin:0 0 44px">Apri un'attività per vedere in cosa consiste.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px">
+<div style="border:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-surface) 75%,transparent);padding:34px 30px">
+<div data-en="For HR" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:var(--color-accent-400);margin-bottom:8px">PER HR</div>
+<h3 data-en="Immersive learning paths, engagement, lower pathological turnover" style="font-family:Orbitron,sans-serif;font-weight:500;font-size:20px;line-height:1.3;margin:0 0 24px">Percorsi formativi immersivi, engagement, turnover più basso</h3>
+<sc-for list="{{ hrItems }}" as="it" hint-placeholder-count="12">
+<button onClick="{{ onOpen }}" data-k="{{ it.k }}" style="width:100%;text-align:left;padding:13px 0;border:0;border-bottom:1px solid color-mix(in srgb,var(--color-text) 9%,transparent);background:transparent;color:var(--color-text);font-family:Inter,sans-serif;font-size:14.5px;line-height:1.4;cursor:pointer;display:flex;justify-content:space-between;gap:14px;align-items:baseline" style-hover="color:var(--color-accent-300)">
+<span>{{ it.label }}</span>
+<span style="font-family:Orbitron,sans-serif;font-size:10px;color:{{ it.tickColor }}">{{ it.tick }}</span>
+</button>
+<div style="max-height:{{ it.h }};overflow:hidden;transition:max-height .35s ease">
+<p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin:12px 0 6px">{{ it.body }}</p>
+</div>
+</sc-for>
+</div>
+<div style="border:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-surface) 75%,transparent);padding:34px 30px">
+<div data-en="For Marketing" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#2F92B3;margin-bottom:8px">PER MARKETING</div>
+<h3 data-en="Marketing to live, not to watch: branded games and immersive experiences" style="font-family:Orbitron,sans-serif;font-weight:500;font-size:20px;line-height:1.3;margin:0 0 24px">Un marketing da vivere invece che da guardare</h3>
+<sc-for list="{{ mkItems }}" as="it" hint-placeholder-count="5">
+<button onClick="{{ onOpen }}" data-k="{{ it.k }}" style="width:100%;text-align:left;padding:13px 0;border:0;border-bottom:1px solid color-mix(in srgb,var(--color-text) 9%,transparent);background:transparent;color:var(--color-text);font-family:Inter,sans-serif;font-size:14.5px;line-height:1.4;cursor:pointer;display:flex;justify-content:space-between;gap:14px;align-items:baseline" style-hover="color:var(--color-accent-300)">
+<span>{{ it.label }}</span>
+<span style="font-family:Orbitron,sans-serif;font-size:10px;color:{{ it.tickColor }}">{{ it.tick }}</span>
+</button>
+<div style="max-height:{{ it.h }};overflow:hidden;transition:max-height .35s ease">
+<p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin:12px 0 6px">{{ it.body }}</p>
+</div>
+</sc-for>
+</div>
+</div>
+</section>
+
+<section id="mappe" style="max-width:1180px;margin:0 auto;padding:30px 28px 90px;scroll-margin-top:80px">
+<div data-en="Custom game maps" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:18px">MAPPE DI GIOCO PERSONALIZZATE</div>
+<h2 data-en="Minecraft, Roblox, Fortnite and much more..." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px;max-width:26ch">Minecraft, Roblox, Fortnite e molto altro...</h2>
+<p data-en="Custom maps and group activities on creative games increase engagement and creativity thanks to how far they can be personalised. They can be branded for training, for marketing campaigns, or for open days and employer branding." style="font-size:16px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0 0 44px;max-width:62ch">Mappe personalizzate e attività di gruppo su giochi creativi aumentano coinvolgimento e creatività grazie alla loro personalizzazione. Possono essere brandizzate per la formazione, per campagne marketing, o per open day ed employer branding.</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px">
+<sc-for list="{{ maps }}" as="m" hint-placeholder-count="4">
+<button onClick="{{ onMap }}" data-k="{{ m.k }}" style="text-align:left;font-family:Inter,sans-serif;cursor:pointer;border:1px solid {{ m.border }};border-radius:var(--radius-lg);background:{{ m.bg }};padding:28px 26px;transition:transform .3s ease,border-color .3s ease,background .3s ease" style-hover="transform:translateY(-5px);border-color:var(--color-accent-500)">
+<div style="font-family:Orbitron,sans-serif;font-size:19px;color:{{ m.color }};margin-bottom:14px">{{ m.name }}</div>
+<div data-en="Ideal for" style="font-family:Orbitron,sans-serif;font-size:9px;letter-spacing:.16em;color:color-mix(in srgb,var(--color-text) 42%,transparent);margin-bottom:8px">IDEALE PER</div>
+<div style="font-size:13px;color:var(--color-accent-300);margin-bottom:14px">{{ m.use }}</div>
+<p style="font-size:13.5px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 66%,transparent);margin:0 0 16px">{{ m.body }}</p>
+<div style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.12em;color:{{ m.cueColor }}">{{ m.cue }}</div>
+</button>
+</sc-for>
+</div>
+<div style="display:{{ viewerDisplay }};margin-top:26px;border:1px solid color-mix(in srgb,var(--color-accent-500) 40%,transparent);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-bg) 80%,transparent);overflow:hidden;animation:xpl4b-fade .4s ease both">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 18px;border-bottom:1px solid color-mix(in srgb,var(--color-text) 10%,transparent);background:color-mix(in srgb,var(--color-surface) 55%,transparent)">
+<div style="display:flex;align-items:center;gap:10px;min-width:0">
+<span style="display:flex;gap:5px;flex:none">
+<span style="width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--color-text) 22%,transparent)"></span>
+<span style="width:8px;height:8px;border-radius:50%;background:color-mix(in srgb,var(--color-text) 22%,transparent)"></span>
+<span style="width:8px;height:8px;border-radius:50%;background:{{ viewerDotColor }}"></span>
+</span>
+<span style="font-family:ui-monospace,Menlo,monospace;font-size:11.5px;letter-spacing:.06em;color:color-mix(in srgb,var(--color-text) 60%,transparent);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">{{ viewerPath }}</span>
+</div>
+<span style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.14em;color:{{ viewerStatusColor }};flex:none">{{ viewerStatus }}</span>
+</div>
+<div style="position:relative;aspect-ratio:16/9;background:color-mix(in srgb,var(--color-bg) 92%,transparent)">
+<canvas ref="{{ mapCanvasRef }}" style="position:absolute;inset:0;width:100%;height:100%;display:block"></canvas>
+<div style="position:absolute;inset:0;display:{{ viewerAskDisplay }};flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center">
+<div data-en="Tell us what your people already play." style="font-family:Orbitron,sans-serif;font-size:clamp(15px,1.8vw,20px);line-height:1.3;color:var(--color-text);max-width:26ch">Dicci a cosa giocano già le vostre persone.</div>
+<a href="#configuratore" class="btn btn-primary" data-en="See a possible format" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.08em;white-space:nowrap;padding:11px 18px">VEDI UN POSSIBILE FORMATO</a>
+</div>
+</div>
+</div>
+</section>
+
+<section id="prodotti" style="max-width:1180px;margin:0 auto;padding:30px 28px 40px;scroll-margin-top:80px">
+<div data-en="Our products" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:18px">I NOSTRI PRODOTTI</div>
+<h2 data-en="Two things we built ourselves." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 44px;max-width:24ch">Due cose che abbiamo costruito noi.</h2>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:28px">
+<div style="border:1px solid color-mix(in srgb,var(--color-accent-500) 40%,transparent);border-radius:var(--radius-lg);background:linear-gradient(160deg,color-mix(in srgb,var(--color-section) 45%,transparent),color-mix(in srgb,var(--color-surface) 75%,transparent));padding:36px 32px;display:flex;flex-direction:column">
+<div data-en="Corporate gamification app" style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.18em;color:var(--color-accent-400);margin-bottom:12px">APP DI GAMIFICATION AZIENDALE</div>
+<h3 style="font-family:Orbitron,sans-serif;font-weight:500;font-size:30px;margin:0 0 16px;color:var(--color-text)">Achivia</h3>
+<p data-en="Missions, leaderboards and daily challenges in one place, so consistency and engagement hold up even remotely. It integrates with HR and CRM systems." style="font-size:15px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0 0 22px">Centralizza missioni, classifiche e sfide giornaliere, favorendo la costanza e l'engagement anche da remoto. Integrabile con i sistemi HR e CRM.</p>
+<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:22px">
+<div style="display:flex;gap:11px;align-items:baseline"><span style="color:#65BFB0;font-size:11px">◆</span><span data-en="Real-time dashboards with points and badges" style="font-size:13.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 66%,transparent)">Dashboard in tempo reale con punti e badge</span></div>
+<div style="display:flex;gap:11px;align-items:baseline"><span style="color:#65BFB0;font-size:11px">◆</span><span data-en="Missions tied to real behaviours, not vanity metrics" style="font-size:13.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 66%,transparent)">Missioni legate a comportamenti reali, non a metriche di facciata</span></div>
+<div style="display:flex;gap:11px;align-items:baseline"><span style="color:#65BFB0;font-size:11px">◆</span><span data-en="HR and CRM integration" style="font-size:13.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 66%,transparent)">Integrazione con HR e CRM</span></div>
+</div>
+<div style="border-top:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);padding-top:20px;display:flex;flex:1;justify-content:center;align-items:center">
+<img src="assets/achivia-mockup.png" alt="Achivia — schermate dell'app" style="width:100%;max-width:340px;height:auto;display:block;filter:drop-shadow(0 26px 44px rgba(0,0,0,.55))">
+</div>
+</div>
+<div style="border:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-surface) 75%,transparent);padding:36px 32px;display:flex;flex-direction:column">
+<div data-en="Management card game" style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.18em;color:#2F92B3;margin-bottom:12px">GIOCO DI CARTE MANAGERIALE</div>
+<h3 style="font-family:Orbitron,sans-serif;font-weight:500;font-size:30px;margin:0 0 16px;color:var(--color-text)">CEO</h3>
+<p data-en="A simulation that takes its cues from the best trading card games, Magic: The Gathering above all, to train strategic vision and decision making in complex scenarios. The player handles limited resources — budget, staff, targets — makes fast calls and watches the medium and long term consequences." style="font-size:15px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 72%,transparent);margin:0 0 22px">Una simulazione che prende spunto dai migliori TCG, Magic: The Gathering in primis, per allenare la visione strategica e le capacità decisionali in scenari complessi. Il giocatore gestisce risorse limitate — budget, personale, obiettivi — prende decisioni rapide e ne monitora le conseguenze a medio-lungo termine.</p>
+<div style="display:flex;flex-direction:column;gap:9px;margin-bottom:22px">
+<div style="display:flex;gap:11px;align-items:baseline"><span style="color:#2F92B3;font-size:11px">◆</span><span data-en="Limited resources: budget, staff, targets" style="font-size:13.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 66%,transparent)">Risorse limitate: budget, personale, obiettivi</span></div>
+<div style="display:flex;gap:11px;align-items:baseline"><span style="color:#2F92B3;font-size:11px">◆</span><span data-en="Consequences visible over several simulated quarters" style="font-size:13.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 66%,transparent)">Conseguenze visibili su più trimestri simulati</span></div>
+<div style="display:flex;gap:11px;align-items:baseline"><span style="color:#2F92B3;font-size:11px">◆</span><span data-en="Debriefing with the decisions taken, in writing" style="font-size:13.5px;line-height:1.5;color:color-mix(in srgb,var(--color-text) 66%,transparent)">Debriefing finale con le decisioni prese, per iscritto</span></div>
+</div>
+<div style="border-top:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);padding-top:26px;display:flex;flex:1;justify-content:center;align-items:center;min-height:300px;max-width:100%">
+<img src="assets/ceo-card-1.png" alt="CEO — carta Nira Bullone" style="width:34%;height:auto;margin-right:-11.5%;transform:rotate(-13deg) translateY(16px);transform-origin:bottom center;filter:drop-shadow(0 16px 26px rgba(0,0,0,.6));transition:transform .35s ease" style-hover="transform:rotate(-13deg) translateY(-4px)">
+<img src="assets/ceo-card-2.png" alt="CEO — carta CEO Rik Omnia" style="width:38%;height:auto;position:relative;z-index:2;transform:rotate(-1deg);transform-origin:bottom center;filter:drop-shadow(0 20px 34px rgba(0,0,0,.65));transition:transform .35s ease" style-hover="transform:rotate(-1deg) translateY(-14px)">
+<img src="assets/ceo-card-6.png" alt="CEO — carta Mentoring" style="width:34%;height:auto;margin-left:-11.5%;transform:rotate(11deg) translateY(16px);transform-origin:bottom center;filter:drop-shadow(0 16px 26px rgba(0,0,0,.6));transition:transform .35s ease" style-hover="transform:rotate(11deg) translateY(-4px)">
+</div>
+</div>
+</div>
+</section>
+
+<section id="vr" style="max-width:1180px;margin:0 auto;padding:50px 28px 90px;scroll-margin-top:80px">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:44px;align-items:center">
+<div>
+<div data-en="VR / AR solutions" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:18px">SOLUZIONI VR-AR</div>
+<h2 data-en="Virtual and augmented reality, for training or for advertising." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(24px,2.6vw,34px);line-height:1.15;margin:0 0 20px">Realtà virtuale e aumentata, a scopo formativo o adv e marketing.</h2>
+<p data-en="Through our partner companies we can deliver virtual and augmented reality solutions for training purposes or for advertising and marketing. Immersive role play lets people rehearse realistic scenarios, safety risk management in particular." style="font-size:16px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0 0 26px;max-width:48ch">Grazie ad aziende partner, siamo in grado di offrire soluzioni di realtà virtuale e aumentata a scopo formativo o adv e marketing. Il role-playing immersivo permette di sperimentare scenari realistici, in particolare la gestione dei rischi in sicurezza.</p>
+<a href="#configuratore" class="btn btn-primary" data-en="Talk about a VR project" style="font-family:Orbitron,sans-serif;font-size:12px;letter-spacing:.08em;white-space:nowrap;padding:13px 20px">PARLIAMO DI UN PROGETTO VR</a>
+</div>
+<div style="border:1px solid color-mix(in srgb,var(--color-text) 12%,transparent);border-radius:var(--radius-lg);aspect-ratio:4/3;background:radial-gradient(110% 85% at 50% 30%,color-mix(in srgb,var(--color-section) 60%,transparent),color-mix(in srgb,var(--color-surface) 70%,transparent));padding:34px;display:flex;align-items:center;justify-content:center">
+<div role="img" aria-label="Visore per realtà virtuale con i due controller" style="width:100%;height:100%;background-image:url(assets/vr-headset.png);background-size:contain;background-repeat:no-repeat;background-position:center;filter:drop-shadow(0 22px 40px rgba(0,0,0,.55))"></div>
+</div>
+</div>
+</section>
+
+<section id="configuratore" style="scroll-margin-top:80px;border-top:1px solid color-mix(in srgb,var(--color-text) 10%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--color-section) 45%,transparent),transparent)">
+<div style="max-width:1180px;margin:0 auto;padding:90px 28px 100px">
+<div data-en="Possible format" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0;margin-bottom:18px">POSSIBILE FORMATO</div>
+<h2 data-en="Five questions. Then a concrete proposal." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 10px;max-width:24ch">Cinque domande. Poi una proposta concreta.</h2>
+<p data-en="What comes out of these five questions is a starting idea, not a catalogue item: every project is customised from beginning to end — mechanics, duration, content, tone. Use it to see how we reason, then leave us your address and we build the real thing around you." style="font-size:15px;line-height:1.6;color:color-mix(in srgb,var(--color-text) 62%,transparent);margin:0 0 44px;max-width:60ch">Quello che esce da queste cinque domande è un'idea di partenza, non una voce di catalogo: ogni progetto è personalizzabile dall'inizio alla fine — meccaniche, durata, contenuti, tono. Serve a farvi vedere come ragioniamo. Poi lasciateci il vostro contatto e costruiamo quello vero su di voi.</p>
+<div style="display:flex;flex-wrap:wrap;gap:36px 40px;align-items:flex-start">
+<div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:26px">
+<sc-for list="{{ questions }}" as="q" hint-placeholder-count="5">
+<div>
+<div style="font-size:13px;color:color-mix(in srgb,var(--color-text) 50%,transparent);font-family:Orbitron,sans-serif;letter-spacing:.1em;margin-bottom:12px">{{ q.num }} · {{ q.label }}</div>
+<div style="display:flex;flex-wrap:wrap;gap:9px">
+<sc-for list="{{ q.options }}" as="o" hint-placeholder-count="4">
+<button onClick="{{ onPick }}" data-q="{{ o.q }}" data-v="{{ o.v }}" style="padding:10px 15px;border-radius:var(--radius-md);font-size:14px;font-family:Inter,sans-serif;cursor:pointer;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.color }};transition:all .18s ease" style-hover="border-color:var(--color-accent-500)">{{ o.v }}</button>
+</sc-for>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="flex:1 1 300px;min-width:0;border:1px solid color-mix(in srgb,var(--color-text) 14%,transparent);border-radius:var(--radius-lg);background:color-mix(in srgb,var(--color-surface) 90%,transparent);padding:30px 28px;position:sticky;top:96px">
+<div data-en="Recommended format" style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.18em;color:color-mix(in srgb,var(--color-text) 45%,transparent);margin-bottom:14px">FORMATO CONSIGLIATO</div>
+<h3 style="font-family:Orbitron,sans-serif;font-weight:500;font-size:20px;line-height:1.25;margin:0 0 12px;color:{{ recColor }}">{{ recTitle }}</h3>
+<p style="font-size:14px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 66%,transparent);margin:0 0 22px;min-height:66px">{{ recBody }}</p>
+<div style="height:1px;background:color-mix(in srgb,var(--color-text) 12%,transparent);margin-bottom:20px"></div>
+<label data-en="Work email" style="display:block;font-size:12px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin-bottom:7px">Email di lavoro</label>
+<input type="email" class="input" placeholder="nome@azienda.it" style="margin-bottom:14px;padding:11px 13px">
+<button onClick="{{ onSubmit }}" class="btn btn-primary btn-block" style="padding:13px;font-family:Orbitron,sans-serif;font-size:12px;letter-spacing:.08em;margin-top:0">{{ submitLabel }}</button>
+<p data-en="The request reaches info@xpl4b.com. We reply within two working days." style="font-size:11.5px;color:color-mix(in srgb,var(--color-text) 42%,transparent);margin:12px 0 0;line-height:1.5">La richiesta arriva a info@xpl4b.com. Rispondiamo entro due giorni lavorativi.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="shop" style="scroll-margin-top:80px;border-top:1px solid color-mix(in srgb,var(--color-text) 10%,transparent);background:linear-gradient(180deg,color-mix(in srgb,var(--color-section) 40%,transparent),transparent)">
+<div style="max-width:1180px;margin:0 auto;padding:90px 28px 100px">
+<div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:18px">
+<div data-en="Shop" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.2em;color:#65BFB0">SHOP</div>
+<a href="https://shop.xpl4b.com/" target="_blank" rel="noopener" data-en="shop.xpl4b.com" style="font-family:ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.04em">shop.xpl4b.com</a>
+</div>
+<h2 data-en="The office jokes, printed." style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;margin:0 0 18px;max-width:24ch">Le battute sul lavoro, stampate.</h2>
+<p data-en="T-shirts and hoodies with the memes anyone who works recognises straight away. Same world as our games: knights, dragons, too much coffee. Good as a gift, as team merch, or just for yourself." style="font-size:16px;line-height:1.62;color:color-mix(in srgb,var(--color-text) 70%,transparent);margin:0 0 48px;max-width:58ch">T-shirt e felpe con i meme che chiunque lavori riconosce al primo sguardo. Stesso mondo dei nostri giochi: cavalieri, draghi, troppo caffè. Vanno bene come regalo, come merch di squadra, o solo per voi.</p>
+<a href="https://shop.xpl4b.com/" target="_blank" rel="noopener" style="display:flex;flex-direction:column;border:1px solid color-mix(in srgb,var(--color-accent-500) 40%,transparent);border-radius:var(--radius-lg);background:radial-gradient(120% 90% at 50% 6%,color-mix(in srgb,var(--color-text) 8%,transparent),color-mix(in srgb,var(--color-surface) 80%,transparent));padding:36px 32px 34px;margin-bottom:40px;color:var(--color-text);transition:border-color .35s ease" style-hover="border-color:var(--color-accent-500)">
+<h3 data-en="Come and see our merch" style="font-family:Orbitron,sans-serif;font-weight:500;font-size:clamp(20px,2.2vw,26px);line-height:1.25;margin:0 0 6px">Vieni a vedere il nostro merch</h3>
+<p data-en="T-shirts and hoodies — shop.xpl4b.com" style="font-size:14px;color:color-mix(in srgb,var(--color-text) 55%,transparent);margin:0">T-shirt e felpe — shop.xpl4b.com</p>
+<div style="display:flex;flex:1;justify-content:center;align-items:flex-end;min-height:0;padding:22px 12px 18px;max-width:100%">
+<div role="img" aria-label="T-shirt bianca con drago e cavaliere: la vita in smartworking" style="width:34%;height:clamp(130px,22vw,250px);margin-right:-8%;background-image:url(assets/shop-tee-dragon.png);background-size:contain;background-repeat:no-repeat;background-position:bottom center;transform:rotate(-9deg);transform-origin:bottom center;filter:drop-shadow(0 16px 26px rgba(0,0,0,.55));transition:transform .35s ease" style-hover="transform:rotate(-9deg) translateY(-10px)"></div>
+<div role="img" aria-label="Felpa nera: 5 caffè, no colazione — CAFFEINAMAXXING" style="width:38%;height:clamp(148px,25vw,282px);position:relative;z-index:2;background-image:url(assets/shop-hoodie-caffeina.png);background-size:contain;background-repeat:no-repeat;background-position:bottom center;transform:translateY(-18px);transform-origin:bottom center;filter:drop-shadow(0 20px 34px rgba(0,0,0,.6));transition:transform .35s ease" style-hover="transform:translateY(-34px)"></div>
+<div role="img" aria-label="T-shirt nera con cavaliere tra le fiamme: potrebbe andare peggio" style="width:34%;height:clamp(130px,22vw,250px);margin-left:-8%;background-image:url(assets/shop-tee-peggio.png);background-size:contain;background-repeat:no-repeat;background-position:bottom center;transform:rotate(8deg);transform-origin:bottom center;filter:drop-shadow(0 16px 26px rgba(0,0,0,.55));transition:transform .35s ease" style-hover="transform:rotate(8deg) translateY(-10px)"></div>
+</div>
+</a>
+<a href="https://shop.xpl4b.com/" target="_blank" rel="noopener" class="btn btn-primary" data-en="Go to the shop" style="font-family:Orbitron,sans-serif;font-size:12px;letter-spacing:.08em;white-space:nowrap;padding:14px 22px">VAI ALLO SHOP</a>
+</div>
+</section>
+
+<section id="contatti" style="scroll-margin-top:80px;border-top:1px solid color-mix(in srgb,var(--color-text) 10%,transparent)">
+<div style="max-width:1180px;margin:0 auto;padding:80px 28px 70px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:44px">
+<div>
+<img src="assets/logo-vert.png" alt="XP-L4B" style="height:82px;width:auto;margin-bottom:22px">
+<p data-en="enhance &amp; engage" style="font-family:Orbitron,sans-serif;font-size:13px;letter-spacing:.14em;color:var(--color-accent-400);margin:0 0 14px">ENHANCE &amp; ENGAGE</p>
+<p data-en="XP-L4B designs game-based experiences for corporate skills development and engagement." style="font-size:14px;line-height:1.65;color:color-mix(in srgb,var(--color-text) 60%,transparent);margin:0;max-width:40ch">XP-L4B progetta esperienze ludiche per lo sviluppo delle competenze e l'engagement in azienda.</p>
+</div>
+<div>
+<div data-en="Contact" style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.18em;color:color-mix(in srgb,var(--color-text) 42%,transparent);margin-bottom:16px">CONTATTI</div>
+<div style="font-size:14.5px;line-height:1.9;color:color-mix(in srgb,var(--color-text) 75%,transparent)">
+<div>XP-L4B s.r.l.</div>
+<div>Via Giotto 3, Truggio (MB) 20844</div>
+<div><a href="tel:+393518800106">+39 351 880 0106</a></div>
+<div><a href="mailto:info@xpl4b.com">info@xpl4b.com</a></div>
+<div><a href="mailto:riccardo@xpl4b.com">riccardo@xpl4b.com</a></div>
+</div>
+</div>
+<div>
+<div data-en="Site" style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.18em;color:color-mix(in srgb,var(--color-text) 42%,transparent);margin-bottom:16px">SITO</div>
+<div style="display:flex;flex-direction:column;gap:9px;font-size:14.5px">
+<a href="#cosa" data-en="Services">Servizi</a>
+<a href="#mappe" data-en="Game maps">Mappe di gioco</a>
+<a href="#prodotti" data-en="Products">Prodotti</a>
+<a href="#vr" data-en="VR / AR">VR / AR</a>
+<a href="#configuratore" data-en="Possible format">Possibile formato</a>
+<a href="#shop" data-en="Shop">Shop</a>
+</div>
+</div>
+</div>
+<div style="border-top:1px solid color-mix(in srgb,var(--color-text) 9%,transparent)">
+<div style="max-width:1180px;margin:0 auto;padding:20px 28px;font-size:12px;color:color-mix(in srgb,var(--color-text) 35%,transparent);display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px">
+<div style="display:flex;flex-wrap:wrap;gap:6px 18px"><span>© 2026 XP-L4B. Tutti i diritti riservati.</span><span>P.IVA 14225710962</span></div>
+<span style="font-family:ui-monospace,Menlo,monospace">WWW.XPL4B.COM</span>
+</div>
+</div>
+</section>
+
+</div>
+
+<div style="position:fixed;left:50%;bottom:28px;transform:translateX(-50%);z-index:60;pointer-events:none;display:{{ toastDisplay }}">
+<div style="animation:xpl4b-pop 3s ease both;border:1px solid var(--color-accent-500);background:color-mix(in srgb,var(--color-surface) 96%,transparent);border-radius:var(--radius-md);padding:13px 20px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow-lg)">
+<span style="font-family:Orbitron,sans-serif;font-size:20px;color:#65BFB0">{{ toastGlyph }}</span>
+<div>
+<div style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.12em;color:var(--color-accent-400)">{{ toastKicker }}</div>
+<div style="font-size:13.5px;color:var(--color-text);margin-top:3px">{{ toastText }}</div>
+</div>
+</div>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;asteroidMode&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normale&quot;,&quot;frequenti&quot;,&quot;spenti&quot;],&quot;default&quot;:&quot;normale&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Gamification&quot;},&quot;showGamification&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Gamification&quot;},&quot;backgroundMotion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;interattivo&quot;,&quot;solo scroll&quot;,&quot;statico&quot;],&quot;default&quot;:&quot;interattivo&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Sfondo&quot;}}">
+const HR = [
+  ["lego", "Incontri con mattoncini da costruzione", "Favoriscono la creatività, aiutano a visualizzare concetti astratti, stimolano brainstorming e permettono a tutti di contribuire indipendentemente dai livelli di estroversione.", "They foster creativity, help visualise abstract concepts, spark brainstorming and let everyone contribute regardless of how extroverted they are."],
+  ["carte", "Carte da gioco personalizzate (quiz, ruoli, risorse, valori)", "Rendono interattive le sessioni di formazione o workshop, facilitano simulazioni di scenari e decision-making, creano dinamiche di gioco competitive e cooperative e formano pensiero strategico e gestione delle criticità.", "They make training sessions and workshops interactive, support scenario simulation and decision making, create competitive and cooperative dynamics and build strategic thinking and crisis handling."],
+  ["app", "App di gamification aziendale", "Centralizzano missioni, classifiche e sfide giornaliere, favorendo la costanza e l'engagement anche da remoto; integrabili con HR e CRM.", "They centralise missions, leaderboards and daily challenges, supporting consistency and engagement even remotely; they integrate with HR and CRM."],
+  ["vr", "Role-playing e simulazioni VR/AR", "Oltre a formare in modo immersivo permettono di sperimentare scenari realistici, in particolare la gestione dei rischi in sicurezza.", "Beyond immersive training, they let people rehearse realistic scenarios, safety risk management in particular."],
+  ["tb", "Team building formativi e ludicizzati", "Giornate in cui il gruppo lavora su un obiettivo comune con regole, ruoli e vincoli di gioco. Non sono uscite ricreative: ogni meccanica è scelta per far emergere un comportamento preciso — chi prende decisioni sotto pressione, come circolano le informazioni, cosa accade quando le risorse non bastano. Il debriefing finale collega quello che è successo nel gioco a quello che succede in ufficio.", "Days where the group works on a shared objective under game rules, roles and constraints. These are not away-days: every mechanic is chosen to surface a specific behaviour — who decides under pressure, how information travels, what happens when resources run short. The closing debrief connects what happened in the game to what happens at the desk."],
+  ["puzzle", "Puzzle e sfide logiche", "Allenano il pensiero critico e il problem solving, possono essere usati come icebreaker nei meeting o come parte di workshop di innovazione.", "They train critical thinking and problem solving, and work as meeting icebreakers or as part of innovation workshops."],
+  ["quiz", "Quiz e idee interattive", "Aumentano la partecipazione attiva durante meeting e corsi, forniscono feedback immediato, coinvolgono il pubblico attivamente.", "They increase active participation during meetings and courses, give immediate feedback and involve the audience."],
+  ["story", "Storytelling a missioni (giochi narrativi)", "Trasformano i percorsi di formazione o onboarding in \u201cviaggi\u201d con tappe e obiettivi, mantenendo alta la motivazione.", "They turn training or onboarding paths into journeys with stages and objectives, keeping motivation high."],
+  ["dash", "Dashboard digitali con punti/badge", "Monitorano in tempo reale l'avanzamento delle attività, premiano obiettivi raggiunti, visualizzano i progressi del team e rendono più chiara la crescita individuale.", "They track progress in real time, reward objectives met, show team progress and make individual growth clearer."],
+  ["ceo", "Gestionale manageriale (simulazioni tipo Football Manager)", "Permettono di allenare la visione strategica e le capacità decisionali in scenari complessi. Il giocatore deve gestire risorse limitate (budget, personale, obiettivi), prendere decisioni rapide e monitorarne le conseguenze a medio-lungo termine.", "They train strategic vision and decision making in complex scenarios. The player handles limited resources (budget, staff, targets), makes fast calls and monitors the medium and long term consequences."],
+  ["mappe", "Mappe di gioco personalizzate o attività di gruppo su giochi creativi", "Aumentano coinvolgimento e creatività grazie alla loro personalizzazione. Possono essere brandizzate per l'azienda a scopo marketing o per open day e employer branding.", "They increase engagement and creativity thanks to how far they can be personalised. They can be branded for marketing purposes or for open days and employer branding."],
+  ["esport", "Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)", "Creano team building o eventi aperti al pubblico attraverso giochi cooperativi e competitivi, sviluppano soft skill come comunicazione rapida, problem solving e leadership situazionale. Coinvolgono soprattutto le nuove generazioni, rafforzano l'employer branding e sono accessibili anche da remoto, favorendo accessibilità e partecipazione.", "They create team building or public events through cooperative and competitive games, and develop soft skills such as fast communication, problem solving and situational leadership. They engage younger generations in particular, strengthen employer branding and are accessible remotely."]
+];
+const MK = [
+  ["mcarte", "Giochi di carte personalizzate", "Le carte sono tangibili, brandizzabili e facilmente condivisibili, diventano gadget e storytelling tools. Trasmettono l'immagine di un'azienda che sa rendere concreti i valori, favorendo viralità e ricordo del brand.", "Cards are tangible, brandable and easy to share; they become gadgets and storytelling tools. They convey a company that makes its values concrete, helping virality and brand recall."],
+  ["escape", "Escape room fisiche o virtuali", "Sono esperienze memorabili ad alto impatto narrativo. Ottime per PR, eventi e comunicazione interna/esterna.", "Memorable experiences with high narrative impact. Excellent for PR, events and internal or external communication."],
+  ["mvr", "Prodotti VR/AR", "Associano il brand a tecnologie all'avanguardia e contenuti immersivi. Perfetti da raccontare in eventi e fiere, rafforzano la percezione di innovazione.", "They associate the brand with leading-edge technology and immersive content. Perfect for events and trade fairs, they strengthen the perception of innovation."],
+  ["mmappe", "Mappe di gioco personalizzate o attività di gruppo su giochi creativi", "Sono strumenti visivi brandizzabili, perfetti per storytelling aziendale e coinvolgimento delle nuove generazioni.", "Brandable visual tools, perfect for corporate storytelling and for engaging younger generations."],
+  ["mesport", "Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)", "Parlano direttamente al linguaggio Gen Z/Gen Alpha, rafforzano employer branding e posizionano l'azienda come giovane e innovativa. Tornei interni/esterni generano contenuti virali, PR e senso di community.", "They speak Gen Z and Gen Alpha directly, strengthen employer branding and position the company as young and innovative. Internal or external tournaments generate viral content, PR and a sense of community."]
+];
+const MAPS = [
+  ["minecraft", "Minecraft", "#65BFB0", "Onboarding, open day, formazione tecnica", "Onboarding, open days, technical training", "Ricostruiamo sedi, impianti o processi come mondi navigabili. I partecipanti costruiscono insieme e nel farlo capiscono come funziona l'azienda.", "We rebuild sites, plants or processes as navigable worlds. Participants build together and, in doing so, understand how the company works.", "assets/map-minecraft.jpg", "corporate_town.mcworld"],
+  ["roblox", "Roblox", "#2F92B3", "Employer branding, campagne, Gen Z", "Employer branding, campaigns, Gen Z", "Esperienze brandizzate dentro una piattaforma che il pubblico più giovane già frequenta ogni giorno, con accesso da browser o mobile.", "Branded experiences inside a platform younger audiences already use daily, reachable from browser or mobile.", "assets/map-roblox.jpg", "business_district.rbxl"],
+  ["fortnite", "Fortnite", "var(--color-accent)", "Eventi, tornei, attivazioni", "Events, tournaments, activations", "Mappe creative su misura per tornei interni o aperti al pubblico, con regolamento, produzione e classifica gestiti da noi.", "Custom creative maps for internal or public tournaments, with rules, production and leaderboard handled by us.", "assets/map-fortnite.jpg", "corporate_cove.island"],
+  ["altro", "Su richiesta", "var(--color-neutral-300)", "Altri titoli e ambienti creativi", "Other titles and creative environments", "Valutiamo il titolo giusto per il vostro pubblico. Se le vostre persone già giocano a qualcosa, partiamo da lì.", "We assess the right title for your audience. If your people already play something, we start there.", "", "custom_request"]
+];
+const PARTNERS = [
+  ["UniCredit", "assets/partner-07-mono.png"],
+  ["ManpowerGroup", "assets/partner-11-mono.png"],
+  ["Gruppo Il Sole 24 Ore", "assets/partner-09-mono.png"],
+  ["Confindustria", "assets/partner-08-mono.png"],
+  ["Cegeka", "assets/partner-04-mono.png"],
+  ["NOVANEXT training", "assets/partner-00-mono.png"],
+  ["NOVO esports", "assets/partner-02-mono.png"],
+  ["Cosmico", "assets/partner-05-mono.png"],
+  ["We Make Future", "assets/partner-06-mono.png"],
+  ["Didacta Italia", "assets/partner-10-mono.png"],
+  ["Feinrohren", "assets/partner-03-mono.png"],
+  ["Dilium", "assets/partner-12-mono.png"],
+  ["Flatmates", "assets/partner-01-mono-trim.png"],
+  ["Level Up MTA", "assets/partner-13-mono.png"],
+  ["FC LEX Studio Legale", "assets/partner-14-mono.png"],
+  ["ITE Enrico Tosi, Busto Arsizio", "assets/partner-15-mono.png"]
+];
+const QUESTIONS = [
+  ["01", "Chi siete", ["PMI", "Grande azienda", "Scuola o università", "PA"]],
+  ["02", "Cosa vi manca", ["Competenze", "Coinvolgimento", "Lead", "Visibilità"]],
+  ["03", "Dove", ["In presenza", "Da remoto", "Ibrido"]],
+  ["04", "Quante persone", ["Fino a 20", "20-80", "Oltre 80"]],
+  ["05", "Quando", ["Entro un mese", "Entro tre mesi", "Sto esplorando"]]
+];
+const BADGES = [
+  ["scout", "◇", "Esploratore", "Scorri metà pagina", "Scroll half the page"],
+  ["roll", "◆", "Giocatore", "Tira il d20", "Roll the d20"],
+  ["ast", "✦", "Artigliere", "Distruggi un asteroide", "Destroy an asteroid"],
+  ["open", "▲", "Stratega", "Apri un'attività", "Open an activity"],
+  ["conf", "◈", "Architetto", "Rispondi alle cinque domande", "Answer the five questions"],
+  ["send", "★", "Player One", "Invia la richiesta", "Send the request"]
+];
+const ROLLS = [
+  "Nessuno legge il manuale, tutti leggono la classifica. Progetta la classifica.",
+  "Se il corso è obbligatorio, hai già perso. La presenza non è attenzione.",
+  "Le riunioni si allungano fino a riempire il tempo disponibile. Accorcia il tempo disponibile.",
+  "Il feedback dato una volta l'anno non è feedback: è un verbale.",
+  "Chi non sbaglia mai in formazione, sbaglierà in produzione.",
+  "Un obiettivo che nessuno sa misurare è un desiderio con una scadenza.",
+  "Le persone non resistono al cambiamento. Resistono a subirlo.",
+  "L'onboarding finisce quando il nuovo assunto sa a chi chiedere, non quando ha firmato.",
+  "Il team building non crea fiducia. La crea vedere qualcuno mantenere una promessa.",
+  "Se il processo funziona solo con la persona giusta, non è un processo.",
+  "Il talento smette di cercare formazione e inizia a cercare offerte di lavoro.",
+  "Delegare senza dare il potere di decidere si chiama scaricare.",
+  "Le competenze soft si allenano con esercizi, non con presentazioni sulle competenze soft.",
+  "Un dipendente che non fa domande non ha capito. O ha capito che è meglio non chiederle.",
+  "La riunione che poteva essere una mail costa più della mail che nessuno leggerà.",
+  "Chi misura solo l'output ottiene output. Chi misura anche il come, ottiene un metodo.",
+  "Il turnover non è un problema di stipendi. Lo scopri quando alzi gli stipendi.",
+  "Premiare i risultati e ignorare i comportamenti insegna che il come non conta.",
+  "Un errore raccontato in pubblico vale dieci corsi. Se chi lo racconta resta al suo posto.",
+  "La motivazione dura una settimana. L'abitudine dura un trimestre. Progetta abitudini."
+];
+
+class Component extends DCLogic {
+  state = { xp: 0, score: 0, done: {}, open: {}, answers: {}, roll: 20, rollText: "", lang: "it", toast: null, sent: false, mapSel: null, decoding: false, decodePct: 0 };
+
+  componentDidMount() {
+    try {
+      const s = JSON.parse(localStorage.getItem("xpl4b_progress") || "null");
+      if (s && s.done) this.setState({ xp: s.xp || 0, done: s.done, score: s.score || 0 });
+    } catch (e) {}
+    this.mx = 0.72; this.my = 0.44;
+    this.onScroll = () => {
+      const h = document.documentElement;
+      this.scrollP = h.scrollTop / Math.max(1, h.scrollHeight - h.clientHeight);
+      if (this.scrollP > 0.45) this.award("scout", "Esploratore", "Explorer", 10);
+    };
+    this.onMove = (e) => { this.mx = e.clientX / window.innerWidth; this.my = e.clientY / window.innerHeight; };
+    window.addEventListener("scroll", this.onScroll, { passive: true });
+    window.addEventListener("pointermove", this.onMove, { passive: true });
+    this.startBg();
+    this.scheduleAsteroid(6000);
+    this.mapImgs = {};
+    setTimeout(() => {
+      MAPS.forEach(r => { if (r[7] && !this.mapImgs[r[7]]) { const i = new Image(); i.src = r[7]; this.mapImgs[r[7]] = i; } });
+    }, 1200);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll);
+    window.removeEventListener("pointermove", this.onMove);
+    cancelAnimationFrame(this.raf);
+    cancelAnimationFrame(this.astRaf);
+    cancelAnimationFrame(this.decRaf);
+    cancelAnimationFrame(this.dieRaf);
+    if (this.dieResize) window.removeEventListener("resize", this.dieResize);
+    clearTimeout(this.astTimer);
+    clearTimeout(this.tt);
+  }
+
+  save() {
+    try { localStorage.setItem("xpl4b_progress", JSON.stringify({ xp: this.state.xp, done: this.state.done, score: this.state.score })); } catch (e) {}
+  }
+  toast(glyph, kicker, text) {
+    this.setState({ toast: { glyph, kicker, text } });
+    clearTimeout(this.tt);
+    this.tt = setTimeout(() => this.setState({ toast: null }), 3000);
+  }
+  award(key, nameIt, nameEn, amount) {
+    if (this.state.done[key]) return;
+    const done = Object.assign({}, this.state.done, { [key]: 1 });
+    const xp = Math.min(100, this.state.xp + amount);
+    const b = BADGES.find(x => x[0] === key);
+    this.setState({ xp, done }, () => this.save());
+    const it = this.state.lang === "it";
+    this.toast(b ? b[1] : "◆", "+" + amount + " XP", (it ? "Badge sbloccato: " : "Badge unlocked: ") + (it ? nameIt : nameEn));
+  }
+
+  scheduleAsteroid(delay) {
+    clearTimeout(this.astTimer);
+    this.astTimer = setTimeout(() => {
+      this.spawnAsteroid();
+      const fast = (this.props.asteroidMode ?? "normale") === "frequenti";
+      this.scheduleAsteroid(fast ? 4000 + Math.random() * 3000 : 10000 + Math.random() * 5000);
+    }, delay);
+  }
+
+  spawnAsteroid() {
+    const layer = this.astLayer;
+    if (!layer || document.hidden || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if ((this.props.asteroidMode ?? "normale") === "spenti") return;
+    const size = 32 + Math.round(Math.random() * 22);
+    const pts = [];
+    const n = 9;
+    for (let i = 0; i < n; i++) {
+      const a = (i / n) * Math.PI * 2;
+      const r = 38 + Math.random() * 12;
+      pts.push((50 + Math.cos(a) * r).toFixed(1) + "," + (50 + Math.sin(a) * r).toFixed(1));
+    }
+    const el = document.createElement("div");
+    el.style.cssText = "position:absolute;left:0;top:0;width:" + size + "px;height:" + size + "px;pointer-events:auto;cursor:crosshair;will-change:transform";
+    el.innerHTML = '<svg viewBox="0 0 100 100" width="100%" height="100%" style="overflow:visible">' +
+      '<polygon points="' + pts.join(" ") + '" fill="none" stroke="#9184d9" stroke-width="2.2" opacity=".85"></polygon>' +
+      '<polygon points="' + pts.join(" ") + '" fill="#9184d9" opacity=".07"></polygon>' +
+      '<circle cx="38" cy="42" r="6" fill="none" stroke="#9184d9" stroke-width="1.6" opacity=".5"></circle>' +
+      '<circle cx="62" cy="60" r="3.4" fill="none" stroke="#9184d9" stroke-width="1.6" opacity=".4"></circle>' +
+      '<g style="transform-origin:50px 50px"><line x1="-76" y1="50" x2="-8" y2="50" stroke="#9184d9" stroke-width="1.4" opacity=".22"></line></g>' +
+      '</svg>';
+    const trailEl = el.querySelector("g");
+    layer.appendChild(el);
+
+    const W = window.innerWidth, H = window.innerHeight;
+    const off = size + 110;
+    const edge = Math.floor(Math.random() * 4);
+    const span = (n) => (0.1 + Math.random() * 0.8) * n;
+    let x0, y0, x1, y1;
+    if (edge === 0) { x0 = -off; y0 = span(H); x1 = W + off; y1 = span(H); }
+    else if (edge === 1) { x0 = W + off; y0 = span(H); x1 = -off; y1 = span(H); }
+    else if (edge === 2) { x0 = span(W); y0 = -off; x1 = span(W); y1 = H + off; }
+    else { x0 = span(W); y0 = H + off; x1 = span(W); y1 = -off; }
+    const dir = x1 >= x0 ? 1 : -1;
+    const dur = 11000 + Math.random() * 4000;
+    const spin = (Math.random() < 0.5 ? -1 : 1) * (420 + Math.random() * 560);
+    const ang = Math.atan2(y1 - y0, x1 - x0) * 180 / Math.PI;
+    const trail = dir > 0 ? ang : ang - 180;
+    const drift = (Math.random() - 0.5) * 2;
+    const t0 = performance.now();
+    let alive = true;
+    const step = (now) => {
+      if (!alive) return;
+      const p = (now - t0) / dur;
+      if (p >= 1) { el.remove(); return; }
+      const wob = Math.sin(p * 5) * 14;
+      const x = x0 + (x1 - x0) * p - Math.sin(ang * Math.PI / 180) * wob * drift;
+      const y = y0 + (y1 - y0) * p + Math.cos(ang * Math.PI / 180) * wob * drift;
+      el.style.transform = "translate(" + x + "px," + y + "px) rotate(" + (spin * p) + "deg) scaleX(" + dir + ")";
+      trailEl.style.transform = "rotate(" + (trail - spin * p) + "deg)";
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+
+    el.addEventListener("pointerdown", (e) => {
+      e.preventDefault();
+      alive = false;
+      el.style.pointerEvents = "none";
+      const pts_ = 10 + Math.round((80 - size) / 8);
+      const score = this.state.score + pts_;
+      this.setState({ score }, () => this.save());
+      const cur = el.style.transform;
+      el.animate([{ transform: cur + " scale(1)", opacity: 1 }, { transform: cur + " scale(1.9)", opacity: 0 }], { duration: 420, easing: "ease-out" }).onfinish = () => el.remove();
+      const f = document.createElement("div");
+      f.textContent = "+" + pts_;
+      f.style.cssText = "position:absolute;left:" + e.clientX + "px;top:" + e.clientY + "px;transform:translate(-50%,-50%);font-family:Orbitron,sans-serif;font-size:15px;color:#65BFB0;pointer-events:none;animation:xpl4b-float .9s ease-out both";
+      layer.appendChild(f);
+      setTimeout(() => f.remove(), 950);
+      this.award("ast", "Artigliere", "Gunner", 10);
+    });
+  }
+
+  startDie() {
+    const c = this.dieCanvas;
+    if (!c || this.dieRaf) return;
+    const ctx = c.getContext("2d");
+    const PHI = (1 + Math.sqrt(5)) / 2;
+    const V = [[-1,PHI,0],[1,PHI,0],[-1,-PHI,0],[1,-PHI,0],[0,-1,PHI],[0,1,PHI],[0,-1,-PHI],[0,1,-PHI],[PHI,0,-1],[PHI,0,1],[-PHI,0,-1],[-PHI,0,1]]
+      .map(v => { const l = Math.hypot(v[0],v[1],v[2]); return [v[0]/l, v[1]/l, v[2]/l]; });
+    const d = (a,b) => Math.hypot(V[a][0]-V[b][0], V[a][1]-V[b][1], V[a][2]-V[b][2]);
+    const EDGE = d(0,1);
+    const faces = [];
+    for (let i=0;i<12;i++) for (let j=i+1;j<12;j++) for (let k=j+1;k<12;k++)
+      if (Math.abs(d(i,j)-EDGE)<1e-6 && Math.abs(d(j,k)-EDGE)<1e-6 && Math.abs(d(i,k)-EDGE)<1e-6) faces.push([i,j,k]);
+    const cen = (f) => {
+      const p = [0,0,0];
+      f.forEach(i => { p[0]+=V[i][0]/3; p[1]+=V[i][1]/3; p[2]+=V[i][2]/3; });
+      const l = Math.hypot(p[0],p[1],p[2]);
+      return [p[0]/l, p[1]/l, p[2]/l];
+    };
+    const N = faces.map(cen);
+    // numbers: opposite faces sum to 21, like a real d20
+    const num = new Array(faces.length).fill(0);
+    let next = 1;
+    for (let i=0;i<faces.length;i++) {
+      if (num[i]) continue;
+      let opp = -1, best = -2;
+      for (let j=0;j<faces.length;j++) {
+        const dp = -(N[i][0]*N[j][0] + N[i][1]*N[j][1] + N[i][2]*N[j][2]);
+        if (dp > best) { best = dp; opp = j; }
+      }
+      num[i] = next; num[opp] = 21 - next; next++;
+    }
+
+    const qmul = (a,b) => [
+      a[0]*b[0]-a[1]*b[1]-a[2]*b[2]-a[3]*b[3],
+      a[0]*b[1]+a[1]*b[0]+a[2]*b[3]-a[3]*b[2],
+      a[0]*b[2]-a[1]*b[3]+a[2]*b[0]+a[3]*b[1],
+      a[0]*b[3]+a[1]*b[2]-a[2]*b[1]+a[3]*b[0]
+    ];
+    const qnorm = (q) => { const l = Math.hypot(q[0],q[1],q[2],q[3]) || 1; return [q[0]/l,q[1]/l,q[2]/l,q[3]/l]; };
+    const qaxis = (ax, ang) => { const s = Math.sin(ang/2), l = Math.hypot(ax[0],ax[1],ax[2])||1; return [Math.cos(ang/2), ax[0]/l*s, ax[1]/l*s, ax[2]/l*s]; };
+    const qslerp = (a, b, t) => {
+      let dot = a[0]*b[0]+a[1]*b[1]+a[2]*b[2]+a[3]*b[3];
+      let bb = b.slice();
+      if (dot < 0) { bb = b.map(x => -x); dot = -dot; }
+      if (dot > 0.9995) return qnorm(a.map((x,i) => x + (bb[i]-x)*t));
+      const th = Math.acos(dot), s = Math.sin(th);
+      const w1 = Math.sin((1-t)*th)/s, w2 = Math.sin(t*th)/s;
+      return [a[0]*w1+bb[0]*w2, a[1]*w1+bb[1]*w2, a[2]*w1+bb[2]*w2, a[3]*w1+bb[3]*w2];
+    };
+    const qrot = (q, v) => {
+      const [w,x,y,z] = q;
+      const ix = w*v[0] + y*v[2] - z*v[1];
+      const iy = w*v[1] + z*v[0] - x*v[2];
+      const iz = w*v[2] + x*v[1] - y*v[0];
+      const iw = -x*v[0] - y*v[1] - z*v[2];
+      return [
+        ix*w + iw*-x + iy*-z - iz*-y,
+        iy*w + iw*-y + iz*-x - ix*-z,
+        iz*w + iw*-z + ix*-y - iy*-x
+      ];
+    };
+    const qToFace = (n) => {
+      const target = [0, 0, 1];
+      const dot = n[0]*target[0] + n[1]*target[1] + n[2]*target[2];
+      if (dot > 0.99999) return [1,0,0,0];
+      if (dot < -0.99999) return [0, 1, 0, 0];
+      const ax = [n[1]*target[2]-n[2]*target[1], n[2]*target[0]-n[0]*target[2], n[0]*target[1]-n[1]*target[0]];
+      return qnorm([1 + dot, ax[0], ax[1], ax[2]]);
+    };
+
+    this.die = { q: qnorm([1, .22, .38, .1]), roll: null, num, faces, N, V, qToFace, qmul, qslerp, qaxis, qrot, current: 20 };
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let w = 0, h = 0, dpr = 1;
+    const resize = () => {
+      dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = c.clientWidth || 268; h = c.clientHeight || 268;
+      c.width = w * dpr; c.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    this.dieResize = resize;
+    window.addEventListener("resize", resize);
+
+    let last = performance.now();
+    const draw = (now) => {
+      const dt = Math.min(48, now - last); last = now;
+      const D = this.die;
+      let expl = 0, glow = 0;
+      if (D.roll) {
+        const t = (now - D.roll.t0) / D.roll.dur;
+        if (t >= 1) {
+          D.q = D.roll.to;
+          D.current = D.roll.n;
+          D.roll = null;
+        } else {
+          const e = t < 0.34 ? t / 0.34 : 1 - (t - 0.34) / 0.66;
+          expl = Math.sin(Math.min(1, Math.max(0, e)) * Math.PI / 2);
+          const st = t < 0.28 ? 0 : (t - 0.28) / 0.72;
+          const ease = 1 - Math.pow(1 - st, 3);
+          D.q = D.roll.spin
+            ? D.qmul(D.qslerp(D.roll.from, D.roll.to, ease), D.qaxis([0,0,1], (1 - ease) * D.roll.spin))
+            : D.qslerp(D.roll.from, D.roll.to, ease);
+          glow = 1 - st;
+        }
+      } else if (!reduce) {
+        D.q = D.qmul(D.q, D.qaxis([0.35, 1, 0.18], dt * 0.00042));
+      }
+
+      ctx.clearRect(0, 0, w, h);
+      const R = Math.min(w, h) * 0.31;
+      const cx = w / 2, cy = h / 2 - 6;
+      const rv = V.map(v => D.qrot(D.q, v));
+      const rn = D.N.map(n => D.qrot(D.q, n));
+      const proj = (p, off) => {
+        const x = p[0] + off[0], y = p[1] + off[1], z = p[2] + off[2];
+        const k = 3.6 / (3.6 - z * 0.7);
+        return [cx + x * R * k, cy - y * R * k, z, k];
+      };
+      const order = D.faces.map((f, i) => i).sort((a, b) => rn[a][2] - rn[b][2]);
+      let frontIdx = 0;
+      for (let i = 1; i < rn.length; i++) if (rn[i][2] > rn[frontIdx][2]) frontIdx = i;
+
+      order.forEach(fi => {
+        const n = rn[fi];
+        const off = [n[0] * expl * 1.15, n[1] * expl * 1.15, n[2] * expl * 1.15];
+        const pts = D.faces[fi].map(vi => proj(rv[vi], off));
+        const front = n[2] > 0;
+        const depth = (n[2] + 1) / 2;
+        const isRes = fi === frontIdx && !D.roll;
+        ctx.beginPath();
+        pts.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+        ctx.closePath();
+        if (front) {
+          ctx.fillStyle = isRes
+            ? "rgba(101,191,176," + (0.16 + glow * 0.2) + ")"
+            : "rgba(145,132,217," + (0.03 + depth * 0.05) + ")";
+          ctx.fill();
+        }
+        ctx.lineWidth = isRes ? 1.6 : 1;
+        ctx.strokeStyle = isRes
+          ? "rgba(101,191,176,.9)"
+          : "rgba(145,132,217," + (front ? 0.2 + depth * 0.55 : 0.06 + depth * 0.12) + ")";
+        ctx.stroke();
+
+        if (front) {
+          // text mapped onto the face's own plane, so it turns with the triangle
+          const f = D.faces[fi];
+          const a = rv[f[0]], b = rv[f[1]], cc = rv[f[2]];
+          let u = [b[0]-a[0], b[1]-a[1], b[2]-a[2]];
+          let ul = Math.hypot(u[0],u[1],u[2]) || 1;
+          u = [u[0]/ul, u[1]/ul, u[2]/ul];
+          let vv = [n[1]*u[2]-n[2]*u[1], n[2]*u[0]-n[0]*u[2], n[0]*u[1]-n[1]*u[0]];
+          const mid = [(a[0]+b[0])/2, (a[1]+b[1])/2, (a[2]+b[2])/2];
+          const toApex = [cc[0]-mid[0], cc[1]-mid[1], cc[2]-mid[2]];
+          if (vv[0]*toApex[0] + vv[1]*toApex[1] + vv[2]*toApex[2] < 0) {
+            u = [-u[0], -u[1], -u[2]];
+            vv = [-vv[0], -vv[1], -vv[2]];
+          }
+          const cn3 = [
+            (a[0]+b[0]+cc[0])/3 + n[0]*0.012,
+            (a[1]+b[1]+cc[1])/3 + n[1]*0.012,
+            (a[2]+b[2]+cc[2])/3 + n[2]*0.012
+          ];
+          const s = 0.26;
+          const pc = proj(cn3, off);
+          const pu = proj([cn3[0]+u[0]*s, cn3[1]+u[1]*s, cn3[2]+u[2]*s], off);
+          const pv = proj([cn3[0]+vv[0]*s, cn3[1]+vv[1]*s, cn3[2]+vv[2]*s], off);
+          const k = (isRes ? 0.40 : 0.26) / s / 100;
+          ctx.save();
+          ctx.transform(
+            (pu[0]-pc[0]) * k, (pu[1]-pc[1]) * k,
+            -(pv[0]-pc[0]) * k, -(pv[1]-pc[1]) * k,
+            pc[0], pc[1]
+          );
+          ctx.font = "500 100px Orbitron, sans-serif";
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = isRes
+            ? "rgba(233,233,237,.98)"
+            : "rgba(233,233,237," + (0.1 + Math.pow(depth, 2.4) * 0.6) + ")";
+          ctx.fillText(String(D.num[fi]), 0, 8);
+          ctx.restore();
+        }
+      });
+      this.dieRaf = requestAnimationFrame(draw);
+    };
+    this.dieRaf = requestAnimationFrame(draw);
+  }
+
+  rollDie(n) {
+    const D = this.die;
+    if (!D) return;
+    const fi = D.num.indexOf(n);
+    if (fi < 0) return;
+    // align the face normal to the camera, then spin about z so the digit lands upright
+    const f = D.faces[fi], nrm = D.N[fi];
+    const a = D.V[f[0]], b = D.V[f[1]], c = D.V[f[2]];
+    let u = [b[0]-a[0], b[1]-a[1], b[2]-a[2]];
+    const ul = Math.hypot(u[0],u[1],u[2]) || 1;
+    u = [u[0]/ul, u[1]/ul, u[2]/ul];
+    let up = [nrm[1]*u[2]-nrm[2]*u[1], nrm[2]*u[0]-nrm[0]*u[2], nrm[0]*u[1]-nrm[1]*u[0]];
+    const mid = [(a[0]+b[0])/2, (a[1]+b[1])/2, (a[2]+b[2])/2];
+    const toApex = [c[0]-mid[0], c[1]-mid[1], c[2]-mid[2]];
+    if (up[0]*toApex[0] + up[1]*toApex[1] + up[2]*toApex[2] < 0) up = [-up[0], -up[1], -up[2]];
+    const q0 = D.qToFace(nrm);
+    const su = D.qrot(q0, up);
+    const to = D.qmul(D.qaxis([0, 0, 1], -Math.atan2(su[0], su[1])), q0);
+    D.roll = {
+      t0: performance.now(),
+      dur: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 260 : 1500,
+      from: D.q.slice(),
+      to,
+      spin: Math.PI * 4,
+      n
+    };
+  }
+
+  stopDecode() {
+    cancelAnimationFrame(this.decRaf);
+    this.decRaf = 0;
+    this.pendingSrc = null;
+    if (this.state.decoding) this.setState({ decoding: false, decodePct: 0 });
+    const c = this.mapCanvas;
+    if (c) { const x = c.getContext("2d"); x.setTransform(1,0,0,1,0,0); x.clearRect(0,0,c.width,c.height); }
+  }
+
+  decodeMap(src) {
+    const c = this.mapCanvas;
+    if (!c) return;
+    cancelAnimationFrame(this.decRaf);
+    const dpr = Math.min(2, window.devicePixelRatio || 1);
+    const w = Math.max(1, Math.round(c.clientWidth)), h = Math.max(1, Math.round(c.clientHeight));
+    c.width = w * dpr; c.height = h * dpr;
+    const ctx = c.getContext("2d");
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.imageSmoothingEnabled = false;
+    const cell = Math.max(10, Math.round(w / 44));
+    const cols = Math.ceil(w / cell), rows = Math.ceil(h / cell);
+    const total = cols * rows;
+    const order = Array.from({ length: total }, (_, i) => i);
+    for (let i = total - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; const t = order[i]; order[i] = order[j]; order[j] = t; }
+    const noise = Array.from({ length: total }, () => Math.random());
+    const HUE = ["#65BFB0", "#2F92B3", "#9184d9"];
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    this.mapImgs = this.mapImgs || {};
+    let img = this.mapImgs[src];
+    if (!img) {
+      img = new Image();
+      img.src = src;
+      this.mapImgs[src] = img;
+    }
+    const isReady = () => img.complete && img.naturalWidth > 0;
+    const drawFinal = () => {
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, w, h);
+      ctx.drawImage(img, 0, 0, w, h);
+      ctx.globalAlpha = 0.06;
+      ctx.fillStyle = "#9184d9";
+      for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
+      ctx.globalAlpha = 1;
+      this.setState({ decoding: false, decodePct: 100 });
+    };
+    this.pendingSrc = src;
+    img.addEventListener("load", () => {
+      if (this.pendingSrc === src && !this.decRaf) drawFinal();
+    });
+
+    this.setState({ decoding: true, decodePct: 0 });
+    const T_SCAN = reduce ? 0 : 620, T_FILL = reduce ? 1 : 1180;
+    const t0 = performance.now();
+    let lastPct = -1;
+
+    const frame = (now) => {
+      const t = now - t0;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = "rgba(22,24,38,.96)";
+      ctx.fillRect(0, 0, w, h);
+
+      // phase 1 — data blocks aggregating
+      if (t < T_SCAN) {
+        const p = t / T_SCAN;
+        const lit = Math.round(total * p * 0.55);
+        for (let i = 0; i < lit; i++) {
+          const idx = order[i];
+          const cx = (idx % cols) * cell, cy = ((idx - idx % cols) / cols) * cell;
+          const n = noise[idx];
+          ctx.globalAlpha = 0.12 + n * 0.5 * (0.4 + Math.sin(t / 90 + n * 9) * 0.6);
+          ctx.fillStyle = HUE[idx % 3];
+          ctx.fillRect(cx, cy, cell - 1, cell - 1);
+        }
+        ctx.globalAlpha = 1;
+        // scanline
+        const sy = p * h;
+        const g = ctx.createLinearGradient(0, sy - 40, 0, sy + 4);
+        g.addColorStop(0, "rgba(101,191,176,0)");
+        g.addColorStop(1, "rgba(101,191,176,.5)");
+        ctx.fillStyle = g;
+        ctx.fillRect(0, sy - 40, w, 44);
+      } else {
+        // phase 2 — image tiles resolving in
+        const p = Math.min(1, (t - T_SCAN) / T_FILL);
+        const shown = Math.round(total * p);
+        const ready = isReady();
+        if (ready) {
+          const sw = img.width / cols, sh = img.height / rows;
+          for (let i = 0; i < shown; i++) {
+            const idx = order[i];
+            const gx = idx % cols, gy = (idx - gx) / cols;
+            ctx.drawImage(img, gx * sw, gy * sh, sw, sh, gx * cell, gy * cell, cell, cell);
+          }
+        }
+        // edge of the resolve front glows
+        for (let i = shown; i < Math.min(total, shown + Math.round(total * 0.09)); i++) {
+          const idx = order[i];
+          const gx = idx % cols, gy = (idx - gx) / cols;
+          ctx.globalAlpha = 0.2 + noise[idx] * 0.55;
+          ctx.fillStyle = HUE[idx % 3];
+          ctx.fillRect(gx * cell, gy * cell, cell - 1, cell - 1);
+        }
+        ctx.globalAlpha = 1;
+        if (p >= 1) {
+          if (ready) { this.decRaf = 0; drawFinal(); return; }
+          // image not in yet: hold the resolve front until load fires
+          this.decRaf = requestAnimationFrame(frame);
+          return;
+        }
+      }
+      const pct = Math.min(99, Math.round((t / (T_SCAN + T_FILL)) * 100));
+      if (pct !== lastPct) { lastPct = pct; this.setState({ decodePct: pct }); }
+      this.decRaf = requestAnimationFrame(frame);
+    };
+    this.decRaf = requestAnimationFrame(frame);
+  }
+
+  startBg() {
+    const c = this.canvas;
+    if (!c) return;
+    const ctx = c.getContext("2d");
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const t = (1 + Math.sqrt(5)) / 2;
+    const V = [[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]];
+    const E = [];
+    for (let i = 0; i < 12; i++) for (let j = i + 1; j < 12; j++) {
+      const d = Math.hypot(V[i][0]-V[j][0], V[i][1]-V[j][1], V[i][2]-V[j][2]);
+      if (d < 2.1) E.push([i, j]);
+    }
+    const scatter = V.map(() => [(Math.random()-.5)*7, (Math.random()-.5)*7, (Math.random()-.5)*7]);
+    const dust = Array.from({ length: 110 }, () => ({ bx: Math.random(), by: Math.random(), z: .3 + Math.random(), r: Math.random() * 1.6 + .4, ox: 0, oy: 0 }));
+    const lerp = (a, b, m) => a + (b - a) * m;
+    const hexes = [[145,132,217],[47,146,179],[101,191,176]];
+    const mix = (p) => {
+      const s = p * 2, i = Math.min(1, Math.floor(s)), f = s - i;
+      const a = hexes[i], b = hexes[Math.min(2, i + 1)];
+      return [Math.round(lerp(a[0],b[0],f)), Math.round(lerp(a[1],b[1],f)), Math.round(lerp(a[2],b[2],f))];
+    };
+    let w = 0, h = 0;
+    const resize = () => {
+      const dpr = Math.min(2, window.devicePixelRatio || 1);
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    resize();
+    window.addEventListener("resize", resize);
+    let time = 0, smx = 0.72, smy = 0.44;
+    const draw = () => {
+      const motion = this.props.backgroundMotion ?? "interattivo";
+      time += (reduce || motion === "statico") ? 0 : 0.004;
+      const p = this.scrollP || 0;
+      const tx = motion === "interattivo" ? (this.mx ?? .72) : .72;
+      const ty = motion === "interattivo" ? (this.my ?? .44) : .44;
+      smx += (tx - smx) * 0.06;
+      smy += (ty - smy) * 0.06;
+      ctx.clearRect(0, 0, w, h);
+      const col = mix(p);
+      const g = ctx.createRadialGradient(smx * w, smy * h, 0, smx * w, smy * h, Math.max(w, h) * .8);
+      g.addColorStop(0, "rgba(" + col.join(",") + ",0.16)");
+      g.addColorStop(1, "rgba(22,24,38,0)");
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, w, h);
+
+      const cx = w * .72 + (smx - .5) * w * .06, cy = h * .44 + (smy - .5) * h * .08;
+      const R = Math.min(w, h) * (0.19 + Math.sin(p * Math.PI) * 0.09);
+      const ax = p * 3.2 + time + (smy - .5) * 1.2, ay = p * 2.1 + time * 0.7 + (smx - .5) * 1.6;
+      const assembly = Math.min(1, Math.max(0, (p - 0.02) * 3.4));
+      const pts = V.map((v, i) => {
+        const sx = lerp(v[0] + scatter[i][0], v[0], assembly);
+        const sy = lerp(v[1] + scatter[i][1], v[1], assembly);
+        const sz = lerp(v[2] + scatter[i][2], v[2], assembly);
+        let x = sx * Math.cos(ay) - sz * Math.sin(ay);
+        let z = sx * Math.sin(ay) + sz * Math.cos(ay);
+        let y = sy * Math.cos(ax) - z * Math.sin(ax);
+        z = sy * Math.sin(ax) + z * Math.cos(ax);
+        const k = 3.4 / (3.4 + z * 0.42);
+        return [cx + x * R * k * 0.5, cy + y * R * k * 0.5, k];
+      });
+      ctx.lineWidth = 1;
+      E.forEach(([i, j]) => {
+        const a = pts[i], b = pts[j];
+        ctx.strokeStyle = "rgba(" + col.join(",") + "," + (0.05 + 0.28 * assembly * ((a[2] + b[2]) / 2 - 0.7)) + ")";
+        ctx.beginPath(); ctx.moveTo(a[0], a[1]); ctx.lineTo(b[0], b[1]); ctx.stroke();
+      });
+      pts.forEach(a => {
+        ctx.fillStyle = "rgba(" + col.join(",") + "," + (0.15 + 0.5 * (a[2] - 0.7)) + ")";
+        ctx.beginPath(); ctx.arc(a[0], a[1], 1.8 * a[2], 0, 6.284); ctx.fill();
+      });
+
+      const px = smx * w, py = smy * h, reach = motion === "interattivo" ? Math.min(w, h) * 0.26 : 0;
+      const near = [];
+      dust.forEach(d => {
+        const bx = d.bx * w, by = (((d.by - p * d.z * 0.55) % 1 + 1) % 1) * h;
+        const dx = bx - px, dy = by - py, dist = Math.hypot(dx, dy) || 1;
+        const push = dist < reach ? (1 - dist / reach) * 46 * d.z : 0;
+        d.ox += ((dx / dist) * push - d.ox) * 0.09;
+        d.oy += ((dy / dist) * push - d.oy) * 0.09;
+        const x = bx + d.ox, y = by + d.oy;
+        ctx.fillStyle = "rgba(" + col.join(",") + "," + (0.10 + d.z * 0.16 + (push > 0 ? 0.2 : 0)) + ")";
+        ctx.beginPath(); ctx.arc(x, y, d.r * d.z * (push > 0 ? 1.5 : 1), 0, 6.284); ctx.fill();
+        if (dist < reach) near.push([x, y, 1 - dist / reach]);
+      });
+      near.forEach(([x, y, s], i) => {
+        for (let j = i + 1; j < near.length; j++) {
+          const o = near[j], dd = Math.hypot(x - o[0], y - o[1]);
+          if (dd < 110) {
+            ctx.strokeStyle = "rgba(" + col.join(",") + "," + (0.16 * s * o[2] * (1 - dd / 110)) + ")";
+            ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(o[0], o[1]); ctx.stroke();
+          }
+        }
+      });
+      this.raf = requestAnimationFrame(draw);
+    };
+    draw();
+  }
+
+  renderVals() {
+    const st = this.state;
+    const it = st.lang === "it";
+    const gami = this.props.showGamification ?? true;
+    const sel = MAPS.find(r => r[0] === st.mapSel);
+    const rows = (src) => src.map(([k, label, bodyIt, bodyEn]) => ({
+      k, label, body: it ? bodyIt : bodyEn,
+      h: st.open[k] ? "320px" : "0px",
+      tick: st.open[k] ? "−" : "+",
+      tickColor: st.open[k] ? "var(--color-accent-500)" : "color-mix(in srgb,var(--color-text) 35%,transparent)"
+    }));
+    const a = st.answers;
+    const answered = Object.keys(a).length;
+    let recTitle = it ? "Rispondi per vedere la proposta" : "Answer to see the proposal";
+    let recBody = it ? "Ogni risposta restringe il campo. Alla quinta ti diciamo quale formato useremmo e perché."
+                     : "Each answer narrows it down. At the fifth we tell you which format we would use and why.";
+    let recColor = "color-mix(in srgb,var(--color-text) 50%,transparent)";
+    if (answered >= 5) {
+      recColor = "#65BFB0";
+      const need = a["02"];
+      if (need === "Lead" || need === "Visibilità") {
+        recTitle = it ? "Campagna marketing gamificata" : "Gamified marketing campaign";
+        recBody = it ? "Meccanica a punti e obiettivi su una landing dedicata, con raccolta lead qualificati. Se il pubblico è già in una community, la abbiniamo a un torneo eSports con NOVO."
+                     : "Points and objectives on a dedicated landing page, collecting qualified leads. If the audience already sits in a community, we pair it with a NOVO eSports tournament.";
+      } else if (need === "Coinvolgimento") {
+        const remote = a["03"] === "Da remoto";
+        recTitle = it ? (remote ? "Torneo interno e mappa personalizzata" : "Teambuilding con giochi di ruolo") : (remote ? "Internal tournament and custom map" : "Role-play team building");
+        recBody = remote
+          ? (it ? "Format competitivo giocabile da casa su una mappa costruita su misura, con classifica visibile e sessioni brevi ripetute nel tempo."
+                : "A competitive format playable from home on a purpose-built map, with a visible leaderboard and short repeated sessions.")
+          : (it ? "Sessione in presenza dove il gruppo vince o perde insieme. Emergono i ruoli reali, non quelli dell'organigramma."
+                : "An on-site session where the group wins or loses together. Real roles surface, not the ones on the org chart.");
+      } else {
+        const school = a["01"] === "Scuola o università";
+        recTitle = it ? (school ? "Serious game didattico" : "Percorso di upskilling gamificato") : (school ? "Educational serious game" : "Gamified upskilling path");
+        recBody = a["04"] === "Oltre 80"
+          ? (it ? "Percorso a moduli con facilitatori multipli e Achivia come piattaforma di progressione condivisa, così i numeri grandi restano gestibili."
+                : "A modular path with several facilitators and Achivia as the shared progression platform, so large numbers stay manageable.")
+          : (it ? "Ciclo di sessioni su una competenza alla volta, con simulazioni sul vostro settore e un report finale per la direzione."
+                : "A cycle of sessions on one competence at a time, with simulations built on your sector and a final report for management.");
+      }
+      if (a["05"] === "Entro un mese") recBody += it ? " Con questi tempi partiamo da un format già collaudato e lo adattiamo." : " On this timeline we start from a proven format and adapt it.";
+    }
+    return {
+      level: Math.max(1, Math.ceil(st.xp / 20)),
+      xpPct: st.xp,
+      score: st.score,
+      scoreColor: st.score > 0 ? "#65BFB0" : "color-mix(in srgb,var(--color-text) 35%,transparent)",
+      langLabel: it ? "EN" : "IT",
+      onLang: () => {
+        document.querySelectorAll("[data-en]").forEach(n => {
+          if (!n.dataset.it) n.dataset.it = n.textContent;
+          n.textContent = it ? n.dataset.en : n.dataset.it;
+        });
+        this.setState({ lang: it ? "en" : "it" });
+      },
+      canvasRef: (el) => { if (el && !this.canvas) { this.canvas = el; this.startBg(); } },
+      astRef: (el) => { if (el) this.astLayer = el; },
+      partners: PARTNERS.map(([name, src]) => ({ name, bgUrl: "url(" + src + ")" })),
+      gamiFlex: gami ? "flex" : "none",
+      gamiBlock: gami ? "block" : "none",
+      dieRef: (el) => { if (el && this.dieCanvas !== el) { this.dieCanvas = el; this.startDie(); } },
+      rollText: st.rollText || (it ? "Venti facce, venti formati possibili. Provane uno." : "Twenty faces, twenty possible formats. Try one."),
+      onRoll: () => {
+        const n = 1 + Math.floor(Math.random() * 20);
+        this.rollDie(n);
+        this.setState({ roll: n, rollText: ROLLS[n - 1] });
+        this.award("roll", "Giocatore", "Player", 15);
+      },
+      hrItems: rows(HR),
+      mkItems: rows(MK),
+      maps: MAPS.map(([k, name, color, useIt, useEn, bodyIt, bodyEn, img]) => {
+        const on = st.mapSel === k;
+        return {
+          k, name, color, use: it ? useIt : useEn, body: it ? bodyIt : bodyEn,
+          border: on ? "var(--color-accent-500)" : "color-mix(in srgb,var(--color-text) 12%,transparent)",
+          bg: on ? "color-mix(in srgb,var(--color-accent-500) 12%,transparent)" : "color-mix(in srgb,var(--color-surface) 75%,transparent)",
+          cue: on ? (it ? "▸ CARICATA" : "▸ LOADED") : (img ? (it ? "▸ VEDI LA MAPPA" : "▸ VIEW THE MAP") : (it ? "▸ PARLIAMONE" : "▸ LET'S TALK")),
+          cueColor: on ? "#65BFB0" : "color-mix(in srgb,var(--color-text) 40%,transparent)"
+        };
+      }),
+      mapCanvasRef: (el) => { this.mapCanvas = el || null; },
+      onMap: (e) => {
+        const k = e.currentTarget.dataset.k;
+        const row = MAPS.find(r => r[0] === k);
+        this.setState({ mapSel: k }, () => { if (row && row[7]) this.decodeMap(row[7]); else this.stopDecode(); });
+        this.award("open", "Stratega", "Strategist", 15);
+      },
+      viewerPath: sel ? "xpl4b://maps/" + sel[1].toLowerCase() + "/" + sel[8] : "xpl4b://maps/",
+      viewerStatus: sel ? (sel[7] ? (st.decoding ? (it ? "DECODIFICA " + st.decodePct + "%" : "DECODING " + st.decodePct + "%") : (it ? "PRONTA" : "READY")) : (it ? "SU MISURA" : "CUSTOM")) : (it ? "IN ATTESA" : "IDLE"),
+      viewerStatusColor: sel && sel[7] && !st.decoding ? "#65BFB0" : "var(--color-accent-400)",
+      viewerDotColor: sel ? "#65BFB0" : "color-mix(in srgb,var(--color-text) 22%,transparent)",
+      viewerDisplay: sel ? "block" : "none",
+      viewerAskDisplay: sel && !sel[7] ? "flex" : "none",
+      onOpen: (e) => {
+        const k = e.currentTarget.dataset.k;
+        this.setState({ open: Object.assign({}, st.open, { [k]: !st.open[k] }) });
+        this.award("open", "Stratega", "Strategist", 15);
+      },
+      questions: QUESTIONS.map(([num, label, opts]) => ({
+        num, label,
+        options: opts.map(v => {
+          const on = a[num] === v;
+          return { q: num, v, border: on ? "var(--color-accent-500)" : "color-mix(in srgb,var(--color-text) 18%,transparent)", bg: on ? "color-mix(in srgb,var(--color-accent-500) 18%,transparent)" : "transparent", color: on ? "var(--color-accent-100)" : "color-mix(in srgb,var(--color-text) 72%,transparent)" };
+        })
+      })),
+      onPick: (e) => {
+        const d = e.currentTarget.dataset;
+        const answers = Object.assign({}, a, { [d.q]: d.v });
+        this.setState({ answers });
+        if (Object.keys(answers).length >= 5) this.award("conf", "Architetto", "Architect", 30);
+      },
+      recTitle, recBody, recColor,
+      submitLabel: st.sent ? (it ? "RICHIESTA INVIATA" : "REQUEST SENT") : (it ? "VOGLIO RICEVERE INFORMAZIONI" : "I WANT MORE INFORMATION"),
+      onSubmit: () => { this.setState({ sent: true }); this.award("send", "Player One", "Player One", 20); },
+      badges: BADGES.map(([k, glyph, name, howIt, howEn]) => {
+        const on = !!st.done[k];
+        return { glyph, name, how: it ? howIt : howEn, border: on ? "color-mix(in srgb,var(--color-accent-500) 55%,transparent)" : "color-mix(in srgb,var(--color-text) 10%,transparent)", bg: on ? "color-mix(in srgb,var(--color-accent-500) 10%,transparent)" : "color-mix(in srgb,var(--color-surface) 50%,transparent)", color: on ? "var(--color-accent-400)" : "color-mix(in srgb,var(--color-text) 30%,transparent)" };
+      }),
+      toastDisplay: st.toast ? "block" : "none",
+      toastGlyph: st.toast ? st.toast.glyph : "",
+      toastKicker: st.toast ? st.toast.kicker : "",
+      toastText: st.toast ? st.toast.text : ""
+    };
+  }
+}
+</script>
+</body>
+</html>
