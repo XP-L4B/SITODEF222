@@ -2,7 +2,7 @@
 
 /* Bumped on each deploy. Shown by the ?debug overlay, so there is never any
    doubt about which version a device has in front of it. */
-export const BUILD = "2026-09-08.10";
+export const BUILD = "2026-09-08.11";
 
 /* Where the "Possibile formato" request is posted.
    export const FORM_ENDPOINT = "https://formspree.io/f/xoeqppow";
@@ -11,8 +11,10 @@ export const BUILD = "2026-09-08.10";
    accepts a JSON POST and the form submits there instead. */
 export const FORM_ENDPOINT = "";
 
-/* Where requests should land, and the mailto fallback recipient. */
-export const CONTACT_EMAIL = "info@xpl4b.com";
+/* Where requests land: the address the page promises under the form, the
+   one the failure message points at, and the mailto fallback recipient. It
+   must match the recipient configured at the form service. */
+export const CONTACT_EMAIL = "riccardo@xpl4b.com";
 
 /* Gamification: XP awarded per badge — the six add up to a full bar. */
 export const XP = {

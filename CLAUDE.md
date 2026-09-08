@@ -61,6 +61,11 @@ anchor che scavalcano l'header fisso (l'altezza è misurata a runtime in
 ## Cose ancora aperte
 
 - `FORM_ENDPOINT` in `js/config.js` è vuoto: il modulo di richiesta apre una
-  mail precompilata a info@xpl4b.com. Va sostituito con un endpoint vero.
+  mail precompilata invece di inviare. Va sostituito con l'endpoint del
+  servizio form (Formspree). `CONTACT_EMAIL` accanto è riccardo@xpl4b.com:
+  è l'indirizzo che la pagina promette sotto il modulo, quello del messaggio
+  d'errore e del ripiego mailto, e **deve restare uguale al destinatario
+  configurato sul servizio** — altrimenti la pagina promette una casella e le
+  richieste ne raggiungono un'altra.
 - La traduzione inglese, incluse le venti frasi del d20, non è stata revisionata
   da un madrelingua.

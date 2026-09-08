@@ -48,7 +48,7 @@ project/                the original Claude Design handoff — design reference,
 ## Things you will want to change
 
 **Where the request form goes.** `js/config.js` → `FORM_ENDPOINT`. Empty, the
-form validates the address and opens a prefilled mail to `info@xpl4b.com`. Set
+form validates the address and opens a prefilled mail to `CONTACT_EMAIL`. Set
 it to any URL that accepts a JSON `POST` — a form service or your own handler —
 and the form posts there instead, with real sending and error states.
 
@@ -74,7 +74,13 @@ object arrives as `[object Object]`.
 
 `_subject` is the convention Formspree and similar services use for the
 subject line; a service that does not know it just treats it as one more
-field.
+field. `email` first is deliberate too — that is the field those services read
+to set the reply-to, so hitting reply answers the person who wrote in.
+
+`CONTACT_EMAIL` beside it is the address the page promises under the form, the
+one the failure message names, and the mailto fallback recipient. Keep it equal
+to the recipient configured at the form service: otherwise the page promises
+one inbox while the requests arrive at another.
 
 **Copy.** All of it is in `index.html`. Italian is the text in the element;
 English is the `data-en` attribute next to it. Text the page generates —
