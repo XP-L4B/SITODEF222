@@ -12,6 +12,7 @@ import { initDebug } from "./debug.js";
 import { env, initEnv, onScroll } from "./env.js";
 import { initFormatForm } from "./format.js";
 import { award, initGamification } from "./gamification.js";
+import { initHeroTitle } from "./hero-title.js";
 import { initI18n } from "./i18n.js";
 import { initMapViewer } from "./map-viewer.js";
 import { initPeopleBand } from "./people-band.js";
@@ -42,6 +43,9 @@ function start() {
   trackHeaderHeight();
   initGamification();
   initI18n(document.getElementById("lang-toggle"));
+
+  // after initI18n: the heading is split from whatever language is on screen
+  initHeroTitle(document.querySelector(".hero__text h1"));
 
   initBackground(document.getElementById("bg-canvas"));
   initAsteroids(document.getElementById("asteroid-layer"));

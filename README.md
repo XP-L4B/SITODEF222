@@ -29,6 +29,7 @@ js/
   i18n.js               the Italian ⇄ English switch
   gamification.js       XP, level, badges, asteroid score, toasts
   background.js         the fixed animated background
+  hero-title.js         the hero heading and its shatter
   asteroids.js          the asteroids that cross the page
   d20.js                the hero d20 and its twenty lines
   map-viewer.js         the game-map cards and their decode animation
@@ -108,6 +109,14 @@ in `PEOPLE` in `js/people-band.js`; an empty list hides the band.
   treatments: a wireframe d20 that assembles as you scroll, star dust pushed
   around by the pointer, and a palette walking from the brand purple through
   blue to teal. Scroll-driven, so it runs backwards as readily as forwards.
+- **The title.** The hero heading is split into letters and each letter into
+  clipped shards. One value drives them, read from how far the page has
+  scrolled: the pieces fly apart on the way down and reassemble on the way
+  back, because it is a position and not a one-shot animation. At the very top
+  the shards are hidden and an intact glyph is shown in their place — three
+  clipped copies tiling a letter leave a hairline seam, and the top of the page
+  is where that would be seen. With reduced motion the heading is never split
+  at all.
 - **Gamification.** Six badges, each tied to something actually done on the
   page. Progress, score and language are kept in `localStorage`, so a returning
   visitor picks up where they left off.

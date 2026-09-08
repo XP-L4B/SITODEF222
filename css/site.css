@@ -87,7 +87,13 @@ h1, h2, h3, h4 {
   padding-inline: var(--shell-pad);
 }
 
-.page { position: relative; z-index: 1; }
+/* The title's shards are absolutely positioned and fly outward, and anything
+   that overflows to the right grows the document. Clipped on that axis the
+   pieces simply leave the screen — which is what they are doing anyway —
+   and the page can never gain a sideways scrollbar. `clip` rather than
+   `hidden` on purpose: it makes no scroll container, so the sticky panel
+   further down still sticks to the viewport. */
+.page { position: relative; z-index: 1; overflow-x: clip; }
 
 section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 
@@ -247,6 +253,46 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   line-height: 1.08;
   margin: 0 0 24px;
 }
+
+/* The title's shatter. js/hero-title.js writes one number per letter, --e,
+   from 0 (whole) to 1 (gone); everything below is that number multiplied out.
+   The letter box itself never moves, so the heading holds its lines and the
+   page does not reflow while the pieces are in the air. */
+.shatter__w { display: inline-block; white-space: nowrap; }
+.shatter__l {
+  --e: 0;
+  display: inline-block;
+  position: relative;
+}
+/* the intact glyph — what is read at the top of the page, handed over to the
+   shards within the first few percent of the travel */
+.shatter__g {
+  display: inline-block;
+  opacity: calc(1 - min(1, var(--e) * 12));
+}
+.shatter__p {
+  position: absolute; inset: 0;
+  transform:
+    translate3d(calc(var(--dx, 0) * var(--e) * 1px), calc(var(--dy, 0) * var(--e) * 1px), 0)
+    rotate(calc(var(--rot, 0) * var(--e) * 1deg))
+    scale(calc(1 - 0.55 * var(--e)));
+  opacity: calc(min(1, var(--e) * 12) * clamp(0, (1 - var(--e)) * 1.35, 1));
+}
+/* debris picks up the two brand colours on the way out */
+.shatter__p--1 { color: color-mix(in srgb, var(--color-text) 74%, var(--brand-mint)); }
+.shatter__p--2 { color: color-mix(in srgb, var(--color-text) 74%, var(--brand-blue)); }
+
+/* A little depth of field, where there is a machine to pay for it: a filter
+   per letter is more than a phone should be asked to repaint every frame. */
+@media (min-width: 900px) and (pointer: fine) {
+  .shatter__l { filter: blur(calc(var(--e) * 2.2px)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shatter__g { opacity: 1; }
+  .shatter__p { display: none; }
+}
+
 .hero__lede {
   font-size: 17px; line-height: 1.62;
   color: var(--text-72);
