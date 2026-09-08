@@ -8,6 +8,7 @@ import { initAccordion } from "./accordion.js";
 import { initAsteroids } from "./asteroids.js";
 import { initBackground } from "./background.js";
 import { initDie } from "./d20.js";
+import { initDebug } from "./debug.js";
 import { env, initEnv, onScroll } from "./env.js";
 import { initFormatForm } from "./format.js";
 import { award, initGamification } from "./gamification.js";
@@ -36,6 +37,7 @@ function trackHeaderHeight() {
 
 function start() {
   initEnv();
+  initDebug();
   trackHeaderHeight();
   initGamification();
   initI18n(document.getElementById("lang-toggle"));

@@ -15,12 +15,22 @@
    Between them these cover the failure without needing to know which flavour
    of it a given device has. */
 
+/* Counters the debug overlay reads, so a phone can report what happened
+   instead of the person holding it having to describe it. */
+export const health = { lost: 0, restored: 0, revives: 0 };
+
 /** Cancels context loss so the browser restores it, and redraws after. */
 export function keepCanvasAlive(canvas, onRestore) {
   if (!canvas) return;
   // Cancelling is what asks for a restore; without it the loss is permanent.
-  canvas.addEventListener("contextlost", (e) => e.preventDefault());
-  canvas.addEventListener("contextrestored", () => onRestore());
+  canvas.addEventListener("contextlost", (e) => {
+    health.lost++;
+    e.preventDefault();
+  });
+  canvas.addEventListener("contextrestored", () => {
+    health.restored++;
+    onRestore();
+  });
 }
 
 /**
@@ -51,6 +61,7 @@ export function startFrameLoop(draw, reset) {
   };
 
   const revive = () => {
+    health.revives++;
     reset();
     start();
   };

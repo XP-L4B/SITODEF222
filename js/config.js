@@ -1,5 +1,9 @@
 /* Site configuration — the values a deploy needs to change. */
 
+/* Bumped on each deploy. Shown by the ?debug overlay, so there is never any
+   doubt about which version a device has in front of it. */
+export const BUILD = "2026-09-08.5";
+
 /* Where the "Possibile formato" request is posted.
    Leave empty and the form falls back to opening a prefilled mail to
    CONTACT_EMAIL, so the page is useful before any backend exists.
