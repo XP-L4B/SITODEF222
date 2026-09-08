@@ -20,9 +20,18 @@ import { env } from "./env.js";
    time and face back along the row, which keeps the procession from looking
    like everyone marching in lockstep.
 
-   Empty until the artwork is cut — see tools/crop-people.py. With no entries
-   the band stays hidden and the page is exactly as it was. */
-const PEOPLE = [];
+   Cut from art/personaggi-lavoro.png by tools/crop-people.py. An empty list
+   leaves the band hidden and the page exactly as it was. */
+const PEOPLE = [
+  { file: "person-01" },                  // studente col portatile
+  { file: "person-02", flipped: true },   // infermiera
+  { file: "person-03" },                  // impiegato in giacca
+  { file: "person-04", flipped: true },   // operaia col caschetto
+  { file: "person-05" },                  // progettista col tablet
+  { file: "person-06" },                  // chef
+  { file: "person-07", flipped: true },   // agente di polizia
+  { file: "person-08" },                  // barista
+];
 
 /** How far the row travels per pixel scrolled. */
 const SPEED = 0.35;
@@ -38,13 +47,19 @@ export function initPeopleBand() {
     const set = document.createElement("div");
     set.className = "crowd__set";
     PEOPLE.forEach((p) => {
+      // webp is a quarter of the png here; the png stays as the fallback
+      const picture = document.createElement("picture");
+      const webp = document.createElement("source");
+      webp.srcset = `assets/people/${p.file}.webp`;
+      webp.type = "image/webp";
       const img = document.createElement("img");
       img.src = `assets/people/${p.file}.png`;
       img.alt = "";
       img.loading = "lazy";
       img.decoding = "async";
       img.className = "crowd__person";
-      set.appendChild(img);
+      picture.append(webp, img);
+      set.appendChild(picture);
     });
     return set;
   };

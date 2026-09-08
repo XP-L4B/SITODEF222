@@ -32,9 +32,14 @@ js/
   asteroids.js          the asteroids that cross the page
   d20.js                the hero d20 and its twenty lines
   map-viewer.js         the game-map cards and their decode animation
+  people-band.js        the row of workers that walks with the scroll
   accordion.js          the two service catalogues
   format.js             the five questions, the recommendation and the form
-assets/                 images and fonts
+  canvas-health.js      keeps the canvases alive when iOS reclaims them
+  debug.js              the ?debug readout, inert without the parameter
+assets/                 images, fonts, and the cut-out people
+art/                    source artwork — not shipped, kept so the cut can be redone
+tools/                  crop-people.py, which cuts the people out of the strip
 project/                the original Claude Design handoff — design reference,
                         not part of the deployed site (its own instructions are
                         in project/HANDOFF.md)
@@ -68,6 +73,18 @@ the badge toasts — sits in the module that owns it, as `{ it, en }` pairs.
 **Gamification.** `js/config.js` carries the XP each badge is worth (the six add
 up to a full bar) and how often asteroids come round.
 
+**The walking people.** To recut them from a new strip:
+
+```sh
+python3 tools/crop-people.py art/personaggi-lavoro.png --expect 8 --flip 2,4,7
+```
+
+`--expect` is how many figures the strip holds — they touch each other in the
+source, so the tool finds them as connected blobs and cuts the merged ones at
+their thinnest column rather than looking for empty gaps. `--flip` mirrors
+those figures so the procession is not all facing one way. Then list the files
+in `PEOPLE` in `js/people-band.js`; an empty list hides the band.
+
 ## How the page behaves
 
 - **Background.** One environment across the whole page rather than per-section
@@ -85,6 +102,9 @@ up to a full bar) and how often asteroids come round.
   with scripting off. The interactive parts simply do not run.
 - **Keyboard.** Everything interactive is a real button, link or input, with the
   design system's focus ring and a skip link ahead of the header.
+- **Diagnostics.** Add `?debug` to the URL for a readout of the build stamp,
+  frame rate, canvas sizes, context-loss counters and the last error — how a
+  fault on a phone gets reported in numbers rather than impressions.
 
 ## Notes for review
 

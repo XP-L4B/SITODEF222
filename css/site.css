@@ -364,6 +364,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   gap: var(--crowd-gap);
   padding-right: var(--crowd-gap);  /* keeps the spacing even across the seam */
 }
+.crowd__set picture { display: contents; }
 .crowd__person {
   height: var(--crowd-height);
   width: auto;

@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 """Cut the pixel-art figures out of a strip and save them with transparency.
 
-    python3 tools/crop-people.py source.png --flip 2,4,7
+    python3 tools/crop-people.py art/personaggi-lavoro.png --expect 8 --flip 2,4,7
 
-The source is a row of characters on a flat light background. Transparency is
-made by flooding in from the borders rather than by deleting every light pixel,
-because plenty of light pixels belong to the figures themselves — a chef's hat,
-a lab coat, a nurse's uniform — and a global "remove white" would punch holes
-straight through them.
+Two kinds of source are handled. One that already carries an alpha channel is
+used as it is — it must not be flooded, because the seed would be whatever sits
+behind the transparency (usually black) and the fill would eat every dark suit
+and shoe it touches. One on a flat light background is flooded from the borders
+instead of by deleting light pixels, because a chef's hat and a lab coat are
+light too and a global cut would punch holes through them.
 
-Figures are then split on the fully empty columns between them, trimmed to
-their own bounds, optionally mirrored, and written to assets/people/ as PNG
-plus WebP.
+Figures are then found as connected blobs rather than by looking for empty
+columns: in a real strip they stand shoulder to shoulder, hold wide props, and
+carry a soft halo, so the columns between them are rarely empty. Blobs that
+share a horizontal span are one figure in pieces and get merged; a blob far
+wider than its neighbours is two figures touching and is cut at the thinnest
+column near its middle.
 """
 
 import argparse
@@ -24,9 +28,11 @@ try:
 except ImportError:
     sys.exit("Pillow is needed: pip install pillow")
 
+SOLID = 128  # alpha at or above this counts as the figure, not its halo
+
 
 def flood_background(px, w, h, tolerance):
-    """Alpha mask: 0 for background reachable from the border, 255 elsewhere."""
+    """Alpha mask for a flat-background source: 0 where the border colour reaches."""
     seed = px[0, 0][:3]
 
     def is_bg(p):
@@ -59,48 +65,91 @@ def flood_background(px, w, h, tolerance):
     return alpha
 
 
-def drop_ground_shadow(px, alpha, w, h, tolerance):
-    """Clear the pale ellipse each figure stands on.
+def blob_spans(alpha, w, h, min_area):
+    """Horizontal spans of the connected blobs, largest first."""
+    seen = [[False] * w for _ in range(h)]
+    spans = []
 
-    It survives the flood because it is not the background colour, but on a
-    dark page it reads as a glowing puddle rather than a shadow. Only the
-    bottom sixth is considered, and only pixels that are pale and close to
-    neutral, so shoes and trouser hems are left alone.
-    """
-    for y in range(int(h * 0.84), h):
-        for x in range(w):
-            if alpha[y][x] == 0:
+    for sy in range(h):
+        for sx in range(w):
+            if seen[sy][sx] or alpha[sy][sx] < SOLID:
                 continue
-            r, g, b = px[x, y][:3]
-            light = min(r, g, b) > 150
-            neutral = max(r, g, b) - min(r, g, b) < 40
-            if light and neutral:
-                alpha[y][x] = 0
+            queue = deque([(sx, sy)])
+            seen[sy][sx] = True
+            area = 0
+            x0 = x1 = sx
+            while queue:
+                x, y = queue.popleft()
+                area += 1
+                x0 = min(x0, x)
+                x1 = max(x1, x)
+                for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < w and 0 <= ny < h and not seen[ny][nx] and alpha[ny][nx] >= SOLID:
+                        seen[ny][nx] = True
+                        queue.append((nx, ny))
+            if area >= min_area:
+                spans.append([x0, x1])
+
+    return sorted(spans)
 
 
-def columns_with_content(alpha, w, h):
-    return [any(alpha[y][x] for y in range(h)) for x in range(w)]
+def merge_overlapping(spans):
+    """One figure can arrive as several blobs; anything overlapping in x is one."""
+    merged = []
+    for span in spans:
+        if merged and span[0] <= merged[-1][1]:
+            merged[-1][1] = max(merged[-1][1], span[1])
+        else:
+            merged.append(list(span))
+    return merged
 
 
-def segments(filled, min_gap):
-    """Runs of filled columns, split where the gap between them is wide enough."""
-    out = []
-    start = None
-    gap = 0
-    for x, on in enumerate(filled):
-        if on:
-            if start is None:
-                start = x
-            gap = 0
-        elif start is not None:
-            gap += 1
-            if gap >= min_gap:
-                out.append((start, x - gap))
-                start = None
-                gap = 0
-    if start is not None:
-        out.append((start, len(filled) - 1))
-    return out
+def split_widest(spans, alpha, h, expect):
+    """Cut over-wide spans — two figures touching — at their thinnest column."""
+    while len(spans) < expect:
+        widths = [s[1] - s[0] for s in spans]
+        i = widths.index(max(widths))
+        x0, x1 = spans[i]
+
+        counts = [sum(1 for y in range(h) if alpha[y][x] >= SOLID) for x in range(x0, x1 + 1)]
+        lo = int(len(counts) * 0.3)
+        hi = int(len(counts) * 0.7)
+        if hi <= lo:
+            break
+        cut = min(range(lo, hi), key=lambda k: counts[k])
+
+        spans[i : i + 1] = [[x0, x0 + cut - 1], [x0 + cut + 1, x1]]
+        spans.sort()
+    return spans
+
+
+# The slab each figure stands on: a mid grey-lavender, sampled off the artwork.
+SLAB = (110, 103, 122)
+SLAB_TOLERANCE = 34
+
+
+def drop_ground_shadow(piece):
+    """Clear the slab each figure stands on.
+
+    It belongs to the artwork, but on a dark page it reads as a floating
+    pedestal rather than a shadow. Only the bottom eighth of the figure is
+    considered, and the match is against the slab's own colour rather than
+    "anything pale" — it is a mid grey, darker than the white trainers just
+    above it and lighter than every shoe, so both survive. The soft edge of
+    the slab goes with it.
+    """
+    px = piece.load()
+    w, h = piece.size
+    band = int(h * 0.875)
+    for y in range(band, h):
+        for x in range(w):
+            r, g, b, a = px[x, y]
+            if a == 0:
+                continue
+            near_slab = all(abs(v - s) <= SLAB_TOLERANCE for v, s in zip((r, g, b), SLAB))
+            if near_slab or (a < 200 and y > int(h * 0.93)):
+                px[x, y] = (0, 0, 0, 0)
 
 
 def main():
@@ -108,38 +157,46 @@ def main():
     ap.add_argument("source")
     ap.add_argument("--out", default="assets/people")
     ap.add_argument("--flip", default="", help="1-based indices to mirror, e.g. 2,4,7")
+    ap.add_argument("--expect", type=int, default=0, help="how many figures the strip holds")
     ap.add_argument("--tolerance", type=int, default=26)
-    ap.add_argument("--min-gap", type=int, default=12, help="empty columns that separate two figures")
+    ap.add_argument("--min-area", type=int, default=2000)
     ap.add_argument("--keep-shadow", action="store_true")
-    ap.add_argument("--height", type=int, default=320, help="output height in px")
+    ap.add_argument("--height", type=int, default=320)
     args = ap.parse_args()
 
     img = Image.open(args.source).convert("RGBA")
     w, h = img.size
     px = img.load()
 
-    alpha = flood_background(px, w, h, args.tolerance)
-    if not args.keep_shadow:
-        drop_ground_shadow(px, alpha, w, h, args.tolerance)
+    if px[0, 0][3] == 0:
+        print("source already carries an alpha channel — using it")
+        alpha = [[px[x, y][3] for x in range(w)] for y in range(h)]
+    else:
+        alpha = flood_background(px, w, h, args.tolerance)
+        for y in range(h):
+            for x in range(w):
+                if alpha[y][x] == 0:
+                    px[x, y] = (0, 0, 0, 0)
 
-    for y in range(h):
-        for x in range(w):
-            if alpha[y][x] == 0:
-                px[x, y] = (0, 0, 0, 0)
+    spans = merge_overlapping(blob_spans(alpha, w, h, args.min_area))
+    if args.expect:
+        spans = split_widest(spans, alpha, h, args.expect)
 
-    found = segments(columns_with_content(alpha, w, h), args.min_gap)
     flip = {int(n) for n in args.flip.split(",") if n.strip()}
-
     out_dir = pathlib.Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"{len(found)} figures in {args.source} ({w}x{h})")
-    for i, (x0, x1) in enumerate(found, start=1):
+    print(f"{len(spans)} figures in {args.source} ({w}x{h})")
+    for i, (x0, x1) in enumerate(spans, start=1):
         piece = img.crop((x0, 0, x1 + 1, h))
-        piece = piece.crop(piece.getbbox())          # trim to the figure itself
+        piece = piece.crop(piece.getbbox())
+        if not args.keep_shadow:
+            drop_ground_shadow(piece)
+            piece = piece.crop(piece.getbbox())
+
         scale = args.height / piece.height
         piece = piece.resize(
-            (max(1, round(piece.width * scale)), args.height), Image.NEAREST  # pixel art: no smoothing
+            (max(1, round(piece.width * scale)), args.height), Image.NEAREST
         )
         if i in flip:
             piece = piece.transpose(Image.FLIP_LEFT_RIGHT)
@@ -147,10 +204,7 @@ def main():
         name = f"person-{i:02d}"
         piece.save(out_dir / f"{name}.png")
         piece.save(out_dir / f"{name}.webp", quality=90, method=6)
-        print(
-            f"  {name}  {piece.width}x{piece.height}"
-            f"{'  mirrored' if i in flip else ''}"
-        )
+        print(f"  {name}  {piece.width}x{piece.height}{'  mirrored' if i in flip else ''}")
 
 
 if __name__ == "__main__":
