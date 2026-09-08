@@ -4,13 +4,21 @@
 
 const reduceQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+/* Does this device have a mouse or a trackpad? A phone does not, so nothing
+   ever moves the pointer and anything following it would sit still forever —
+   the background drifts on its own instead. */
+const fineQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+
 export const env = {
   /** 0 at the top of the document, 1 at the bottom. */
   scrollP: 0,
   /** Pointer position normalised to the viewport; the hero's own resting spot. */
   mx: 0.72,
   my: 0.44,
+  /** When the pointer last moved. 0 means it never has. */
+  pointerAt: 0,
   reduce: reduceQuery.matches,
+  finePointer: fineQuery.matches,
 };
 
 const listeners = new Set();
@@ -34,11 +42,15 @@ export function initEnv() {
     (e) => {
       env.mx = e.clientX / window.innerWidth;
       env.my = e.clientY / window.innerHeight;
+      env.pointerAt = performance.now();
     },
     { passive: true }
   );
   reduceQuery.addEventListener("change", (e) => {
     env.reduce = e.matches;
+  });
+  fineQuery.addEventListener("change", (e) => {
+    env.finePointer = e.matches;
   });
 
   readScroll();

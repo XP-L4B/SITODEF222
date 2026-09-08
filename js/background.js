@@ -9,7 +9,13 @@
 
    Everything is driven by scroll position, so it runs backwards as readily as
    forwards. With prefers-reduced-motion the idle drift stops and the scene
-   only answers the scroll. */
+   only answers the scroll.
+
+   On a touch device there is no pointer to follow, so the focus point would
+   sit at its resting spot forever and none of that would ever happen. There,
+   and on a desktop before the mouse has first moved, the focus wanders on its
+   own along a slow Lissajous path — the same effect, driving itself. A real
+   pointer takes over the moment it moves. */
 
 import { env } from "./env.js";
 
@@ -94,9 +100,29 @@ export function initBackground(canvas) {
     const interactive = !env.reduce;
     time += env.reduce ? 0 : 0.004;
 
+    // A phone has no pointer at all; a desktop has one that has not moved yet.
+    // In both cases drive the focus point ourselves rather than let it freeze.
+    // A touch drag does move the pointer, so it takes the wheel for a moment
+    // and the drift eases back in afterwards.
+    const drifting =
+      interactive &&
+      (env.pointerAt === 0 || (!env.finePointer && performance.now() - env.pointerAt > 1800));
+
+    let targetX;
+    let targetY;
+    if (!interactive) {
+      targetX = RESTING_X;
+      targetY = RESTING_Y;
+    } else if (drifting) {
+      // two incommensurate periods, so the path does not visibly repeat
+      targetX = 0.5 + Math.sin(time * 0.9) * 0.3;
+      targetY = 0.46 + Math.cos(time * 0.61) * 0.28;
+    } else {
+      targetX = env.mx;
+      targetY = env.my;
+    }
+
     const p = env.scrollP || 0;
-    const targetX = interactive ? env.mx : RESTING_X;
-    const targetY = interactive ? env.my : RESTING_Y;
     smx += (targetX - smx) * 0.06;
     smy += (targetY - smy) * 0.06;
 
@@ -113,7 +139,10 @@ export function initBackground(canvas) {
     ctx.fillRect(0, 0, w, h);
 
     // ── the d20 wireframe ──
-    const cx = w * 0.72 + (smx - 0.5) * w * 0.06;
+    // On a narrow screen the layout stacks and there is no empty right-hand
+    // column, so the die pulls back from the edge to sit fully in view.
+    const compact = w < 720;
+    const cx = w * (compact ? 0.6 : 0.72) + (smx - 0.5) * w * 0.06;
     const cy = h * 0.44 + (smy - 0.5) * h * 0.08;
     const R = Math.min(w, h) * (0.19 + Math.sin(p * Math.PI) * 0.09);
     const ax = p * 3.2 + time + (smy - 0.5) * 1.2;
@@ -136,7 +165,9 @@ export function initBackground(canvas) {
     E.forEach(([i, j]) => {
       const a = pts[i];
       const b = pts[j];
-      ctx.strokeStyle = `rgba(${rgb},${0.05 + 0.28 * assembly * ((a[2] + b[2]) / 2 - 0.7)})`;
+      const edge = compact ? 0.07 : 0.05;
+      const lift = compact ? 0.36 : 0.28;
+      ctx.strokeStyle = `rgba(${rgb},${edge + lift * assembly * ((a[2] + b[2]) / 2 - 0.7)})`;
       ctx.beginPath();
       ctx.moveTo(a[0], a[1]);
       ctx.lineTo(b[0], b[1]);
@@ -153,7 +184,7 @@ export function initBackground(canvas) {
     // ── star dust, repelled by the pointer ──
     const px = smx * w;
     const py = smy * h;
-    const reach = interactive ? Math.min(w, h) * 0.26 : 0;
+    const reach = interactive ? Math.min(w, h) * (compact ? 0.42 : 0.26) : 0;
     const near = [];
 
     dust.forEach((d) => {
@@ -169,7 +200,9 @@ export function initBackground(canvas) {
 
       const x = bx + d.ox;
       const y = by + d.oy;
-      ctx.fillStyle = `rgba(${rgb},${0.1 + d.z * 0.16 + (push > 0 ? 0.2 : 0)})`;
+      const base = compact ? 0.14 : 0.1;
+      const depth = compact ? 0.2 : 0.16;
+      ctx.fillStyle = `rgba(${rgb},${base + d.z * depth + (push > 0 ? 0.2 : 0)})`;
       ctx.beginPath();
       ctx.arc(x, y, d.r * d.z * (push > 0 ? 1.5 : 1), 0, Math.PI * 2);
       ctx.fill();
