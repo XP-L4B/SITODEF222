@@ -108,6 +108,9 @@ in `PEOPLE` in `js/people-band.js`; an empty list hides the band.
 
 ## Deploying a change
 
+`main` is the published branch: GitHub Pages builds it from the repository
+root, so a push to `main` is a deploy. It is the only branch.
+
 **`.nojekyll` must stay.** GitHub Pages runs every `.html` file through
 Jekyll's Liquid templating when it publishes from a branch, and `project/`
 holds three files from the design handoff with 55 `{{ … }}` placeholders each.

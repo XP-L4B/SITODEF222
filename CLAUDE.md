@@ -10,21 +10,23 @@ senza aprire branch di lavoro e senza chiedere conferma ogni volta.
   chiederle esplicitamente.
 - Remote: `origin` → https://github.com/XP-L4B/SITODEF222.git
 
-**Il sito però viene pubblicato dal branch `implement-homepage`, non da
-`main`.** Finché è così, ogni push va portato anche lì, altrimenti Riccardo
-non vede nulla di quello che hai fatto:
+**`main` è anche il branch da cui il sito viene pubblicato** (GitHub Pages,
+"Deploy from a branch", cartella root). Un push su `main` è un deploy: dopo un
+paio di minuti è online. Non esistono altri branch e non vanno creati.
 
-```sh
-git push origin main && git push origin main:implement-homepage
-```
-
-È un fast-forward: `implement-homepage` non ha commit propri, segue `main`.
-Questa cosa è già costata undici commit invisibili — le correzioni c'erano su
-`main` e il telefono continuava a caricare la prima versione. Se un giorno la
-pubblicazione passa a `main`, togli questa nota e il secondo push.
+Perché la nota: per un periodo la pubblicazione leggeva `implement-homepage`
+mentre i commit andavano su `main`, e sono rimasti invisibili undici commit —
+il codice era giusto, la destinazione sbagliata. Se un giorno ricompare un
+branch di pubblicazione diverso da `main`, verificalo prima di dire che una
+modifica è online.
 
 Resta valido il resto: prima di pushare verifica che il sito funzioni davvero
 (vedi sotto), e descrivi nel messaggio di commit cosa cambia e perché.
+
+**Non togliere `.nojekyll`.** Senza, Pages passa ogni `.html` attraverso
+Jekyll, che si rompe sui segnaposto `{{ … }}` dei file in `project/` — e una
+build fallita lascia online la versione precedente, cioè un sito che sembra
+non aggiornarsi mai.
 
 ## Il progetto
 
