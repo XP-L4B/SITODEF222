@@ -1,3 +1,2 @@
-build 2026-09-08.9
+build 2026-09-08.10
 Se leggi questo file dal sito pubblicato, il deploy sta funzionando.
-Se non lo trovi (404) o riporta una build piu vecchia, il problema e la pubblicazione, non il codice.

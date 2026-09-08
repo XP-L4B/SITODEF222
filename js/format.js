@@ -153,38 +153,50 @@ export function initFormatForm() {
 
   /* ── submission ───────────────────────────────────────────────────────── */
 
+  /* The five questions, in the order they are asked, with the label that will
+     head each line in the email. */
+  const FIELDS = [
+    ["01", "Chi sono"],
+    ["02", "Cosa manca"],
+    ["03", "Dove"],
+    ["04", "Quante persone"],
+    ["05", "Quando"],
+  ];
+
+  /* Flat, and in Italian, because whoever opens this reads it in an inbox.
+     Most form services turn each key into a line of the email and print a
+     nested object as [object Object], so the answers are spelled out as
+     fields rather than handed over as a structure. `_subject` is the
+     convention Formspree and its like use for the subject line. */
   function payload() {
-    const rec = Object.keys(answers).length >= 5 ? recommend(answers) : null;
-    return {
+    const complete = Object.keys(answers).length >= 5;
+    const rec = complete ? recommend(answers) : null;
+    const format = rec ? rec.title.it : "non completato";
+
+    const data = {
       email: emailEl.value.trim(),
-      lang: getLang(),
-      answers,
-      recommendation: rec ? rec.title.it : null,
-      page: window.location.href,
-      sentAt: new Date().toISOString(),
+      _subject: `Richiesta dal sito — ${format}`,
+      "Formato consigliato": format,
     };
+    FIELDS.forEach(([key, label]) => {
+      data[label] = answers[key] || "—";
+    });
+    data["Lingua del sito"] = getLang() === "it" ? "italiano" : "inglese";
+    data["Pagina"] = window.location.href;
+    data["Inviato"] = new Date().toISOString();
+
+    return data;
   }
 
   function mailtoFallback(data) {
-    const lines = [
-      `Email: ${data.email}`,
-      "",
-      t({ it: "Risposte:", en: "Answers:" }),
-      ...Object.entries(data.answers).map(([k, v]) => `  ${k} — ${v}`),
-      "",
-      data.recommendation
-        ? `${t({ it: "Formato consigliato:", en: "Recommended format:" })} ${data.recommendation}`
-        : "",
-    ].filter(Boolean);
-
-    const subject = t({
-      it: "Richiesta dal sito — possibile formato",
-      en: "Request from the site — possible format",
-    });
+    const body = Object.entries(data)
+      .filter(([k]) => k !== "_subject")
+      .map(([k, v]) => `${k}: ${v}`)
+      .join("\n");
 
     window.location.href =
-      `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}` +
-      `&body=${encodeURIComponent(lines.join("\n"))}`;
+      `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(data._subject)}` +
+      `&body=${encodeURIComponent(body)}`;
   }
 
   form.addEventListener("submit", async (e) => {

@@ -47,23 +47,34 @@ project/                the original Claude Design handoff — design reference,
 
 ## Things you will want to change
 
-**Where the request form goes.** `js/config.js` → `FORM_ENDPOINT`. It is empty,
-so today the form validates the address and then opens a prefilled mail to
-`info@xpl4b.com` with the five answers and the recommended format in the body.
-Set `FORM_ENDPOINT` to any handler that accepts a JSON `POST` and the form
-submits there instead, with real sending / error states. The payload is:
+**Where the request form goes.** `js/config.js` → `FORM_ENDPOINT`. Empty, the
+form validates the address and opens a prefilled mail to `info@xpl4b.com`. Set
+it to any URL that accepts a JSON `POST` — a form service or your own handler —
+and the form posts there instead, with real sending and error states.
+
+The body is flat and in Italian, because whoever opens it reads it in an
+inbox: most form services turn each key into a line of the email, and a nested
+object arrives as `[object Object]`.
 
 ```json
 {
-  "email": "nome@azienda.it",
-  "lang": "it",
-  "answers": { "01": "PMI", "02": "Coinvolgimento", "03": "Da remoto",
-               "04": "20-80", "05": "Entro un mese" },
-  "recommendation": "Torneo interno e mappa personalizzata",
-  "page": "https://www.xpl4b.com/",
-  "sentAt": "2026-09-08T12:00:00.000Z"
+  "email": "laura.bianchi@aziendaesempio.it",
+  "_subject": "Richiesta dal sito — Percorso di upskilling gamificato",
+  "Formato consigliato": "Percorso di upskilling gamificato",
+  "Chi sono": "PMI",
+  "Cosa manca": "Competenze",
+  "Dove": "Ibrido",
+  "Quante persone": "20-80",
+  "Quando": "Entro un mese",
+  "Lingua del sito": "italiano",
+  "Pagina": "https://www.xpl4b.com/",
+  "Inviato": "2026-09-08T20:36:00.500Z"
 }
 ```
+
+`_subject` is the convention Formspree and similar services use for the
+subject line; a service that does not know it just treats it as one more
+field.
 
 **Copy.** All of it is in `index.html`. Italian is the text in the element;
 English is the `data-en` attribute next to it. Text the page generates —

@@ -2,7 +2,7 @@
 
 /* Bumped on each deploy. Shown by the ?debug overlay, so there is never any
    doubt about which version a device has in front of it. */
-export const BUILD = "2026-09-08.9";
+export const BUILD = "2026-09-08.10";
 
 /* Where the "Possibile formato" request is posted.
    Leave empty and the form falls back to opening a prefilled mail to
