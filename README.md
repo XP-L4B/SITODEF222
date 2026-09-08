@@ -106,6 +106,18 @@ in `PEOPLE` in `js/people-band.js`; an empty list hides the band.
   frame rate, canvas sizes, context-loss counters and the last error — how a
   fault on a phone gets reported in numbers rather than impressions.
 
+## Deploying a change
+
+Asset URLs carry a version — `css/site.css?v=2026-09-08.6` — so a browser
+cannot serve a stale stylesheet after a deploy. Bump it in two places when you
+ship: the `?v=` on the links in `index.html`, and `BUILD` in `js/config.js`,
+which is what `?debug` reports. They should match, so the readout on a device
+tells you exactly which version that device is running.
+
+Static imports inside the JS modules do not carry the version, so a change to
+a module other than `main.js` can still be served from cache for as long as
+the host's max-age (ten minutes on GitHub Pages).
+
 ## Notes for review
 
 - **English.** The English half of the site — including the twenty d20 lines —
