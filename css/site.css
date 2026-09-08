@@ -28,6 +28,15 @@
   --text-35: color-mix(in srgb, var(--color-text) 35%, transparent);
 }
 
+html {
+  /* iOS and Android bounce past the ends of the document, and during that
+     bounce the browser drags position:fixed layers — the animated background
+     among them — leaving a bare strip behind. Refusing the overscroll at the
+     root is the only thing that stops it; script cannot reach it. */
+  overscroll-behavior-y: none;
+  background: var(--color-bg);
+}
+
 body {
   margin: 0;
   background: var(--color-bg);
@@ -35,7 +44,6 @@ body {
   font-family: "Inter", system-ui, sans-serif;
   font-size: 15px;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
 }
 
 a { color: var(--color-accent-400); text-decoration: none; }
@@ -54,12 +62,16 @@ h1, h2, h3, h4 {
 }
 
 .skip-link {
-  position: absolute; left: -9999px; top: 0; z-index: 100;
+  /* parked above the viewport rather than off to the left: with no
+     overflow-x:hidden on the body any more, nothing should sit outside the
+     horizontal edges at all */
+  position: absolute; top: 12px; left: 12px; z-index: 100;
+  transform: translateY(-250%);
   padding: 10px 16px; background: var(--color-surface);
   border: 1px solid var(--color-accent); border-radius: var(--radius-md);
   font-family: var(--font-display); font-size: 12px;
 }
-.skip-link:focus { left: 12px; top: 12px; }
+.skip-link:focus { transform: none; }
 
 /* ── Layout shell ──────────────────────────────────────────────────────── */
 
@@ -120,6 +132,11 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   position: fixed; inset: 0;
   width: 100%; height: 100%;
   z-index: 0; pointer-events: none;
+}
+@media (pointer: coarse) {
+  /* overhangs the viewport, so there is no bare edge to expose if the browser
+     drags the layer anyway (top and height both set, so bottom is ignored) */
+  #bg-canvas { top: -8vh; height: 116vh; }
 }
 
 #asteroid-layer {
