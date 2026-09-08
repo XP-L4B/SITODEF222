@@ -14,6 +14,7 @@ import { initFormatForm } from "./format.js";
 import { award, initGamification } from "./gamification.js";
 import { initI18n } from "./i18n.js";
 import { initMapViewer } from "./map-viewer.js";
+import { initPeopleBand } from "./people-band.js";
 
 /* The header wraps to two or three rows on narrow screens, and English text
    changes where it wraps, so its height is measured rather than assumed.
@@ -51,6 +52,7 @@ function start() {
   );
   initAccordion();
   initMapViewer();
+  initPeopleBand();
   initFormatForm();
 
   onScroll((p) => {

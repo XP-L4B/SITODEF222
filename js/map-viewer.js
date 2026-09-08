@@ -234,17 +234,43 @@ export function initMapViewer() {
 
   /* ── wiring ───────────────────────────────────────────────────────────── */
 
+  /* Where the window sits.
+
+     On a wide screen the cards are side by side and one window below them all
+     reads fine. Stacked on a phone it does not: tap Minecraft and the picture
+     opens three cards further down, off screen, so nothing appears to happen.
+     There the window moves to directly under the card that was tapped. */
+  const grid = document.querySelector(".maps__grid");
+  const narrow = window.matchMedia("(max-width: 899px)");
+
+  const placeViewer = () => {
+    if (!grid) return;
+    if (narrow.matches && selected) {
+      if (selected.nextElementSibling !== viewer) selected.after(viewer);
+    } else if (viewer.parentElement !== grid.parentElement) {
+      grid.after(viewer);
+    }
+  };
+
   cards.forEach((card) => {
     card.addEventListener("click", () => {
       selected = card;
-      // paint first: the window has to be on the page before the canvas can be
-      // sized from it, otherwise the decode runs into a 0×0 surface
+      // move it before painting, and paint before decoding: the window has to
+      // be in its final place and on the page before the canvas can be sized
+      // from it, otherwise the decode runs into a 0×0 surface
+      placeViewer();
       paint();
       if (card.dataset.image) decode(card.dataset.image);
       else stopDecode();
       paint();
       award("open");
     });
+  });
+
+  // rotating a phone, or resizing a window past the breakpoint, moves it back
+  narrow.addEventListener("change", () => {
+    placeViewer();
+    if (selected?.dataset.image) decode(selected.dataset.image);
   });
 
   document.addEventListener("languagechange", paint);
