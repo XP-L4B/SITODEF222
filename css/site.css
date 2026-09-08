@@ -351,7 +351,14 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   /* they walk in and out of the edges rather than being cut off at them */
   mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+  /* the row can be turned by hand: take horizontal gestures, leave vertical
+     ones to the page so a finger can still scroll straight through the band */
+  touch-action: pan-y;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
 }
+.crowd.is-grabbing { cursor: grabbing; }
 
 .crowd__track {
   display: flex;
@@ -371,6 +378,8 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   flex: none;
   image-rendering: pixelated;       /* pixel art: keep the edges crisp */
   opacity: .92;
+  -webkit-user-drag: none;          /* dragging the row, not the picture */
+  pointer-events: none;
 }
 
 @media (min-width: 900px) {
