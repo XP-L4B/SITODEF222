@@ -261,7 +261,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 .partners { padding-bottom: 80px; }
 .partners__grid {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(132px, 100%), 1fr));
   gap: 10px;
 }
 .partners__cell {
@@ -293,7 +293,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 }
 .stats__grid {
   padding-block: 52px;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
   gap: 36px;
 }
 .stat p { margin: 0; }
@@ -318,7 +318,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 
 .badges {
   list-style: none; margin: 0; padding: 0;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
   gap: 14px;
 }
 .badge {
@@ -356,7 +356,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 .services .section-lede { margin-bottom: 44px; }
 
 .services__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 28px;
 }
 .catalogue {
@@ -408,7 +408,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 .maps h2 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; margin: 0 0 18px; max-width: 26ch; }
 
 .maps__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
   gap: 20px;
 }
 .map-card {
@@ -517,7 +517,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 .products h2 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; margin: 0 0 44px; max-width: 24ch; }
 
 .products__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 28px;
 }
 .product {
@@ -601,7 +601,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 /* ── VR / AR ───────────────────────────────────────────────────────────── */
 
 .vr {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
   gap: 44px; align-items: center;
   padding-block: 50px 90px;
 }
@@ -797,7 +797,7 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
 }
 .site-footer__grid {
   padding-block: 80px 70px;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 44px;
 }
 .site-footer__logo { height: 82px; width: auto; margin-bottom: 22px; }
@@ -893,6 +893,17 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   .site-header__brand img { height: 22px; }
   .hud { gap: 10px; }
   .hud__bar { width: 64px; }
+}
+
+@media (max-width: 480px) {
+  /* Below about 410px the auto-fit track no longer fits two badges and they
+     fall into one tall column. Two per row reads better and halves the height
+     the section takes; the tile tightens to pay for the narrower cell. */
+  .badges { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .badge { padding: 16px 14px; border-radius: var(--radius-md); }
+  .badge__glyph { font-size: 21px; margin-bottom: 10px; }
+  .badge__name { font-size: 12px; margin-bottom: 5px; }
+  .badge__how { font-size: 11.5px; line-height: 1.45; }
 }
 
 /* ── Reduced motion ────────────────────────────────────────────────────── */
