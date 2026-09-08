@@ -16,10 +16,10 @@
 
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=2026-09-08.13">
-<link rel="stylesheet" href="css/nocturne.css?v=2026-09-08.13">
-<link rel="stylesheet" href="css/site.css?v=2026-09-08.13">
-<script type="module" src="js/main.js?v=2026-09-08.13"></script>
+<link rel="stylesheet" href="css/fonts.css?v=2026-09-08.14">
+<link rel="stylesheet" href="css/nocturne.css?v=2026-09-08.14">
+<link rel="stylesheet" href="css/site.css?v=2026-09-08.14">
+<script type="module" src="js/main.js?v=2026-09-08.14"></script>
 </head>
 <body>
 
@@ -29,7 +29,7 @@
    what the current build is and, if it is older, reloads itself at a URL the
    cache has never seen. Once per session, so it can never loop. */
 (function () {
-  var BUILD = "2026-09-08.13";
+  var BUILD = "2026-09-08.14";
   try {
     /* One attempt per session, whatever happens. Comparing the stored value
        against BUILD instead would loop forever when the reload still returns
@@ -214,125 +214,132 @@
         <p class="kicker kicker--accent" data-en="For HR">PER HR</p>
         <h3 data-en="Immersive learning paths, engagement, lower pathological turnover">Percorsi formativi immersivi, engagement, turnover più basso</h3>
 
-        <div class="accordion">
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-lego">
-              <span data-en="Sessions with building bricks">Incontri con mattoncini da costruzione</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-lego" hidden>
-            <p data-en="They foster creativity, help visualise abstract concepts, spark brainstorming and let everyone contribute regardless of how extroverted they are.">Favoriscono la creatività, aiutano a visualizzare concetti astratti, stimolano brainstorming e permettono a tutti di contribuire indipendentemente dai livelli di estroversione.</p>
-          </div>
+        <button type="button" class="catalogue__toggle" aria-expanded="false" aria-controls="cat-hr" hidden>
+          <span data-en="12 activities">12 ATTIVITÀ</span>
+          <span class="catalogue__toggle-tick" aria-hidden="true">+</span>
+        </button>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-carte">
-              <span data-en="Custom playing cards (quizzes, roles, resources, values)">Carte da gioco personalizzate (quiz, ruoli, risorse, valori)</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-carte" hidden>
-            <p data-en="They make training sessions and workshops interactive, support scenario simulation and decision making, create competitive and cooperative dynamics and build strategic thinking and crisis handling.">Rendono interattive le sessioni di formazione o workshop, facilitano simulazioni di scenari e decision-making, creano dinamiche di gioco competitive e cooperative e formano pensiero strategico e gestione delle criticità.</p>
-          </div>
+        <div class="catalogue__body" id="cat-hr">
+          <div class="accordion">
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-lego">
+                <span data-en="Sessions with building bricks">Incontri con mattoncini da costruzione</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-lego" hidden>
+              <p data-en="They foster creativity, help visualise abstract concepts, spark brainstorming and let everyone contribute regardless of how extroverted they are.">Favoriscono la creatività, aiutano a visualizzare concetti astratti, stimolano brainstorming e permettono a tutti di contribuire indipendentemente dai livelli di estroversione.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-app">
-              <span data-en="Corporate gamification app">App di gamification aziendale</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-app" hidden>
-            <p data-en="They centralise missions, leaderboards and daily challenges, supporting consistency and engagement even remotely; they integrate with HR and CRM.">Centralizzano missioni, classifiche e sfide giornaliere, favorendo la costanza e l'engagement anche da remoto; integrabili con HR e CRM.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-carte">
+                <span data-en="Custom playing cards (quizzes, roles, resources, values)">Carte da gioco personalizzate (quiz, ruoli, risorse, valori)</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-carte" hidden>
+              <p data-en="They make training sessions and workshops interactive, support scenario simulation and decision making, create competitive and cooperative dynamics and build strategic thinking and crisis handling.">Rendono interattive le sessioni di formazione o workshop, facilitano simulazioni di scenari e decision-making, creano dinamiche di gioco competitive e cooperative e formano pensiero strategico e gestione delle criticità.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-vr">
-              <span data-en="VR/AR role play and simulations">Role-playing e simulazioni VR/AR</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-vr" hidden>
-            <p data-en="Beyond immersive training, they let people rehearse realistic scenarios, safety risk management in particular.">Oltre a formare in modo immersivo permettono di sperimentare scenari realistici, in particolare la gestione dei rischi in sicurezza.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-app">
+                <span data-en="Corporate gamification app">App di gamification aziendale</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-app" hidden>
+              <p data-en="They centralise missions, leaderboards and daily challenges, supporting consistency and engagement even remotely; they integrate with HR and CRM.">Centralizzano missioni, classifiche e sfide giornaliere, favorendo la costanza e l'engagement anche da remoto; integrabili con HR e CRM.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-tb">
-              <span data-en="Educational, gamified team building">Team building formativi e ludicizzati</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-tb" hidden>
-            <p data-en="Days where the group works on a shared objective under game rules, roles and constraints. These are not away-days: every mechanic is chosen to surface a specific behaviour — who decides under pressure, how information travels, what happens when resources run short. The closing debrief connects what happened in the game to what happens at the desk.">Giornate in cui il gruppo lavora su un obiettivo comune con regole, ruoli e vincoli di gioco. Non sono uscite ricreative: ogni meccanica è scelta per far emergere un comportamento preciso — chi prende decisioni sotto pressione, come circolano le informazioni, cosa accade quando le risorse non bastano. Il debriefing finale collega quello che è successo nel gioco a quello che succede in ufficio.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-vr">
+                <span data-en="VR/AR role play and simulations">Role-playing e simulazioni VR/AR</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-vr" hidden>
+              <p data-en="Beyond immersive training, they let people rehearse realistic scenarios, safety risk management in particular.">Oltre a formare in modo immersivo permettono di sperimentare scenari realistici, in particolare la gestione dei rischi in sicurezza.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-puzzle">
-              <span data-en="Puzzles and logic challenges">Puzzle e sfide logiche</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-puzzle" hidden>
-            <p data-en="They train critical thinking and problem solving, and work as meeting icebreakers or as part of innovation workshops.">Allenano il pensiero critico e il problem solving, possono essere usati come icebreaker nei meeting o come parte di workshop di innovazione.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-tb">
+                <span data-en="Educational, gamified team building">Team building formativi e ludicizzati</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-tb" hidden>
+              <p data-en="Days where the group works on a shared objective under game rules, roles and constraints. These are not away-days: every mechanic is chosen to surface a specific behaviour — who decides under pressure, how information travels, what happens when resources run short. The closing debrief connects what happened in the game to what happens at the desk.">Giornate in cui il gruppo lavora su un obiettivo comune con regole, ruoli e vincoli di gioco. Non sono uscite ricreative: ogni meccanica è scelta per far emergere un comportamento preciso — chi prende decisioni sotto pressione, come circolano le informazioni, cosa accade quando le risorse non bastano. Il debriefing finale collega quello che è successo nel gioco a quello che succede in ufficio.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-quiz">
-              <span data-en="Quizzes and interactive ideas">Quiz e idee interattive</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-quiz" hidden>
-            <p data-en="They increase active participation during meetings and courses, give immediate feedback and involve the audience.">Aumentano la partecipazione attiva durante meeting e corsi, forniscono feedback immediato, coinvolgono il pubblico attivamente.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-puzzle">
+                <span data-en="Puzzles and logic challenges">Puzzle e sfide logiche</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-puzzle" hidden>
+              <p data-en="They train critical thinking and problem solving, and work as meeting icebreakers or as part of innovation workshops.">Allenano il pensiero critico e il problem solving, possono essere usati come icebreaker nei meeting o come parte di workshop di innovazione.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-story">
-              <span data-en="Mission-based storytelling (narrative games)">Storytelling a missioni (giochi narrativi)</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-story" hidden>
-            <p data-en="They turn training or onboarding paths into journeys with stages and objectives, keeping motivation high.">Trasformano i percorsi di formazione o onboarding in “viaggi” con tappe e obiettivi, mantenendo alta la motivazione.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-quiz">
+                <span data-en="Quizzes and interactive ideas">Quiz e idee interattive</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-quiz" hidden>
+              <p data-en="They increase active participation during meetings and courses, give immediate feedback and involve the audience.">Aumentano la partecipazione attiva durante meeting e corsi, forniscono feedback immediato, coinvolgono il pubblico attivamente.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-dash">
-              <span data-en="Digital dashboards with points and badges">Dashboard digitali con punti/badge</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-dash" hidden>
-            <p data-en="They track progress in real time, reward objectives met, show team progress and make individual growth clearer.">Monitorano in tempo reale l'avanzamento delle attività, premiano obiettivi raggiunti, visualizzano i progressi del team e rendono più chiara la crescita individuale.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-story">
+                <span data-en="Mission-based storytelling (narrative games)">Storytelling a missioni (giochi narrativi)</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-story" hidden>
+              <p data-en="They turn training or onboarding paths into journeys with stages and objectives, keeping motivation high.">Trasformano i percorsi di formazione o onboarding in “viaggi” con tappe e obiettivi, mantenendo alta la motivazione.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-ceo">
-              <span data-en="Management simulators (Football Manager style)">Gestionale manageriale (simulazioni tipo Football Manager)</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-ceo" hidden>
-            <p data-en="They train strategic vision and decision making in complex scenarios. The player handles limited resources (budget, staff, targets), makes fast calls and monitors the medium and long term consequences.">Permettono di allenare la visione strategica e le capacità decisionali in scenari complessi. Il giocatore deve gestire risorse limitate (budget, personale, obiettivi), prendere decisioni rapide e monitorarne le conseguenze a medio-lungo termine.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-dash">
+                <span data-en="Digital dashboards with points and badges">Dashboard digitali con punti/badge</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-dash" hidden>
+              <p data-en="They track progress in real time, reward objectives met, show team progress and make individual growth clearer.">Monitorano in tempo reale l'avanzamento delle attività, premiano obiettivi raggiunti, visualizzano i progressi del team e rendono più chiara la crescita individuale.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mappe">
-              <span data-en="Custom game maps or group activities on creative games">Mappe di gioco personalizzate o attività di gruppo su giochi creativi</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-mappe" hidden>
-            <p data-en="They increase engagement and creativity thanks to how far they can be personalised. They can be branded for marketing purposes or for open days and employer branding.">Aumentano coinvolgimento e creatività grazie alla loro personalizzazione. Possono essere brandizzate per l'azienda a scopo marketing o per open day e employer branding.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-ceo">
+                <span data-en="Management simulators (Football Manager style)">Gestionale manageriale (simulazioni tipo Football Manager)</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-ceo" hidden>
+              <p data-en="They train strategic vision and decision making in complex scenarios. The player handles limited resources (budget, staff, targets), makes fast calls and monitors the medium and long term consequences.">Permettono di allenare la visione strategica e le capacità decisionali in scenari complessi. Il giocatore deve gestire risorse limitate (budget, personale, obiettivi), prendere decisioni rapide e monitorarne le conseguenze a medio-lungo termine.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-esport">
-              <span data-en="eSports activities with the NOVO esports partners (tournaments and competitive gaming)">Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-esport" hidden>
-            <p data-en="They create team building or public events through cooperative and competitive games, and develop soft skills such as fast communication, problem solving and situational leadership. They engage younger generations in particular, strengthen employer branding and are accessible remotely.">Creano team building o eventi aperti al pubblico attraverso giochi cooperativi e competitivi, sviluppano soft skill come comunicazione rapida, problem solving e leadership situazionale. Coinvolgono soprattutto le nuove generazioni, rafforzano l'employer branding e sono accessibili anche da remoto, favorendo accessibilità e partecipazione.</p>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mappe">
+                <span data-en="Custom game maps or group activities on creative games">Mappe di gioco personalizzate o attività di gruppo su giochi creativi</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-mappe" hidden>
+              <p data-en="They increase engagement and creativity thanks to how far they can be personalised. They can be branded for marketing purposes or for open days and employer branding.">Aumentano coinvolgimento e creatività grazie alla loro personalizzazione. Possono essere brandizzate per l'azienda a scopo marketing o per open day e employer branding.</p>
+            </div>
+
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-esport">
+                <span data-en="eSports activities with the NOVO esports partners (tournaments and competitive gaming)">Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-esport" hidden>
+              <p data-en="They create team building or public events through cooperative and competitive games, and develop soft skills such as fast communication, problem solving and situational leadership. They engage younger generations in particular, strengthen employer branding and are accessible remotely.">Creano team building o eventi aperti al pubblico attraverso giochi cooperativi e competitivi, sviluppano soft skill come comunicazione rapida, problem solving e leadership situazionale. Coinvolgono soprattutto le nuove generazioni, rafforzano l'employer branding e sono accessibili anche da remoto, favorendo accessibilità e partecipazione.</p>
+            </div>
           </div>
         </div>
       </article>
@@ -341,55 +348,62 @@
         <p class="kicker kicker--blue" data-en="For Marketing">PER MARKETING</p>
         <h3 data-en="Marketing to live, not to watch: branded games and immersive experiences">Un marketing da vivere invece che da guardare</h3>
 
-        <div class="accordion">
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mcarte">
-              <span data-en="Custom card games">Giochi di carte personalizzate</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-mcarte" hidden>
-            <p data-en="Cards are tangible, brandable and easy to share; they become gadgets and storytelling tools. They convey a company that makes its values concrete, helping virality and brand recall.">Le carte sono tangibili, brandizzabili e facilmente condivisibili, diventano gadget e storytelling tools. Trasmettono l'immagine di un'azienda che sa rendere concreti i valori, favorendo viralità e ricordo del brand.</p>
-          </div>
+        <button type="button" class="catalogue__toggle" aria-expanded="false" aria-controls="cat-mk" hidden>
+          <span data-en="5 activities">5 ATTIVITÀ</span>
+          <span class="catalogue__toggle-tick" aria-hidden="true">+</span>
+        </button>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-escape">
-              <span data-en="Physical or virtual escape rooms">Escape room fisiche o virtuali</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-escape" hidden>
-            <p data-en="Memorable experiences with high narrative impact. Excellent for PR, events and internal or external communication.">Sono esperienze memorabili ad alto impatto narrativo. Ottime per PR, eventi e comunicazione interna/esterna.</p>
-          </div>
+        <div class="catalogue__body" id="cat-mk">
+          <div class="accordion">
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mcarte">
+                <span data-en="Custom card games">Giochi di carte personalizzate</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-mcarte" hidden>
+              <p data-en="Cards are tangible, brandable and easy to share; they become gadgets and storytelling tools. They convey a company that makes its values concrete, helping virality and brand recall.">Le carte sono tangibili, brandizzabili e facilmente condivisibili, diventano gadget e storytelling tools. Trasmettono l'immagine di un'azienda che sa rendere concreti i valori, favorendo viralità e ricordo del brand.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mvr">
-              <span data-en="VR/AR products">Prodotti VR/AR</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-mvr" hidden>
-            <p data-en="They associate the brand with leading-edge technology and immersive content. Perfect for events and trade fairs, they strengthen the perception of innovation.">Associano il brand a tecnologie all'avanguardia e contenuti immersivi. Perfetti da raccontare in eventi e fiere, rafforzano la percezione di innovazione.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-escape">
+                <span data-en="Physical or virtual escape rooms">Escape room fisiche o virtuali</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-escape" hidden>
+              <p data-en="Memorable experiences with high narrative impact. Excellent for PR, events and internal or external communication.">Sono esperienze memorabili ad alto impatto narrativo. Ottime per PR, eventi e comunicazione interna/esterna.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mmappe">
-              <span data-en="Custom game maps or group activities on creative games">Mappe di gioco personalizzate o attività di gruppo su giochi creativi</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-mmappe" hidden>
-            <p data-en="Brandable visual tools, perfect for corporate storytelling and for engaging younger generations.">Sono strumenti visivi brandizzabili, perfetti per storytelling aziendale e coinvolgimento delle nuove generazioni.</p>
-          </div>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mvr">
+                <span data-en="VR/AR products">Prodotti VR/AR</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-mvr" hidden>
+              <p data-en="They associate the brand with leading-edge technology and immersive content. Perfect for events and trade fairs, they strengthen the perception of innovation.">Associano il brand a tecnologie all'avanguardia e contenuti immersivi. Perfetti da raccontare in eventi e fiere, rafforzano la percezione di innovazione.</p>
+            </div>
 
-          <h4 class="accordion__item">
-            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mesport">
-              <span data-en="eSports activities with the NOVO esports partners (tournaments and competitive gaming)">Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)</span>
-              <span class="accordion__tick" aria-hidden="true">+</span>
-            </button>
-          </h4>
-          <div class="accordion__panel" id="svc-mesport" hidden>
-            <p data-en="They speak Gen Z and Gen Alpha directly, strengthen employer branding and position the company as young and innovative. Internal or external tournaments generate viral content, PR and a sense of community.">Parlano direttamente al linguaggio Gen Z/Gen Alpha, rafforzano employer branding e posizionano l'azienda come giovane e innovativa. Tornei interni/esterni generano contenuti virali, PR e senso di community.</p>
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mmappe">
+                <span data-en="Custom game maps or group activities on creative games">Mappe di gioco personalizzate o attività di gruppo su giochi creativi</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-mmappe" hidden>
+              <p data-en="Brandable visual tools, perfect for corporate storytelling and for engaging younger generations.">Sono strumenti visivi brandizzabili, perfetti per storytelling aziendale e coinvolgimento delle nuove generazioni.</p>
+            </div>
+
+            <h4 class="accordion__item">
+              <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mesport">
+                <span data-en="eSports activities with the NOVO esports partners (tournaments and competitive gaming)">Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)</span>
+                <span class="accordion__tick" aria-hidden="true">+</span>
+              </button>
+            </h4>
+            <div class="accordion__panel" id="svc-mesport" hidden>
+              <p data-en="They speak Gen Z and Gen Alpha directly, strengthen employer branding and position the company as young and innovative. Internal or external tournaments generate viral content, PR and a sense of community.">Parlano direttamente al linguaggio Gen Z/Gen Alpha, rafforzano employer branding e posizionano l'azienda come giovane e innovativa. Tornei interni/esterni generano contenuti virali, PR e senso di community.</p>
+            </div>
           </div>
         </div>
       </article>

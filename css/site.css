@@ -497,6 +497,31 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   margin: 0 0 24px;
 }
 
+/* On one column the two catalogues are seventeen entries stacked end to end,
+   and everything under them is a long scroll away. There they fold: the
+   heading stays, the list goes behind a toggle. The fold is added by script
+   and only under the width where the columns stack — with no script the
+   button never appears and both lists are open, as they are on a wide
+   screen. */
+.catalogue__toggle {
+  display: none;
+  width: 100%;
+  margin: 0 0 4px;
+  padding: 12px 0;
+  border: 0; border-top: 1px solid var(--line-strong);
+  background: transparent;
+  color: var(--color-accent-300);
+  font-family: var(--font-display);
+  font-size: 11px; letter-spacing: 0.16em;
+  cursor: pointer;
+  justify-content: space-between; align-items: center; gap: 14px;
+}
+.catalogue.is-folded .catalogue__toggle { display: flex; }
+/* bigger and brighter than the ticks on the entries inside it, so the two
+   levels of open-and-close do not read as the same control */
+.catalogue__toggle-tick { font-size: 15px; color: var(--color-accent-400); }
+.catalogue.is-folded .catalogue__body { overflow: hidden; transition: max-height .4s ease; }
+
 .accordion__item { margin: 0; font-weight: inherit; }
 .accordion__trigger {
   width: 100%; text-align: left;
