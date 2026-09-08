@@ -30,10 +30,15 @@ const LIFT = 0.45;
 const SPIN = 105;
 const WAVE = 0.38;
 
-/* Where the shatter is complete, as a fraction of the viewport height. Half a
-   screen: short enough that the last letters break while the title is still on
-   it, rather than finishing the job behind the header. */
-const SPAN = 0.5;
+/* How much of the scroll the title has before it is behind the header is what
+   the shatter gets to use — measured, not guessed. On a phone the header is
+   three rows tall and the heading passes under it after a couple of hundred
+   pixels, so a span set as a fraction of the viewport spent most of its length
+   animating something already out of sight. Four fifths of the real distance
+   leaves the last letters finishing just before the last line goes under. */
+const USE = 0.8;
+const SPAN_MAX = 0.5;
+const SPAN_MIN = 170;
 
 /* Pieces per letter. Phones get fewer — every shard is a text box the browser
    repaints each frame, and the difference is invisible at that size. */
@@ -190,12 +195,30 @@ export function initHeroTitle(h1) {
     if (!frame) frame = requestAnimationFrame(tick);
   }
 
+  /* The scroll distance the shatter is given. Remeasured rather than kept: the
+     header changes height with the language and with the width, and so does
+     where the heading wraps. */
+  let span = 400;
+
+  function measure() {
+    const box = h1.getBoundingClientRect();
+    const header =
+      parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--header-height")) || 0;
+    // how far the page scrolls before the heading's last line is under the header
+    const room = box.bottom + window.scrollY - header;
+    span = Math.max(SPAN_MIN, Math.min(window.innerHeight * SPAN_MAX, room * USE));
+  }
+
   function read() {
-    const span = Math.max(240, window.innerHeight * SPAN);
     const next = clamp01(window.scrollY / span);
     if (next === target) return;
     target = next;
     schedule();
+  }
+
+  function remeasure() {
+    measure();
+    read();
   }
 
   /* Reduced motion keeps the heading exactly as written: no split, no shards,
@@ -203,14 +226,19 @@ export function initHeroTitle(h1) {
   if (env.reduce) return;
 
   build();
+  measure();
   read();
   value = target;
   paint();
 
   onScroll(read);
-  window.addEventListener("resize", read, { passive: true });
+  window.addEventListener("resize", remeasure, { passive: true });
+  // the header is measured into --header-height after the fonts land, and the
+  // heading wraps differently once they do
+  document.fonts?.ready.then(remeasure);
   document.addEventListener("languagechange", () => {
     build();
+    remeasure();
     paint();
   });
 }
