@@ -32,7 +32,11 @@ export function onScroll(fn) {
 export function initEnv() {
   const readScroll = () => {
     const doc = document.documentElement;
-    env.scrollP = doc.scrollTop / Math.max(1, doc.scrollHeight - doc.clientHeight);
+    const p = doc.scrollTop / Math.max(1, doc.scrollHeight - doc.clientHeight);
+    // Rubber-band overscroll reports past both ends — negative at the top on
+    // iOS, over 1 at the bottom. Progress is 0..1 by definition, and consumers
+    // index palettes with it, so it is clamped here rather than in each of them.
+    env.scrollP = Math.min(1, Math.max(0, p));
     listeners.forEach((fn) => fn(env.scrollP));
   };
 

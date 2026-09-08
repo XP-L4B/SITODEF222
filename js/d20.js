@@ -239,6 +239,9 @@ export function initDie(canvas, button, quoteEl) {
   let last = performance.now();
 
   const draw = (now) => {
+    // asked for first, so a throw below cannot end the loop for good
+    requestAnimationFrame(draw);
+
     const dt = Math.min(48, now - last);
     last = now;
 
@@ -346,8 +349,6 @@ export function initDie(canvas, button, quoteEl) {
       ctx.fillText(String(num[fi]), 0, 8);
       ctx.restore();
     });
-
-    requestAnimationFrame(draw);
   };
   requestAnimationFrame(draw);
 

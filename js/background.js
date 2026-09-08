@@ -32,7 +32,7 @@ const PALETTE = [
 const lerp = (a, b, m) => a + (b - a) * m;
 
 function mixPalette(p) {
-  const scaled = p * 2;
+  const scaled = Math.min(1, Math.max(0, p)) * 2;
   const i = Math.min(1, Math.floor(scaled));
   const f = scaled - i;
   const a = PALETTE[i];
@@ -97,6 +97,9 @@ export function initBackground(canvas) {
   let smy = RESTING_Y;
 
   const draw = () => {
+    // asked for before any of the work below, so a throw cannot end the loop
+    requestAnimationFrame(draw);
+
     const interactive = !env.reduce;
     time += env.reduce ? 0 : 0.004;
 
@@ -224,8 +227,6 @@ export function initBackground(canvas) {
         }
       }
     });
-
-    requestAnimationFrame(draw);
   };
 
   requestAnimationFrame(draw);
