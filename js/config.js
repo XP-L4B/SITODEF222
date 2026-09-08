@@ -5,7 +5,7 @@
 export const BUILD = "2026-09-08.10";
 
 /* Where the "Possibile formato" request is posted.
-   Leave empty and the form falls back to opening a prefilled mail to
+   export const FORM_ENDPOINT = "https://formspree.io/f/xyzabcde";
    CONTACT_EMAIL, so the page is useful before any backend exists.
    Set it to a form endpoint (your own handler, Formspree, Basin, …) that
    accepts a JSON POST and the form submits there instead. */
