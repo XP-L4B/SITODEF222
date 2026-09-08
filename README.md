@@ -108,6 +108,19 @@ in `PEOPLE` in `js/people-band.js`; an empty list hides the band.
 
 ## Deploying a change
 
+**`.nojekyll` must stay.** GitHub Pages runs every `.html` file through
+Jekyll's Liquid templating when it publishes from a branch, and `project/`
+holds three files from the design handoff with 55 `{{ … }}` placeholders each.
+Jekyll fails on them, and a failed Pages build leaves the previous deploy
+online — which is how a site can sit at its first version while every later
+commit lands correctly in git. The empty `.nojekyll` at the root turns that
+step off and the files are served as they are. It also skips rebuilding the
+81MB of reference material in `project/` on every deploy.
+
+`version.txt` carries the same build stamp. Opening it on the live site
+answers "did the deploy actually happen" without depending on the page's HTML,
+CSS or JavaScript being fresh.
+
 Asset URLs carry a version — `css/site.css?v=2026-09-08.6` — so a browser
 cannot serve a stale stylesheet after a deploy. Bump it in two places when you
 ship: the `?v=` on the links in `index.html`, and `BUILD` in `js/config.js`,
