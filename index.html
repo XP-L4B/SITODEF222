@@ -16,12 +16,38 @@
 
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=2026-09-08.8">
-<link rel="stylesheet" href="css/nocturne.css?v=2026-09-08.8">
-<link rel="stylesheet" href="css/site.css?v=2026-09-08.8">
-<script type="module" src="js/main.js?v=2026-09-08.8"></script>
+<link rel="stylesheet" href="css/fonts.css?v=2026-09-08.9">
+<link rel="stylesheet" href="css/nocturne.css?v=2026-09-08.9">
+<link rel="stylesheet" href="css/site.css?v=2026-09-08.9">
+<script type="module" src="js/main.js?v=2026-09-08.9"></script>
 </head>
 <body>
+
+<script>
+/* A stale copy of this page cannot be fixed by the ?v= on its own links —
+   those only help once the new HTML has arrived. So the page asks the server
+   what the current build is and, if it is older, reloads itself at a URL the
+   cache has never seen. Once per session, so it can never loop. */
+(function () {
+  var BUILD = "2026-09-08.9";
+  try {
+    /* One attempt per session, whatever happens. Comparing the stored value
+       against BUILD instead would loop forever when the reload still returns
+       a cached page — which is exactly the case this exists for. */
+    if (sessionStorage.getItem("xpl4b_reload_attempted")) return;
+    fetch("version.txt?t=" + Date.now(), { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.text() : null; })
+      .then(function (text) {
+        if (!text) return;
+        var live = (text.match(/build\s+(\S+)/) || [])[1];
+        if (!live || live === BUILD) return;
+        sessionStorage.setItem("xpl4b_reload_attempted", live);
+        location.replace(location.pathname + "?b=" + encodeURIComponent(live) + location.hash);
+      })
+      .catch(function () {});
+  } catch (e) {}
+})();
+</script>
 
 <a class="skip-link" href="#main" data-en="Skip to content">Vai al contenuto</a>
 

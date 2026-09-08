@@ -117,6 +117,14 @@ commit lands correctly in git. The empty `.nojekyll` at the root turns that
 step off and the files are served as they are. It also skips rebuilding the
 81MB of reference material in `project/` on every deploy.
 
+The page also checks `version.txt` on load and, if the build it was served is
+older, replaces itself with a URL the cache has never seen. That closes the
+last hole: the `?v=` on the links only helps once the new HTML has arrived, and
+a device holding a stale `index.html` never gets that far. It tries once per
+session, recorded before the reload rather than compared against the build —
+comparing would loop forever whenever the reload still returns a cached page,
+which is exactly the case it exists for.
+
 `version.txt` carries the same build stamp. Opening it on the live site
 answers "did the deploy actually happen" without depending on the page's HTML,
 CSS or JavaScript being fresh.
