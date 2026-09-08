@@ -10,6 +10,19 @@ senza aprire branch di lavoro e senza chiedere conferma ogni volta.
   chiederle esplicitamente.
 - Remote: `origin` → https://github.com/XP-L4B/SITODEF222.git
 
+**Il sito però viene pubblicato dal branch `implement-homepage`, non da
+`main`.** Finché è così, ogni push va portato anche lì, altrimenti Riccardo
+non vede nulla di quello che hai fatto:
+
+```sh
+git push origin main && git push origin main:implement-homepage
+```
+
+È un fast-forward: `implement-homepage` non ha commit propri, segue `main`.
+Questa cosa è già costata undici commit invisibili — le correzioni c'erano su
+`main` e il telefono continuava a caricare la prima versione. Se un giorno la
+pubblicazione passa a `main`, togli questa nota e il secondo push.
+
 Resta valido il resto: prima di pushare verifica che il sito funzioni davvero
 (vedi sotto), e descrivi nel messaggio di commit cosa cambia e perché.
 
