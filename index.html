@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>XP-L4B — Trasformare ogni attività in una esperienza coinvolgente</title>
+<meta name="description" content="XP-L4B progetta sessioni di sviluppo competenze e soluzioni di engagement per HR e Marketing, costruite con meccaniche di gioco, serious games e tecnologie VR/AR.">
+<link rel="canonical" href="https://www.xpl4b.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.xpl4b.com/">
+<meta property="og:title" content="XP-L4B — Trasformare ogni attività in una esperienza coinvolgente">
+<meta property="og:description" content="Sviluppo competenze ed engagement con meccaniche di gioco, serious games e tecnologie VR/AR, per HR e Marketing.">
+<meta property="og:image" content="https://www.xpl4b.com/assets/logo-vert.png">
+<meta name="theme-color" content="#161826">
+<link rel="icon" href="assets/logo-vert.png" type="image/png">
+
+<link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/nocturne.css">
+<link rel="stylesheet" href="css/site.css">
+<script type="module" src="js/main.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#main" data-en="Skip to content">Vai al contenuto</a>
+
+<canvas id="bg-canvas" aria-hidden="true"></canvas>
+<div id="asteroid-layer" aria-hidden="true"></div>
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="#main">
+      <img src="assets/logo-oriz.png" width="2052" height="394" alt="XP-L4B">
+    </a>
+
+    <nav class="site-nav" aria-label="Principale">
+      <a href="#cosa" data-en="Services">Servizi</a>
+      <a href="#mappe" data-en="Game maps">Mappe di gioco</a>
+      <a href="#prodotti" data-en="Products">Prodotti</a>
+      <a href="#formato" data-en="Possible format">Possibile formato</a>
+      <a href="#shop" data-en="Shop">Shop</a>
+    </nav>
+
+    <div class="hud" id="hud">
+      <div class="hud__score" id="hud-score" title="asteroidi distrutti" data-en-title="asteroids destroyed">
+        <span class="hud__score-glyph" aria-hidden="true">✦</span>
+        <span class="hud__score-value" id="hud-score-value">0</span>
+        <span class="visually-hidden" data-en="asteroids destroyed">asteroidi distrutti</span>
+      </div>
+      <span class="hud__level" id="hud-level">LV 1</span>
+      <div class="hud__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Esperienza" data-en-aria-label="Experience">
+        <div class="hud__bar-fill" id="hud-bar-fill"></div>
+      </div>
+    </div>
+
+    <button type="button" class="btn btn-secondary lang-toggle" id="lang-toggle" lang="en">EN</button>
+  </div>
+</header>
+
+<main id="main" class="page">
+
+  <!-- ── Hero ────────────────────────────────────────────────────────── -->
+  <section class="shell hero">
+    <div class="hero__text">
+      <p class="kicker kicker--mint" data-en="Skills development · Engagement · Analogue and digital products">SVILUPPO COMPETENZE · ENGAGEMENT · PRODOTTI ANALOGICI E DIGITALI</p>
+      <h1 data-en="Turning every activity into an engaging experience.">Trasformare ogni attività, in una esperienza coinvolgente.</h1>
+      <p class="hero__lede" data-en="XP-L4B designs skills-development sessions and engagement solutions for HR and Marketing teams, built with game mechanics, serious games and VR/AR technology.">XP-L4B progetta sessioni di sviluppo competenze e soluzioni di engagement per i reparti HR e Marketing, costruite con meccaniche di gioco, serious games e tecnologie VR/AR.</p>
+      <div class="hero__actions">
+        <a href="#formato" class="btn btn-primary btn--display" data-en="See a possible format">VEDI UN POSSIBILE FORMATO</a>
+        <a href="#cosa" class="btn btn-secondary btn--display" data-en="See the services">VEDI I SERVIZI</a>
+      </div>
+    </div>
+
+    <div class="hero__die">
+      <button type="button" class="die" id="die-button">
+        <canvas id="die-canvas" aria-hidden="true"></canvas>
+        <span class="die__label" data-en="roll the d20">TIRA IL D20</span>
+      </button>
+      <p class="die__quote" id="die-quote" role="status" data-en="Twenty faces, twenty possible formats. Try one.">Venti facce, venti formati possibili. Provane uno.</p>
+    </div>
+  </section>
+
+  <!-- ── Partner ─────────────────────────────────────────────────────── -->
+  <section class="shell partners" aria-labelledby="partners-title">
+    <h2 class="kicker kicker--muted" id="partners-title" data-en="Some of the brands we have worked with">ALCUNI BRAND CON CUI ABBIAMO LAVORATO</h2>
+    <ul class="partners__grid">
+      <li class="partners__cell"><img src="assets/partner-07-mono.png" width="480" height="95" loading="lazy" decoding="async" alt="UniCredit"></li>
+      <li class="partners__cell"><img src="assets/partner-11-mono.png" width="400" height="218" loading="lazy" decoding="async" alt="ManpowerGroup"></li>
+      <li class="partners__cell"><img src="assets/partner-09-mono.png" width="480" height="340" loading="lazy" decoding="async" alt="Gruppo Il Sole 24 Ore"></li>
+      <li class="partners__cell"><img src="assets/partner-08-mono.png" width="320" height="166" loading="lazy" decoding="async" alt="Confindustria"></li>
+      <li class="partners__cell"><img src="assets/partner-04-mono.png" width="360" height="115" loading="lazy" decoding="async" alt="Cegeka"></li>
+      <li class="partners__cell"><img src="assets/partner-00-mono.png" width="444" height="120" loading="lazy" decoding="async" alt="NOVANEXT training"></li>
+      <li class="partners__cell"><img src="assets/partner-02-mono.png" width="400" height="113" loading="lazy" decoding="async" alt="NOVO esports"></li>
+      <li class="partners__cell"><img src="assets/partner-05-mono.png" width="467" height="110" loading="lazy" decoding="async" alt="Cosmico"></li>
+      <li class="partners__cell"><img src="assets/partner-06-mono.png" width="400" height="181" loading="lazy" decoding="async" alt="We Make Future"></li>
+      <li class="partners__cell"><img src="assets/partner-10-mono.png" width="400" height="257" loading="lazy" decoding="async" alt="Didacta Italia"></li>
+      <li class="partners__cell"><img src="assets/partner-03-mono.png" width="296" height="132" loading="lazy" decoding="async" alt="Feinrohren"></li>
+      <li class="partners__cell"><img src="assets/partner-12-mono.png" width="480" height="160" loading="lazy" decoding="async" alt="Dilium"></li>
+      <li class="partners__cell"><img src="assets/partner-01-mono-trim.png" width="194" height="35" loading="lazy" decoding="async" alt="Flatmates"></li>
+      <li class="partners__cell"><img src="assets/partner-13-mono.png" width="386" height="99" loading="lazy" decoding="async" alt="Level Up MTA"></li>
+      <li class="partners__cell"><img src="assets/partner-14-mono.png" width="400" height="115" loading="lazy" decoding="async" alt="FC LEX Studio Legale"></li>
+      <li class="partners__cell"><img src="assets/partner-15-mono.png" width="331" height="150" loading="lazy" decoding="async" alt="ITE Enrico Tosi, Busto Arsizio"></li>
+    </ul>
+  </section>
+
+  <!-- ── Dati ────────────────────────────────────────────────────────── -->
+  <section class="stats" aria-label="Dati sulla gamification" data-en-aria-label="Gamification data">
+    <div class="shell stats__grid">
+      <div class="stat">
+        <p class="stat__value stat__value--mint">+50%</p>
+        <p class="stat__label" data-en="Gamification increases productivity by up to 50%">La gamification aumenta la produttività fino al 50%</p>
+      </div>
+      <div class="stat">
+        <p class="stat__value stat__value--blue">+60%</p>
+        <p class="stat__label" data-en="It increases employee engagement by up to 60%">Aumenta il coinvolgimento dei dipendenti fino al 60%</p>
+      </div>
+      <div class="stat">
+        <p class="stat__value stat__value--accent">72%</p>
+        <p class="stat__label" data-en="of people say gamification pushes them to be more motivated while training">Delle persone ritiene che la gamification li spinga a essere più motivati in fase formativa</p>
+      </div>
+      <div class="stat stat--source">
+        <p data-en="Source: Salesforce">Fonte: Salesforce</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Progressi ───────────────────────────────────────────────────── -->
+  <section class="shell progress" id="progress" aria-labelledby="progress-title">
+    <p class="kicker kicker--mint" data-en="Progress">I TUOI PROGRESSI</p>
+    <h2 id="progress-title" data-en="You have been playing since you arrived.">Stai giocando da quando sei arrivato.</h2>
+    <p class="section-lede" data-en="This is the same mechanic we build into your sessions: visible progress, unlockable objectives, nothing hidden.">È la stessa meccanica che costruiamo nelle vostre sessioni: progresso visibile, obiettivi sbloccabili, niente di nascosto.</p>
+    <ul class="badges">
+      <li class="badge" data-badge="scout">
+        <span class="badge__glyph" aria-hidden="true">◇</span>
+        <span class="badge__name" data-en="Explorer">Esploratore</span>
+        <span class="badge__how" data-en="Scroll half the page">Scorri metà pagina</span>
+        <span class="badge__state visually-hidden">bloccato</span>
+      </li>
+      <li class="badge" data-badge="roll">
+        <span class="badge__glyph" aria-hidden="true">◆</span>
+        <span class="badge__name" data-en="Player">Giocatore</span>
+        <span class="badge__how" data-en="Roll the d20">Tira il d20</span>
+        <span class="badge__state visually-hidden">bloccato</span>
+      </li>
+      <li class="badge" data-badge="ast">
+        <span class="badge__glyph" aria-hidden="true">✦</span>
+        <span class="badge__name" data-en="Gunner">Artigliere</span>
+        <span class="badge__how" data-en="Destroy an asteroid">Distruggi un asteroide</span>
+        <span class="badge__state visually-hidden">bloccato</span>
+      </li>
+      <li class="badge" data-badge="open">
+        <span class="badge__glyph" aria-hidden="true">▲</span>
+        <span class="badge__name" data-en="Strategist">Stratega</span>
+        <span class="badge__how" data-en="Open an activity">Apri un'attività</span>
+        <span class="badge__state visually-hidden">bloccato</span>
+      </li>
+      <li class="badge" data-badge="conf">
+        <span class="badge__glyph" aria-hidden="true">◈</span>
+        <span class="badge__name" data-en="Architect">Architetto</span>
+        <span class="badge__how" data-en="Answer the five questions">Rispondi alle cinque domande</span>
+        <span class="badge__state visually-hidden">bloccato</span>
+      </li>
+      <li class="badge" data-badge="send">
+        <span class="badge__glyph" aria-hidden="true">★</span>
+        <span class="badge__name">Player One</span>
+        <span class="badge__how" data-en="Send the request">Invia la richiesta</span>
+        <span class="badge__state visually-hidden">bloccato</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── Servizi ─────────────────────────────────────────────────────── -->
+  <section class="shell services" id="cosa" aria-labelledby="services-title">
+    <p class="kicker kicker--mint" data-en="Services">I SERVIZI</p>
+    <h2 id="services-title" data-en="Two departments, two catalogues.">Due reparti, due cataloghi.</h2>
+    <p class="section-lede" data-en="Open an activity to see what it involves.">Apri un'attività per vedere in cosa consiste.</p>
+
+    <div class="services__grid">
+      <article class="catalogue">
+        <p class="kicker kicker--accent" data-en="For HR">PER HR</p>
+        <h3 data-en="Immersive learning paths, engagement, lower pathological turnover">Percorsi formativi immersivi, engagement, turnover più basso</h3>
+
+        <div class="accordion">
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-lego">
+              <span data-en="Sessions with building bricks">Incontri con mattoncini da costruzione</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-lego" hidden>
+            <p data-en="They foster creativity, help visualise abstract concepts, spark brainstorming and let everyone contribute regardless of how extroverted they are.">Favoriscono la creatività, aiutano a visualizzare concetti astratti, stimolano brainstorming e permettono a tutti di contribuire indipendentemente dai livelli di estroversione.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-carte">
+              <span data-en="Custom playing cards (quizzes, roles, resources, values)">Carte da gioco personalizzate (quiz, ruoli, risorse, valori)</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-carte" hidden>
+            <p data-en="They make training sessions and workshops interactive, support scenario simulation and decision making, create competitive and cooperative dynamics and build strategic thinking and crisis handling.">Rendono interattive le sessioni di formazione o workshop, facilitano simulazioni di scenari e decision-making, creano dinamiche di gioco competitive e cooperative e formano pensiero strategico e gestione delle criticità.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-app">
+              <span data-en="Corporate gamification app">App di gamification aziendale</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-app" hidden>
+            <p data-en="They centralise missions, leaderboards and daily challenges, supporting consistency and engagement even remotely; they integrate with HR and CRM.">Centralizzano missioni, classifiche e sfide giornaliere, favorendo la costanza e l'engagement anche da remoto; integrabili con HR e CRM.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-vr">
+              <span data-en="VR/AR role play and simulations">Role-playing e simulazioni VR/AR</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-vr" hidden>
+            <p data-en="Beyond immersive training, they let people rehearse realistic scenarios, safety risk management in particular.">Oltre a formare in modo immersivo permettono di sperimentare scenari realistici, in particolare la gestione dei rischi in sicurezza.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-tb">
+              <span data-en="Educational, gamified team building">Team building formativi e ludicizzati</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-tb" hidden>
+            <p data-en="Days where the group works on a shared objective under game rules, roles and constraints. These are not away-days: every mechanic is chosen to surface a specific behaviour — who decides under pressure, how information travels, what happens when resources run short. The closing debrief connects what happened in the game to what happens at the desk.">Giornate in cui il gruppo lavora su un obiettivo comune con regole, ruoli e vincoli di gioco. Non sono uscite ricreative: ogni meccanica è scelta per far emergere un comportamento preciso — chi prende decisioni sotto pressione, come circolano le informazioni, cosa accade quando le risorse non bastano. Il debriefing finale collega quello che è successo nel gioco a quello che succede in ufficio.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-puzzle">
+              <span data-en="Puzzles and logic challenges">Puzzle e sfide logiche</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-puzzle" hidden>
+            <p data-en="They train critical thinking and problem solving, and work as meeting icebreakers or as part of innovation workshops.">Allenano il pensiero critico e il problem solving, possono essere usati come icebreaker nei meeting o come parte di workshop di innovazione.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-quiz">
+              <span data-en="Quizzes and interactive ideas">Quiz e idee interattive</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-quiz" hidden>
+            <p data-en="They increase active participation during meetings and courses, give immediate feedback and involve the audience.">Aumentano la partecipazione attiva durante meeting e corsi, forniscono feedback immediato, coinvolgono il pubblico attivamente.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-story">
+              <span data-en="Mission-based storytelling (narrative games)">Storytelling a missioni (giochi narrativi)</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-story" hidden>
+            <p data-en="They turn training or onboarding paths into journeys with stages and objectives, keeping motivation high.">Trasformano i percorsi di formazione o onboarding in “viaggi” con tappe e obiettivi, mantenendo alta la motivazione.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-dash">
+              <span data-en="Digital dashboards with points and badges">Dashboard digitali con punti/badge</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-dash" hidden>
+            <p data-en="They track progress in real time, reward objectives met, show team progress and make individual growth clearer.">Monitorano in tempo reale l'avanzamento delle attività, premiano obiettivi raggiunti, visualizzano i progressi del team e rendono più chiara la crescita individuale.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-ceo">
+              <span data-en="Management simulators (Football Manager style)">Gestionale manageriale (simulazioni tipo Football Manager)</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-ceo" hidden>
+            <p data-en="They train strategic vision and decision making in complex scenarios. The player handles limited resources (budget, staff, targets), makes fast calls and monitors the medium and long term consequences.">Permettono di allenare la visione strategica e le capacità decisionali in scenari complessi. Il giocatore deve gestire risorse limitate (budget, personale, obiettivi), prendere decisioni rapide e monitorarne le conseguenze a medio-lungo termine.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mappe">
+              <span data-en="Custom game maps or group activities on creative games">Mappe di gioco personalizzate o attività di gruppo su giochi creativi</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-mappe" hidden>
+            <p data-en="They increase engagement and creativity thanks to how far they can be personalised. They can be branded for marketing purposes or for open days and employer branding.">Aumentano coinvolgimento e creatività grazie alla loro personalizzazione. Possono essere brandizzate per l'azienda a scopo marketing o per open day e employer branding.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-esport">
+              <span data-en="eSports activities with the NOVO esports partners (tournaments and competitive gaming)">Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-esport" hidden>
+            <p data-en="They create team building or public events through cooperative and competitive games, and develop soft skills such as fast communication, problem solving and situational leadership. They engage younger generations in particular, strengthen employer branding and are accessible remotely.">Creano team building o eventi aperti al pubblico attraverso giochi cooperativi e competitivi, sviluppano soft skill come comunicazione rapida, problem solving e leadership situazionale. Coinvolgono soprattutto le nuove generazioni, rafforzano l'employer branding e sono accessibili anche da remoto, favorendo accessibilità e partecipazione.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="catalogue">
+        <p class="kicker kicker--blue" data-en="For Marketing">PER MARKETING</p>
+        <h3 data-en="Marketing to live, not to watch: branded games and immersive experiences">Un marketing da vivere invece che da guardare</h3>
+
+        <div class="accordion">
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mcarte">
+              <span data-en="Custom card games">Giochi di carte personalizzate</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-mcarte" hidden>
+            <p data-en="Cards are tangible, brandable and easy to share; they become gadgets and storytelling tools. They convey a company that makes its values concrete, helping virality and brand recall.">Le carte sono tangibili, brandizzabili e facilmente condivisibili, diventano gadget e storytelling tools. Trasmettono l'immagine di un'azienda che sa rendere concreti i valori, favorendo viralità e ricordo del brand.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-escape">
+              <span data-en="Physical or virtual escape rooms">Escape room fisiche o virtuali</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-escape" hidden>
+            <p data-en="Memorable experiences with high narrative impact. Excellent for PR, events and internal or external communication.">Sono esperienze memorabili ad alto impatto narrativo. Ottime per PR, eventi e comunicazione interna/esterna.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mvr">
+              <span data-en="VR/AR products">Prodotti VR/AR</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-mvr" hidden>
+            <p data-en="They associate the brand with leading-edge technology and immersive content. Perfect for events and trade fairs, they strengthen the perception of innovation.">Associano il brand a tecnologie all'avanguardia e contenuti immersivi. Perfetti da raccontare in eventi e fiere, rafforzano la percezione di innovazione.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mmappe">
+              <span data-en="Custom game maps or group activities on creative games">Mappe di gioco personalizzate o attività di gruppo su giochi creativi</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-mmappe" hidden>
+            <p data-en="Brandable visual tools, perfect for corporate storytelling and for engaging younger generations.">Sono strumenti visivi brandizzabili, perfetti per storytelling aziendale e coinvolgimento delle nuove generazioni.</p>
+          </div>
+
+          <h4 class="accordion__item">
+            <button type="button" class="accordion__trigger" aria-expanded="false" aria-controls="svc-mesport">
+              <span data-en="eSports activities with the NOVO esports partners (tournaments and competitive gaming)">Attività eSports con i partner di NOVO esports (tornei e gaming competitivo)</span>
+              <span class="accordion__tick" aria-hidden="true">+</span>
+            </button>
+          </h4>
+          <div class="accordion__panel" id="svc-mesport" hidden>
+            <p data-en="They speak Gen Z and Gen Alpha directly, strengthen employer branding and position the company as young and innovative. Internal or external tournaments generate viral content, PR and a sense of community.">Parlano direttamente al linguaggio Gen Z/Gen Alpha, rafforzano employer branding e posizionano l'azienda come giovane e innovativa. Tornei interni/esterni generano contenuti virali, PR e senso di community.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── Mappe di gioco ──────────────────────────────────────────────── -->
+  <section class="shell maps" id="mappe" aria-labelledby="maps-title">
+    <p class="kicker kicker--mint" data-en="Custom game maps">MAPPE DI GIOCO PERSONALIZZATE</p>
+    <h2 id="maps-title" data-en="Minecraft, Roblox, Fortnite and much more...">Minecraft, Roblox, Fortnite e molto altro...</h2>
+    <p class="section-lede section-lede--wide" data-en="Custom maps and group activities on creative games increase engagement and creativity thanks to how far they can be personalised. They can be branded for training, for marketing campaigns, or for open days and employer branding.">Mappe personalizzate e attività di gruppo su giochi creativi aumentano coinvolgimento e creatività grazie alla loro personalizzazione. Possono essere brandizzate per la formazione, per campagne marketing, o per open day ed employer branding.</p>
+
+    <div class="maps__grid">
+      <button type="button" class="map-card" data-map="minecraft" data-path="minecraft" data-image="assets/map-minecraft.jpg" data-file="corporate_town.mcworld" aria-controls="map-viewer" aria-expanded="false">
+        <span class="map-card__name" style="--map-color: var(--brand-mint)">Minecraft</span>
+        <span class="kicker kicker--tiny" data-en="Ideal for">IDEALE PER</span>
+        <span class="map-card__use" data-en="Onboarding, open days, technical training">Onboarding, open day, formazione tecnica</span>
+        <span class="map-card__body" data-en="We rebuild sites, plants or processes as navigable worlds. Participants build together and, in doing so, understand how the company works.">Ricostruiamo sedi, impianti o processi come mondi navigabili. I partecipanti costruiscono insieme e nel farlo capiscono come funziona l'azienda.</span>
+        <span class="map-card__cue">▸ VEDI LA MAPPA</span>
+      </button>
+
+      <button type="button" class="map-card" data-map="roblox" data-path="roblox" data-image="assets/map-roblox.jpg" data-file="business_district.rbxl" aria-controls="map-viewer" aria-expanded="false">
+        <span class="map-card__name" style="--map-color: var(--brand-blue)">Roblox</span>
+        <span class="kicker kicker--tiny" data-en="Ideal for">IDEALE PER</span>
+        <span class="map-card__use" data-en="Employer branding, campaigns, Gen Z">Employer branding, campagne, Gen Z</span>
+        <span class="map-card__body" data-en="Branded experiences inside a platform younger audiences already use daily, reachable from browser or mobile.">Esperienze brandizzate dentro una piattaforma che il pubblico più giovane già frequenta ogni giorno, con accesso da browser o mobile.</span>
+        <span class="map-card__cue">▸ VEDI LA MAPPA</span>
+      </button>
+
+      <button type="button" class="map-card" data-map="fortnite" data-path="fortnite" data-image="assets/map-fortnite.jpg" data-file="corporate_cove.island" aria-controls="map-viewer" aria-expanded="false">
+        <span class="map-card__name" style="--map-color: var(--color-accent)">Fortnite</span>
+        <span class="kicker kicker--tiny" data-en="Ideal for">IDEALE PER</span>
+        <span class="map-card__use" data-en="Events, tournaments, activations">Eventi, tornei, attivazioni</span>
+        <span class="map-card__body" data-en="Custom creative maps for internal or public tournaments, with rules, production and leaderboard handled by us.">Mappe creative su misura per tornei interni o aperti al pubblico, con regolamento, produzione e classifica gestiti da noi.</span>
+        <span class="map-card__cue">▸ VEDI LA MAPPA</span>
+      </button>
+
+      <button type="button" class="map-card" data-map="altro" data-path="su richiesta" data-file="custom_request" aria-controls="map-viewer" aria-expanded="false">
+        <span class="map-card__name" style="--map-color: var(--color-neutral-300)" data-en="On request">Su richiesta</span>
+        <span class="kicker kicker--tiny" data-en="Ideal for">IDEALE PER</span>
+        <span class="map-card__use" data-en="Other titles and creative environments">Altri titoli e ambienti creativi</span>
+        <span class="map-card__body" data-en="We assess the right title for your audience. If your people already play something, we start there.">Valutiamo il titolo giusto per il vostro pubblico. Se le vostre persone già giocano a qualcosa, partiamo da lì.</span>
+        <span class="map-card__cue">▸ PARLIAMONE</span>
+      </button>
+    </div>
+
+    <div class="viewer" id="map-viewer" hidden>
+      <div class="viewer__bar">
+        <div class="viewer__dots" aria-hidden="true">
+          <span></span><span></span><span class="viewer__dot--live"></span>
+        </div>
+        <p class="viewer__path" id="viewer-path">xpl4b://maps/</p>
+        <p class="viewer__status" id="viewer-status" role="status">IN ATTESA</p>
+      </div>
+      <div class="viewer__stage">
+        <canvas id="map-canvas"></canvas>
+        <div class="viewer__ask" id="viewer-ask" hidden>
+          <p data-en="Tell us what your people already play.">Dicci a cosa giocano già le vostre persone.</p>
+          <a href="#formato" class="btn btn-primary btn--display btn--small" data-en="See a possible format">VEDI UN POSSIBILE FORMATO</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Prodotti ────────────────────────────────────────────────────── -->
+  <section class="shell products" id="prodotti" aria-labelledby="products-title">
+    <p class="kicker kicker--mint" data-en="Our products">I NOSTRI PRODOTTI</p>
+    <h2 id="products-title" data-en="Two things we built ourselves.">Due cose che abbiamo costruito noi.</h2>
+
+    <div class="products__grid">
+      <article class="product product--featured">
+        <p class="kicker kicker--accent kicker--tight" data-en="Corporate gamification app">APP DI GAMIFICATION AZIENDALE</p>
+        <h3 class="product__name">Achivia</h3>
+        <p class="product__body" data-en="Missions, leaderboards and daily challenges in one place, so consistency and engagement hold up even remotely. It integrates with HR and CRM systems.">Centralizza missioni, classifiche e sfide giornaliere, favorendo la costanza e l'engagement anche da remoto. Integrabile con i sistemi HR e CRM.</p>
+        <ul class="product__points product__points--mint">
+          <li data-en="Real-time dashboards with points and badges">Dashboard in tempo reale con punti e badge</li>
+          <li data-en="Missions tied to real behaviours, not vanity metrics">Missioni legate a comportamenti reali, non a metriche di facciata</li>
+          <li data-en="HR and CRM integration">Integrazione con HR e CRM</li>
+        </ul>
+        <div class="product__media">
+          <picture>
+            <source srcset="assets/achivia-mockup.webp" type="image/webp">
+            <img src="assets/achivia-mockup.png" width="880" height="1260" loading="lazy" decoding="async" class="product__mockup" alt="Achivia — schermate dell'app" data-en-alt="Achivia — app screens">
+          </picture>
+        </div>
+      </article>
+
+      <article class="product">
+        <p class="kicker kicker--blue kicker--tight" data-en="Management card game">GIOCO DI CARTE MANAGERIALE</p>
+        <h3 class="product__name">CEO</h3>
+        <p class="product__body" data-en="A simulation that takes its cues from the best trading card games, Magic: The Gathering above all, to train strategic vision and decision making in complex scenarios. The player handles limited resources — budget, staff, targets — makes fast calls and watches the medium and long term consequences.">Una simulazione che prende spunto dai migliori TCG, Magic: The Gathering in primis, per allenare la visione strategica e le capacità decisionali in scenari complessi. Il giocatore gestisce risorse limitate — budget, personale, obiettivi — prende decisioni rapide e ne monitora le conseguenze a medio-lungo termine.</p>
+        <ul class="product__points product__points--blue">
+          <li data-en="Limited resources: budget, staff, targets">Risorse limitate: budget, personale, obiettivi</li>
+          <li data-en="Consequences visible over several simulated quarters">Conseguenze visibili su più trimestri simulati</li>
+          <li data-en="Debriefing with the decisions taken, in writing">Debriefing finale con le decisioni prese, per iscritto</li>
+        </ul>
+        <div class="product__media product__media--fan">
+          <picture>
+            <source srcset="assets/ceo-card-1.webp" type="image/webp">
+            <img src="assets/ceo-card-1.png" width="428" height="604" loading="lazy" decoding="async" class="card-fan__item card-fan__item--left" alt="CEO — carta Nira Bullone" data-en-alt="CEO — Nira Bullone card">
+          </picture>
+          <picture>
+            <source srcset="assets/ceo-card-2.webp" type="image/webp">
+            <img src="assets/ceo-card-2.png" width="520" height="652" loading="lazy" decoding="async" class="card-fan__item card-fan__item--centre" alt="CEO — carta CEO Rik Omnia" data-en-alt="CEO — CEO Rik Omnia card">
+          </picture>
+          <picture>
+            <source srcset="assets/ceo-card-6.webp" type="image/webp">
+            <img src="assets/ceo-card-6.png" width="432" height="608" loading="lazy" decoding="async" class="card-fan__item card-fan__item--right" alt="CEO — carta Mentoring" data-en-alt="CEO — Mentoring card">
+          </picture>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── VR / AR ─────────────────────────────────────────────────────── -->
+  <section class="shell vr" id="vr" aria-labelledby="vr-title">
+    <div class="vr__text">
+      <p class="kicker kicker--mint" data-en="VR / AR solutions">SOLUZIONI VR-AR</p>
+      <h2 id="vr-title" data-en="Virtual and augmented reality, for training or for advertising.">Realtà virtuale e aumentata, a scopo formativo o adv e marketing.</h2>
+      <p class="section-lede" data-en="Through our partner companies we can deliver virtual and augmented reality solutions for training purposes or for advertising and marketing. Immersive role play lets people rehearse realistic scenarios, safety risk management in particular.">Grazie ad aziende partner, siamo in grado di offrire soluzioni di realtà virtuale e aumentata a scopo formativo o adv e marketing. Il role-playing immersivo permette di sperimentare scenari realistici, in particolare la gestione dei rischi in sicurezza.</p>
+      <a href="#formato" class="btn btn-primary btn--display" data-en="Talk about a VR project">PARLIAMO DI UN PROGETTO VR</a>
+    </div>
+    <div class="vr__media">
+      <picture>
+        <source srcset="assets/vr-headset.webp" type="image/webp">
+        <img src="assets/vr-headset.png" width="542" height="655" loading="lazy" decoding="async" alt="Visore per realtà virtuale con i due controller" data-en-alt="A virtual reality headset with its two controllers">
+      </picture>
+    </div>
+  </section>
+
+  <!-- ── Possibile formato ───────────────────────────────────────────── -->
+  <section class="format" id="formato" aria-labelledby="format-title">
+    <div class="shell">
+      <p class="kicker kicker--mint" data-en="Possible format">POSSIBILE FORMATO</p>
+      <h2 id="format-title" data-en="Five questions. Then a concrete proposal.">Cinque domande. Poi una proposta concreta.</h2>
+      <p class="section-lede" data-en="What comes out of these five questions is a starting idea, not a catalogue item: every project is customised from beginning to end — mechanics, duration, content, tone. Use it to see how we reason, then leave us your address and we build the real thing around you.">Quello che esce da queste cinque domande è un'idea di partenza, non una voce di catalogo: ogni progetto è personalizzabile dall'inizio alla fine — meccaniche, durata, contenuti, tono. Serve a farvi vedere come ragioniamo. Poi lasciateci il vostro contatto e costruiamo quello vero su di voi.</p>
+
+      <form class="format__layout" id="format-form" novalidate>
+        <div class="questions">
+          <fieldset class="question" data-question="01">
+            <legend class="question__label"><span class="question__num">01</span> · <span data-en="Who you are">Chi siete</span></legend>
+            <div class="question__options">
+              <button type="button" class="chip" data-value="PMI" data-en="SME" aria-pressed="false">PMI</button>
+              <button type="button" class="chip" data-value="Grande azienda" data-en="Large company" aria-pressed="false">Grande azienda</button>
+              <button type="button" class="chip" data-value="Scuola o università" data-en="School or university" aria-pressed="false">Scuola o università</button>
+              <button type="button" class="chip" data-value="PA" data-en="Public sector" aria-pressed="false">PA</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="question" data-question="02">
+            <legend class="question__label"><span class="question__num">02</span> · <span data-en="What you are missing">Cosa vi manca</span></legend>
+            <div class="question__options">
+              <button type="button" class="chip" data-value="Competenze" data-en="Skills" aria-pressed="false">Competenze</button>
+              <button type="button" class="chip" data-value="Coinvolgimento" data-en="Engagement" aria-pressed="false">Coinvolgimento</button>
+              <button type="button" class="chip" data-value="Lead" data-en="Leads" aria-pressed="false">Lead</button>
+              <button type="button" class="chip" data-value="Visibilità" data-en="Visibility" aria-pressed="false">Visibilità</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="question" data-question="03">
+            <legend class="question__label"><span class="question__num">03</span> · <span data-en="Where">Dove</span></legend>
+            <div class="question__options">
+              <button type="button" class="chip" data-value="In presenza" data-en="On site" aria-pressed="false">In presenza</button>
+              <button type="button" class="chip" data-value="Da remoto" data-en="Remote" aria-pressed="false">Da remoto</button>
+              <button type="button" class="chip" data-value="Ibrido" data-en="Hybrid" aria-pressed="false">Ibrido</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="question" data-question="04">
+            <legend class="question__label"><span class="question__num">04</span> · <span data-en="How many people">Quante persone</span></legend>
+            <div class="question__options">
+              <button type="button" class="chip" data-value="Fino a 20" data-en="Up to 20" aria-pressed="false">Fino a 20</button>
+              <button type="button" class="chip" data-value="20-80" data-en="20-80" aria-pressed="false">20-80</button>
+              <button type="button" class="chip" data-value="Oltre 80" data-en="Over 80" aria-pressed="false">Oltre 80</button>
+            </div>
+          </fieldset>
+
+          <fieldset class="question" data-question="05">
+            <legend class="question__label"><span class="question__num">05</span> · <span data-en="When">Quando</span></legend>
+            <div class="question__options">
+              <button type="button" class="chip" data-value="Entro un mese" data-en="Within a month" aria-pressed="false">Entro un mese</button>
+              <button type="button" class="chip" data-value="Entro tre mesi" data-en="Within three months" aria-pressed="false">Entro tre mesi</button>
+              <button type="button" class="chip" data-value="Sto esplorando" data-en="Just exploring" aria-pressed="false">Sto esplorando</button>
+            </div>
+          </fieldset>
+        </div>
+
+        <aside class="recommendation">
+          <p class="kicker kicker--muted kicker--tight" data-en="Recommended format">FORMATO CONSIGLIATO</p>
+          <h3 class="recommendation__title" id="rec-title" data-en="Answer to see the proposal">Rispondi per vedere la proposta</h3>
+          <p class="recommendation__body" id="rec-body" data-en="Each answer narrows it down. At the fifth we tell you which format we would use and why.">Ogni risposta restringe il campo. Alla quinta ti diciamo quale formato useremmo e perché.</p>
+
+          <div class="recommendation__rule" aria-hidden="true"></div>
+
+          <label class="recommendation__label" for="email" data-en="Work email">Email di lavoro</label>
+          <input type="email" class="input" id="email" name="email" autocomplete="email" required placeholder="nome@azienda.it" data-en-placeholder="name@company.com">
+          <p class="recommendation__error" id="form-error" role="alert" hidden></p>
+
+          <button type="submit" class="btn btn-primary btn-block btn--display" id="format-submit" data-en="I want more information" data-en-sent="Request sent" data-it-sent="Richiesta inviata">VOGLIO RICEVERE INFORMAZIONI</button>
+          <p class="recommendation__note" data-en="The request reaches info@xpl4b.com. We reply within two working days.">La richiesta arriva a info@xpl4b.com. Rispondiamo entro due giorni lavorativi.</p>
+        </aside>
+      </form>
+    </div>
+  </section>
+
+  <!-- ── Shop ────────────────────────────────────────────────────────── -->
+  <section class="shop" id="shop" aria-labelledby="shop-title">
+    <div class="shell">
+      <div class="shop__head">
+        <p class="kicker kicker--mint">SHOP</p>
+        <a href="https://shop.xpl4b.com/" target="_blank" rel="noopener" class="shop__link">shop.xpl4b.com</a>
+      </div>
+      <h2 id="shop-title" data-en="The office jokes, printed.">Le battute sul lavoro, stampate.</h2>
+      <p class="section-lede section-lede--wide" data-en="T-shirts and hoodies with the memes anyone who works recognises straight away. Same world as our games: knights, dragons, too much coffee. Good as a gift, as team merch, or just for yourself.">T-shirt e felpe con i meme che chiunque lavori riconosce al primo sguardo. Stesso mondo dei nostri giochi: cavalieri, draghi, troppo caffè. Vanno bene come regalo, come merch di squadra, o solo per voi.</p>
+
+      <a href="https://shop.xpl4b.com/" target="_blank" rel="noopener" class="merch">
+        <h3 class="merch__title" data-en="Come and see our merch">Vieni a vedere il nostro merch</h3>
+        <p class="merch__sub" data-en="T-shirts and hoodies — shop.xpl4b.com">T-shirt e felpe — shop.xpl4b.com</p>
+        <div class="merch__fan">
+          <picture>
+            <source srcset="assets/shop-tee-dragon.webp" type="image/webp">
+            <img src="assets/shop-tee-dragon.png" width="569" height="696" loading="lazy" decoding="async" class="merch__item merch__item--left" alt="T-shirt bianca con drago e cavaliere: la vita in smartworking" data-en-alt="White t-shirt with a dragon and a knight: working from home">
+          </picture>
+          <picture>
+            <source srcset="assets/shop-hoodie-caffeina.webp" type="image/webp">
+            <img src="assets/shop-hoodie-caffeina.png" width="520" height="758" loading="lazy" decoding="async" class="merch__item merch__item--centre" alt="Felpa nera: 5 caffè, no colazione — CAFFEINAMAXXING" data-en-alt="Black hoodie: 5 coffees, no breakfast — CAFFEINAMAXXING">
+          </picture>
+          <picture>
+            <source srcset="assets/shop-tee-peggio.webp" type="image/webp">
+            <img src="assets/shop-tee-peggio.png" width="677" height="748" loading="lazy" decoding="async" class="merch__item merch__item--right" alt="T-shirt nera con cavaliere tra le fiamme: potrebbe andare peggio" data-en-alt="Black t-shirt with a knight in the flames: it could be worse">
+          </picture>
+        </div>
+      </a>
+
+      <a href="https://shop.xpl4b.com/" target="_blank" rel="noopener" class="btn btn-primary btn--display" data-en="Go to the shop">VAI ALLO SHOP</a>
+    </div>
+  </section>
+</main>
+
+<!-- ── Contatti ──────────────────────────────────────────────────────── -->
+<footer class="site-footer" id="contatti">
+  <div class="shell site-footer__grid">
+    <div>
+      <img src="assets/logo-vert.png" width="1393" height="831" loading="lazy" decoding="async" class="site-footer__logo" alt="XP-L4B">
+      <p class="site-footer__payoff">ENHANCE &amp; ENGAGE</p>
+      <p class="site-footer__about" data-en="XP-L4B designs game-based experiences for corporate skills development and engagement.">XP-L4B progetta esperienze ludiche per lo sviluppo delle competenze e l'engagement in azienda.</p>
+    </div>
+
+    <div>
+      <h2 class="kicker kicker--muted kicker--tight" data-en="Contact">CONTATTI</h2>
+      <address class="site-footer__contact">
+        <span>XP-L4B s.r.l.</span>
+        <span>Via Giotto 3, Truggio (MB) 20844</span>
+        <a href="tel:+393518800106">+39 351 880 0106</a>
+        <a href="mailto:info@xpl4b.com">info@xpl4b.com</a>
+        <a href="mailto:riccardo@xpl4b.com">riccardo@xpl4b.com</a>
+      </address>
+    </div>
+
+    <div>
+      <h2 class="kicker kicker--muted kicker--tight" data-en="Site">SITO</h2>
+      <nav class="site-footer__nav" aria-label="Sezioni del sito" data-en-aria-label="Site sections">
+        <a href="#cosa" data-en="Services">Servizi</a>
+        <a href="#mappe" data-en="Game maps">Mappe di gioco</a>
+        <a href="#prodotti" data-en="Products">Prodotti</a>
+        <a href="#vr">VR / AR</a>
+        <a href="#formato" data-en="Possible format">Possibile formato</a>
+        <a href="#shop" data-en="Shop">Shop</a>
+      </nav>
+    </div>
+  </div>
+
+  <div class="site-footer__legal">
+    <div class="shell site-footer__legal-inner">
+      <p><span data-en="© 2026 XP-L4B. All rights reserved.">© 2026 XP-L4B. Tutti i diritti riservati.</span> <span>P.IVA 14225710962</span></p>
+      <p class="site-footer__domain">WWW.XPL4B.COM</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden>
+  <span class="toast__glyph" id="toast-glyph" aria-hidden="true"></span>
+  <div>
+    <p class="toast__kicker" id="toast-kicker"></p>
+    <p class="toast__text" id="toast-text"></p>
+  </div>
+</div>
+
+</body>
+</html>
