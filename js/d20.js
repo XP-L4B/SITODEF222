@@ -12,6 +12,7 @@
    prefers-reduced-motion the same thing happens in a quarter of a second with
    no idle rotation. */
 
+import { keepCanvasAlive, onSurfaceChange, startFrameLoop } from "./canvas-health.js";
 import { env } from "./env.js";
 import { award } from "./gamification.js";
 import { t } from "./i18n.js";
@@ -234,14 +235,13 @@ export function initDie(canvas, button, quoteEl) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
   resize();
-  window.addEventListener("resize", resize);
+  onSurfaceChange(resize);
+  keepCanvasAlive(canvas, () => resize());
 
   let last = performance.now();
 
-  const draw = (now) => {
-    // asked for first, so a throw below cannot end the loop for good
-    requestAnimationFrame(draw);
-
+  const draw = () => {
+    const now = performance.now();
     const dt = Math.min(48, now - last);
     last = now;
 
@@ -350,7 +350,7 @@ export function initDie(canvas, button, quoteEl) {
       ctx.restore();
     });
   };
-  requestAnimationFrame(draw);
+  startFrameLoop(draw, resize);
 
   function roll(n) {
     const fi = num.indexOf(n);

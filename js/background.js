@@ -17,6 +17,7 @@
    own along a slow Lissajous path — the same effect, driving itself. A real
    pointer takes over the moment it moves. */
 
+import { keepCanvasAlive, onSurfaceChange, startFrameLoop } from "./canvas-health.js";
 import { env } from "./env.js";
 
 const RESTING_X = 0.72;
@@ -90,16 +91,14 @@ export function initBackground(canvas) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
   resize();
-  window.addEventListener("resize", resize);
+  onSurfaceChange(resize);
+  keepCanvasAlive(canvas, () => resize());
 
   let time = 0;
   let smx = RESTING_X;
   let smy = RESTING_Y;
 
   const draw = () => {
-    // asked for before any of the work below, so a throw cannot end the loop
-    requestAnimationFrame(draw);
-
     const interactive = !env.reduce;
     time += env.reduce ? 0 : 0.004;
 
@@ -229,5 +228,5 @@ export function initBackground(canvas) {
     });
   };
 
-  requestAnimationFrame(draw);
+  startFrameLoop(draw, resize);
 }
