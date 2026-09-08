@@ -4,12 +4,14 @@
    doubt about which version a device has in front of it. */
 export const BUILD = "2026-09-08.11";
 
-/* Where the "Possibile formato" request is posted.
-   export const FORM_ENDPOINT = "https://formspree.io/f/xoeqppow";
-   CONTACT_EMAIL, so the page is useful before any backend exists.
-   Set it to a form endpoint (your own handler, Formspree, Basin, …) that
-   accepts a JSON POST and the form submits there instead. */
-export const FORM_ENDPOINT = "";
+/* Where the "Possibile formato" request is posted. Any URL that accepts a
+   JSON POST — a form service or your own handler. Left empty, the form falls
+   back to opening a prefilled mail to CONTACT_EMAIL instead, so the page is
+   still useful with no backend at all.
+
+   This is the line to edit: a value written into the comment above changes
+   nothing, and the form goes on falling back to mail without saying so. */
+export const FORM_ENDPOINT = "https://formspree.io/f/xoeqppow";
 
 /* Where requests land: the address the page promises under the form, the
    one the failure message points at, and the mailto fallback recipient. It
