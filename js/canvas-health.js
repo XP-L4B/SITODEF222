@@ -60,10 +60,20 @@ export function startFrameLoop(draw, reset) {
     requestAnimationFrame(frame);
   };
 
-  const revive = () => {
-    health.revives++;
+  const restart = () => {
     reset();
     start();
+  };
+
+  /* `revives` is a diagnostic: it has to say how many times the loop actually
+     died on this device. Coming back to a tab restarts it too, but that
+     happens all day and is not a failure — counting it turned the one number
+     you would look at when the background misbehaves into noise. Only the
+     watchdog, which fires when frames stopped while the page was on screen,
+     counts. */
+  const revive = () => {
+    health.revives++;
+    restart();
   };
 
   // Frames legitimately stop while the page is hidden, so only the visible
@@ -75,11 +85,11 @@ export function startFrameLoop(draw, reset) {
   }, 2000);
 
   document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") revive();
+    if (document.visibilityState === "visible") restart();
   });
   // coming back from the back/forward cache
   window.addEventListener("pageshow", (e) => {
-    if (e.persisted) revive();
+    if (e.persisted) restart();
   });
 
   start();

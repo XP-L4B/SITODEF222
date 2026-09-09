@@ -168,6 +168,39 @@ Static imports inside the JS modules do not carry the version, so a change to
 a module other than `main.js` can still be served from cache for as long as
 the host's max-age (ten minutes on GitHub Pages).
 
+## What the page is served with
+
+A `<meta>` Content-Security-Policy in the head sets three restrictions the
+page does not need and should not leave open: `object-src 'none'`,
+`base-uri 'none'` and `form-action 'none'`.
+
+`form-action` is the one that does real work. The request form carries no
+`action`, because JavaScript sends it with `fetch`; without JavaScript,
+pressing enter in the email field submits it natively to the page itself and
+the visitor's address lands in the URL, in their history, and in the Referer
+of every request the page makes afterwards — including the ones to the shop.
+Blocking form submission means nothing leaves at all, and the real send is a
+`fetch`, which `form-action` does not govern.
+
+Two things this cannot do. `frame-ancestors`, which is what stops the site
+being framed by someone else, is ignored in a meta tag and needs a response
+header — GitHub Pages does not let you set one, so it would take a proxy in
+front (a custom domain behind Cloudflare, say). And a full policy —
+`script-src 'self'` and the rest — would mean allow-listing the form endpoint
+in the markup as well as setting it in `js/config.js`: two places that have to
+agree, in a project where the endpoint has already been lost once. It is worth
+doing the day this page grows a third-party script; today it would buy little
+and cost a trap.
+
+**Everything in the repository root is published.** Pages serves the branch as
+it is and `.nojekyll` turns off the only step that could exclude anything, so
+`project/`, `chats/`, `art/`, `tools/`, `CLAUDE.md` and this file are all
+reachable on the live domain. Nothing there is a credential, but the design
+handoff, the working notes and the PDFs under `project/uploads/` are internal
+material. To publish only the site, Pages has to move from "deploy from a
+branch" to a GitHub Actions workflow that copies the site files and nothing
+else — a change to how deploys work, and worth making deliberately.
+
 ## Notes for review
 
 - **English.** The English half of the site — including the twenty d20 lines —

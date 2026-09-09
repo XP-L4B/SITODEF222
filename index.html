@@ -12,14 +12,24 @@
 <meta property="og:description" content="Sviluppo competenze ed engagement con meccaniche di gioco, serious games e tecnologie VR/AR, per HR e Marketing.">
 <meta property="og:image" content="https://www.xpl4b.com/assets/logo-vert.png">
 <meta name="theme-color" content="#161826">
+
+<!-- Tre restrizioni che questa pagina non usa e che è meglio non lasciare aperte.
+     form-action è quella che serve davvero: il modulo non ha un action perché
+     lo invia il JavaScript, e senza JavaScript premere invio lo spedirebbe
+     alla pagina stessa, scrivendo l'indirizzo di chi scrive nella barra degli
+     indirizzi, nella cronologia e nel Referer verso lo shop. Bloccato qui, non
+     parte proprio. L'invio vero è una fetch e non è toccato.
+     frame-ancestors non si può mettere in un meta: per impedire che il sito
+     venga incorniciato serve un header, che GitHub Pages non fa impostare. -->
+<meta http-equiv="Content-Security-Policy" content="object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="icon" href="assets/logo-vert.png" type="image/png">
 
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/orbitron-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/fonts.css?v=2026-09-08.15">
-<link rel="stylesheet" href="css/nocturne.css?v=2026-09-08.15">
-<link rel="stylesheet" href="css/site.css?v=2026-09-08.15">
-<script type="module" src="js/main.js?v=2026-09-08.15"></script>
+<link rel="stylesheet" href="css/fonts.css?v=2026-09-09.1">
+<link rel="stylesheet" href="css/nocturne.css?v=2026-09-09.1">
+<link rel="stylesheet" href="css/site.css?v=2026-09-09.1">
+<script type="module" src="js/main.js?v=2026-09-09.1"></script>
 </head>
 <body>
 
@@ -29,7 +39,7 @@
    what the current build is and, if it is older, reloads itself at a URL the
    cache has never seen. Once per session, so it can never loop. */
 (function () {
-  var BUILD = "2026-09-08.15";
+  var BUILD = "2026-09-09.1";
   try {
     /* One attempt per session, whatever happens. Comparing the stored value
        against BUILD instead would loop forever when the reload still returns

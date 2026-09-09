@@ -28,11 +28,20 @@ let toastTimer = 0;
 function load() {
   try {
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-    if (saved && saved.done) {
-      state.xp = saved.xp || 0;
-      state.score = saved.score || 0;
-      state.done = saved.done;
-    }
+    if (!saved || typeof saved !== "object") return;
+
+    /* Storage holds whatever it holds: an older shape of this state, another
+       page on the same domain, a value half written when a tab was closed.
+       Taken as read, a string where the badges belong throws on the next
+       award — "cannot create property on string" — and leaves the header at
+       LV NaN with the bar empty and no way back, because the code that would
+       save a good value never runs. So each field is used only if it is the
+       right kind of thing, and anything else starts again from zero. */
+    const xp = Number(saved.xp);
+    const score = Number(saved.score);
+    state.xp = Number.isFinite(xp) ? Math.min(MAX_XP, Math.max(0, xp)) : 0;
+    state.score = Number.isFinite(score) ? Math.max(0, score) : 0;
+    state.done = saved.done && typeof saved.done === "object" ? saved.done : {};
   } catch (e) {
     /* corrupt or unavailable storage — start fresh */
   }

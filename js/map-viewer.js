@@ -140,9 +140,19 @@ export function initMapViewer() {
     };
 
     pendingSrc = src;
-    img.addEventListener("load", () => {
-      if (pendingSrc === src && !raf) drawFinal();
-    });
+    /* Only while it is still arriving, and only once. The Image is kept in
+       `images` and lives as long as the page, so a listener attached on every
+       click would pile up on the same object and never come off — eight taps
+       on one card left eight of them behind. */
+    if (!isReady()) {
+      img.addEventListener(
+        "load",
+        () => {
+          if (pendingSrc === src && !raf) drawFinal();
+        },
+        { once: true }
+      );
+    }
 
     decoding = true;
     decodePct = 0;
