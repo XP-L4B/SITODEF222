@@ -40,7 +40,8 @@ js/
   debug.js              the ?debug readout, inert without the parameter
 assets/                 images, fonts, and the cut-out people
 art/                    source artwork — not shipped, kept so the cut can be redone
-tools/                  crop-people.py, which cuts the people out of the strip
+tools/                  crop-people.py cuts the people out of the strip;
+                        normalise-logos.py evens out the partner logos
 project/                the original Claude Design handoff — design reference,
                         not part of the deployed site (its own instructions are
                         in project/HANDOFF.md)
@@ -104,6 +105,37 @@ the badge toasts — sits in the module that owns it, as `{ it, en }` pairs.
 
 **Gamification.** `js/config.js` carries the XP each badge is worth (the six add
 up to a full bar) and how often asteroids come round.
+
+**A new partner logo.** Drop the white-silhouette PNG in `assets/`, add the
+`<li>` in `index.html` with the file's real pixel dimensions, then:
+
+```sh
+python3 tools/normalise-logos.py --check    # report
+python3 tools/normalise-logos.py            # normalise in place
+```
+
+Two things go wrong with these files, and neither is fixable in CSS.
+
+The first is **ink density**. The logos are white shapes carried entirely by
+their alpha channel, and they arrive exported at whatever opacity their source
+had — across this set the ceiling ran from 136 to 255. The row's single
+`opacity: .7` then lands on an uneven base, so UniCredit rendered at 0.70 and
+ManpowerGroup at 0.38, and no stylesheet can even that out. The tool lifts each
+file's own ceiling back to fully opaque, scaling the whole channel so
+anti-aliased edges keep their softness. Colour is never touched — there is
+nothing to touch, the ink is pure white throughout.
+
+The second is **wasted canvas**. `object-fit: contain` fits the file, not the
+mark inside it: a logo centred in a canvas twice its height renders at half
+the size of its neighbours whatever the CSS says. Il Sole 24 Ore filled 35% of
+its own file and looked tiny for exactly that reason. Crop each logo to its
+alpha bounding box before adding it, and put those cropped dimensions in the
+markup. Two in the set still have room to reclaim: `partner-03` at 64% and
+`partner-06` at 55%.
+
+Equal density is not equal *presence*. A hairline mark with small lettering —
+didacta, Enrico Tosi — reads lighter than a solid wordmark however the alpha is
+scaled, and that is the artwork, not the file.
 
 **The walking people.** To recut them from a new strip:
 
