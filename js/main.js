@@ -16,7 +16,6 @@ import { initHeroTitle } from "./hero-title.js";
 import { initI18n } from "./i18n.js";
 import { initMapViewer } from "./map-viewer.js";
 import { initPeopleBand } from "./people-band.js";
-import { initPageShatter } from "./shatter-page.js";
 
 /* The header wraps to two or three rows on narrow screens, and English text
    changes where it wraps, so its height is measured rather than assumed.
@@ -59,9 +58,6 @@ function start() {
   initMapViewer();
   initPeopleBand();
   initFormatForm();
-
-  // last: it walks the finished page and splits what it finds
-  initPageShatter();
 
   onScroll((p) => {
     if (p > 0.45) award("scout");
