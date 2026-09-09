@@ -2,7 +2,7 @@
 
 /* Bumped on each deploy. Shown by the ?debug overlay, so there is never any
    doubt about which version a device has in front of it. */
-export const BUILD = "2026-09-09.4";
+export const BUILD = "2026-09-09.5";
 
 /* Where the "Possibile formato" request is posted. Any URL that accepts a
    JSON POST — a form service or your own handler. Left empty, the form falls
