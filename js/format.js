@@ -8,7 +8,7 @@
    falls back to opening a prefilled mail to CONTACT_EMAIL, so the form is
    useful from the first deploy. */
 
-import { CONTACT_EMAIL, FORM_ENDPOINT } from "./config.js";
+import { CONTACT_EMAIL, FORM_ENDPOINT, PRIVACY_URL } from "./config.js";
 import { award } from "./gamification.js";
 import { getLang, t } from "./i18n.js";
 
@@ -30,6 +30,10 @@ const ERRORS = {
   email: {
     it: "Inserisci un indirizzo email valido.",
     en: "Enter a valid email address.",
+  },
+  consent: {
+    it: "Per inviare la richiesta devi accettare l'informativa sulla privacy.",
+    en: "To send the request you have to accept the privacy policy.",
   },
   network: {
     it: "Invio non riuscito. Riprova, oppure scrivici a " + CONTACT_EMAIL + ".",
@@ -102,6 +106,14 @@ export function initFormatForm() {
   const emailEl = document.getElementById("email");
   const errorEl = document.getElementById("form-error");
   const submitEl = document.getElementById("format-submit");
+  const consentEl = document.getElementById("privacy-consent");
+  const privacyLink = document.getElementById("privacy-link");
+
+  /* The link appears only once there is a policy to point at. */
+  if (privacyLink && PRIVACY_URL) {
+    privacyLink.href = PRIVACY_URL;
+    privacyLink.hidden = false;
+  }
 
   const answers = {};
   let sent = false;
@@ -183,6 +195,11 @@ export function initFormatForm() {
     });
     data["Lingua del sito"] = getLang() === "it" ? "italiano" : "inglese";
     data["Pagina"] = window.location.href;
+    /* Consent has to be demonstrable, which means recording what was agreed
+       to and not just that something was: the policy it pointed at travels
+       with the request, and "Inviato" below is when it was given. */
+    data["Consenso privacy"] = "accettato";
+    data["Informativa"] = PRIVACY_URL || "non configurata";
     data["Inviato"] = new Date().toISOString();
 
     return data;
@@ -206,6 +223,11 @@ export function initFormatForm() {
     if (!emailEl.checkValidity() || !emailEl.value.trim()) {
       showError("email");
       emailEl.focus();
+      return;
+    }
+    if (consentEl && !consentEl.checked) {
+      showError("consent");
+      consentEl.focus();
       return;
     }
     clearError();
@@ -241,6 +263,7 @@ export function initFormatForm() {
   });
 
   emailEl.addEventListener("input", clearError);
+  consentEl?.addEventListener("change", clearError);
   document.addEventListener("languagechange", paint);
   paint();
 }

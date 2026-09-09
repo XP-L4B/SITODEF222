@@ -83,6 +83,20 @@ one the failure message names, and the mailto fallback recipient. Keep it equal
 to the recipient configured at the form service: otherwise the page promises
 one inbox while the requests arrive at another.
 
+**The privacy consent.** `js/config.js` → `PRIVACY_URL`. The form will not
+send until the box is ticked, whatever this holds; what it changes is the link
+beside it, which stays hidden while the constant is empty, because a link to
+nowhere is worse than none. Set it and the link appears, opens in a new tab,
+and the policy's address travels with every request.
+
+Each submission carries `"Consenso privacy": "accettato"`, the `Informativa`
+it pointed at, and `Inviato` — consent has to be demonstrable, and that means
+recording what was agreed to and when, not just that something was. Until the
+constant carries a real address those requests arrive saying
+`"Informativa": "non configurata"`, which is exactly as true as it sounds: the
+tick is the easy half, the policy it refers to is the half that matters, and
+the form is not lawful to run on without it.
+
 **Copy.** All of it is in `index.html`. Italian is the text in the element;
 English is the `data-en` attribute next to it. Text the page generates —
 the d20's twenty lines, the recommendations, the map viewer's status line,

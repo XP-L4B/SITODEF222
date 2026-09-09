@@ -2,7 +2,7 @@
 
 /* Bumped on each deploy. Shown by the ?debug overlay, so there is never any
    doubt about which version a device has in front of it. */
-export const BUILD = "2026-09-09.1";
+export const BUILD = "2026-09-09.2";
 
 /* Where the "Possibile formato" request is posted. Any URL that accepts a
    JSON POST — a form service or your own handler. Left empty, the form falls
@@ -17,6 +17,15 @@ export const FORM_ENDPOINT = "https://formspree.io/f/xoeqppow";
    one the failure message points at, and the mailto fallback recipient. It
    must match the recipient configured at the form service. */
 export const CONTACT_EMAIL = "riccardo@xpl4b.com";
+
+/* The privacy policy the consent tick refers to. Until this carries a URL the
+   form still asks for the tick and still records it, but the link beside it
+   stays hidden — a link to nowhere is worse than no link.
+
+   This is the line to edit, and the value belongs on the constant, not in
+   this comment. Consent without a reachable policy is not consent that would
+   hold up: the tick is the easy half, the policy is the half that matters. */
+export const PRIVACY_URL = "";
 
 /* Gamification: XP awarded per badge — the six add up to a full bar. */
 export const XP = {

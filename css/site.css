@@ -866,6 +866,48 @@ section[id] { scroll-margin-top: calc(var(--header-height) + 16px); }
   font-size: 12px;
   color: var(--color-accent-300);
 }
+/* The privacy tick. Built the way Nocturne builds .radio: the real checkbox is
+   there and focusable but invisible, and the square beside it is what you see,
+   so native keyboard and screen-reader behaviour is kept rather than
+   reimplemented. */
+.consent {
+  display: flex; align-items: flex-start; gap: 10px;
+  margin: 6px 0 10px;
+  cursor: pointer;
+}
+.consent input {
+  position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+}
+.consent__box {
+  width: 16px; height: 16px; flex: none; margin-top: 1px;
+  border-radius: 4px;
+  border: 1.5px solid var(--color-divider);
+  position: relative;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+.consent:hover .consent__box { border-color: var(--color-accent); }
+.consent input:checked + .consent__box {
+  border-color: var(--brand-mint);
+  background: var(--brand-mint);
+}
+.consent input:checked + .consent__box::after {
+  content: "";
+  position: absolute; left: 4.5px; top: 1px;
+  width: 3.5px; height: 8px;
+  border: solid var(--color-bg);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+.consent input:focus-visible + .consent__box {
+  outline: 2px solid var(--color-accent); outline-offset: 2px;
+}
+.consent__text { font-size: 12.5px; line-height: 1.5; color: var(--text-72); }
+.consent__link {
+  display: inline-block;
+  margin: 0 0 12px;
+  font-size: 12.5px;
+}
+
 .recommendation__note {
   font-size: 11.5px;
   color: var(--text-42);

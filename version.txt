@@ -1,2 +1,2 @@
-build 2026-09-09.1
+build 2026-09-09.2
 Se leggi questo file dal sito pubblicato, il deploy sta funzionando.
